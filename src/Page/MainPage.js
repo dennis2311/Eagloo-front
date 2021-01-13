@@ -8,7 +8,8 @@ function MainPage({ setIsLoggedIn, setUserInfo }) {
 
     async function handleLogin() {
         const { data } = await axios.get(
-            `/api/user/${mailInput}/${passwordInput}`
+            // (api 원칙이 회원가입 2단계랑 충돌하는 중)
+            `/api/auth/${mailInput}/${passwordInput}`
         );
         if (data.success) {
             setIsLoggedIn(true);
