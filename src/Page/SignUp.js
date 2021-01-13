@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 function SignUp({ history }) {
+    const server = "https://eaglooserver.herokuapp.com";
     const [mailInput, setMailInput] = useState("");
     const [secretInput, setSecretInput] = useState("");
     const [passwordInput, setPasswordInput] = useState("");
@@ -13,7 +14,9 @@ function SignUp({ history }) {
     // 회원가입1단계
     async function sendSecret() {
         try {
-            const { data } = await axios.post(`/api/user/${mailInput}`);
+            const { data } = await axios.post(
+                `${server}/api/user/${mailInput}`
+            );
             if (data.success) {
                 setSecretSended(true);
                 setSecretAuthenticated(false);
@@ -30,7 +33,7 @@ function SignUp({ history }) {
     async function confirmSecret() {
         try {
             const { data } = await axios.get(
-                `/api/user/${mailInput}/${secretInput}`
+                `${server}/api/user/${mailInput}/${secretInput}`
             );
             if (data.success) {
                 setSecretAuthenticated(true);
@@ -51,7 +54,7 @@ function SignUp({ history }) {
         } else {
             try {
                 const { data } = await axios.put(
-                    `/api/user/${mailInput}/${passwordInput}`
+                    `${server}/api/user/${mailInput}/${passwordInput}`
                 );
                 if (data.success) {
                     alert("계정 생성이 완료되었습니다! 홈화면으로 돌아갑니다");
