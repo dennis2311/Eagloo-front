@@ -10,7 +10,6 @@ function SignUp({ history }) {
     const [secretInput, setSecretInput] = useState("");
     const [passwordInput, setPasswordInput] = useState("");
     const [passwordConfirmInput, setPasswordConfirmInput] = useState("");
-    const [hashedPassword, setHashedPassword] = useState("");
     const [secretSended, setSecretSended] = useState(false);
     const [secretAuthenticated, setSecretAuthenticated] = useState(false);
 
@@ -55,10 +54,9 @@ function SignUp({ history }) {
         if (passwordInput !== passwordConfirmInput) {
             alert("비밀번호가 일치하지 않습니다.");
         } else {
-            setHashedPassword(hash(passwordInput));
             try {
                 const { data } = await axios.put(
-                    `${server}/api/user/${mailInput}/${hashedPassword}`
+                    `${server}/api/user/${mailInput}/${hash(passwordInput)}`
                 );
                 if (data.success) {
                     alert("계정 생성이 완료되었습니다! 홈화면으로 돌아갑니다");

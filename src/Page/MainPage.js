@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
+var hash = require("object-hash");
+
 function MainPage({ setIsLoggedIn, setUserInfo }) {
     const server = "https://eaglooserver.herokuapp.com";
     const [mailInput, setMailInput] = useState("");
@@ -10,7 +12,7 @@ function MainPage({ setIsLoggedIn, setUserInfo }) {
     async function handleLogin() {
         const { data } = await axios.get(
             // (api 원칙이 회원가입 2단계랑 충돌하는 중)
-            `${server}/api/auth/${mailInput}/${passwordInput}`
+            `${server}/api/auth/${mailInput}/${hash(passwordInput)}`
         );
         if (data.success) {
             setIsLoggedIn(true);

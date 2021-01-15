@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { BrowserRouter } from "react-router-dom";
 import UserRouter from "./Router/UserRouter";
 import CommonRouter from "./Router/CommonRouter";
-import "./App.css";
+import "./Style/App.css";
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
