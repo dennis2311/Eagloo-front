@@ -4,19 +4,20 @@ import { Link } from "react-router-dom";
 
 var hash = require("object-hash");
 
-function MainPage({ setIsLoggedIn, setUserInfo }) {
+function MainPage({ setIsLoggedIn }) {
     const server = "https://eaglooserver.herokuapp.com";
-    const [mailInput, setMailInput] = useState("");
+    const [emailInput, setEmailInput] = useState("");
     const [passwordInput, setPasswordInput] = useState("");
 
     async function handleLogin() {
         const { data } = await axios.get(
             // (api 원칙이 회원가입 2단계랑 충돌하는 중)
-            `${server}/api/auth/${mailInput}/${hash(passwordInput)}`
+            `${server}/api/auth/${emailInput}/${hash(passwordInput)}`
         );
         if (data.success) {
+            window.localStorage.setItem("email", emailInput);
+            window.localStorage.setItem("loggedIn", true);
             setIsLoggedIn(true);
-            setUserInfo({ email: mailInput });
         } else {
             alert(data.message);
         }
@@ -27,9 +28,9 @@ function MainPage({ setIsLoggedIn, setUserInfo }) {
             <div>
                 <input
                     type="text"
-                    value={mailInput}
+                    value={emailInput}
                     placeholder="연세 메일 주소"
-                    onChange={(e) => setMailInput(e.target.value)}
+                    onChange={(e) => setEmailInput(e.target.value)}
                 />
                 @yonsei.ac.kr
                 <input

@@ -5,19 +5,14 @@ import SignUp from "../Page/SignUp";
 import About from "../Page/About";
 import WrongPath from "../Page/WrongPath";
 
-function CommonRouter({ setIsLoggedIn, setUserInfo }) {
+function CommonRouter({ setIsLoggedIn }) {
     return (
         <>
             <Switch>
                 <Route
                     exact
                     path="/"
-                    render={() => (
-                        <MainPage
-                            setIsLoggedIn={setIsLoggedIn}
-                            setUserInfo={setUserInfo}
-                        />
-                    )}
+                    render={() => <MainPage setIsLoggedIn={setIsLoggedIn} />}
                 ></Route>
                 <Route path="/signup" component={SignUp}></Route>
                 <Route path="/about" component={About}></Route>

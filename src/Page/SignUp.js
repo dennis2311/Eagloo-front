@@ -6,7 +6,7 @@ var hash = require("object-hash");
 
 function SignUp({ history }) {
     const server = "https://eaglooserver.herokuapp.com";
-    const [mailInput, setMailInput] = useState("");
+    const [emailInput, setEmailInput] = useState("");
     const [secretInput, setSecretInput] = useState("");
     const [passwordInput, setPasswordInput] = useState("");
     const [passwordConfirmInput, setPasswordConfirmInput] = useState("");
@@ -17,7 +17,7 @@ function SignUp({ history }) {
     async function sendSecret() {
         try {
             const { data } = await axios.post(
-                `${server}/api/user/${mailInput}`
+                `${server}/api/user/${emailInput}`
             );
             if (data.success) {
                 setSecretSended(true);
@@ -35,7 +35,7 @@ function SignUp({ history }) {
     async function confirmSecret() {
         try {
             const { data } = await axios.get(
-                `${server}/api/user/${mailInput}/${secretInput}`
+                `${server}/api/user/${emailInput}/${secretInput}`
             );
             if (data.success) {
                 setSecretAuthenticated(true);
@@ -56,7 +56,7 @@ function SignUp({ history }) {
         } else {
             try {
                 const { data } = await axios.put(
-                    `${server}/api/user/${mailInput}/${hash(passwordInput)}`
+                    `${server}/api/user/${emailInput}/${hash(passwordInput)}`
                 );
                 if (data.success) {
                     alert("계정 생성이 완료되었습니다! 홈화면으로 돌아갑니다");
@@ -77,9 +77,9 @@ function SignUp({ history }) {
             <div>
                 <input
                     type="text"
-                    value={mailInput}
+                    value={emailInput}
                     placeholder="연세대학교 메일 계정"
-                    onChange={(e) => setMailInput(e.target.value)}
+                    onChange={(e) => setEmailInput(e.target.value)}
                 />
                 @yonsei.ac.kr
                 <button onClick={() => sendSecret()}>인증 단어 발송</button>

@@ -6,22 +6,14 @@ import "./Style/App.css";
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [userInfo, setUserInfo] = useState({ email: "" });
 
     return (
         <BrowserRouter>
             <div className="app">
                 {isLoggedIn ? (
-                    <UserRouter
-                        userInfo={userInfo}
-                        setIsLoggedIn={setIsLoggedIn}
-                        setUserInfo={setUserInfo}
-                    />
+                    <UserRouter setIsLoggedIn={setIsLoggedIn} />
                 ) : (
-                    <CommonRouter
-                        setIsLoggedIn={setIsLoggedIn}
-                        setUserInfo={setUserInfo}
-                    />
+                    <CommonRouter setIsLoggedIn={setIsLoggedIn} />
                 )}
             </div>
         </BrowserRouter>
