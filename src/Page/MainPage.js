@@ -16,7 +16,7 @@ function MainPage({ setIsLoggedIn }) {
         );
         if (data.success) {
             window.localStorage.setItem("email", emailInput);
-            window.localStorage.setItem("loggedIn", true);
+            window.localStorage.setItem("isLoggedIn", true);
             setIsLoggedIn(true);
         } else {
             alert(data.message);

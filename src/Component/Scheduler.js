@@ -30,9 +30,7 @@ function Scheduler() {
                 const { data } = await axios.get(
                     `${server}/api/schedule/${email}/`
                 );
-                console.log(data);
             } catch (err) {
-                console.log(err);
                 setLoadComplete(false);
             }
         }

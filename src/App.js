@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter } from "react-router-dom";
 import UserRouter from "./Router/UserRouter";
 import CommonRouter from "./Router/CommonRouter";
@@ -6,6 +6,14 @@ import "./Style/App.css";
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+        if (window.localStorage.getItem("isLoggedIn")) {
+            setIsLoggedIn(true);
+        } else {
+            setIsLoggedIn(false);
+        }
+    });
 
     return (
         <BrowserRouter>
