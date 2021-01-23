@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 var hash = require("object-hash");
 
@@ -13,6 +14,11 @@ function SignUp({ history }) {
     const [secretSended, setSecretSended] = useState(false);
     const [secretAuthenticated, setSecretAuthenticated] = useState(false);
 
+    const serverErrorMessage = "서버 통신 중 오류가 발생하였습니다";
+    function toastErrorMessage(message) {
+        toast.error(`😥 ${message}`);
+    }
+
     // 회원가입1단계
     async function sendSecret() {
         try {
@@ -22,12 +28,19 @@ function SignUp({ history }) {
             if (data.success) {
                 setSecretSended(true);
                 setSecretAuthenticated(false);
+                toast.info(
+                    <div>
+                        {`😃 ${emailInput}@yonsei.ac.kr 로`}
+                        <br />
+                        &emsp;인증 메일이 전송되었습니다
+                    </div>
+                );
             } else {
-                alert(data.message);
+                toastErrorMessage(data.message);
             }
         } catch (err) {
             console.log(err);
-            alert("오류가 발생하였습니다. 잠시 후 다시 시도해 주세요.");
+            toastErrorMessage(serverErrorMessage);
         }
     }
 
@@ -39,34 +52,40 @@ function SignUp({ history }) {
             );
             if (data.success) {
                 setSecretAuthenticated(true);
-                alert("메일 인증이 완료되었습니다! 비밀번호를 설정해주세요");
+                toast.success(
+                    <div>
+                        😆 메일 인증이 완료되었습니다!
+                        <br />
+                        &emsp;비밀번호를 설정해주세요
+                    </div>
+                );
             } else {
-                alert(data.message);
+                toastErrorMessage(data.message);
             }
         } catch (err) {
             console.log(err);
-            alert("오류가 발생하였습니다. 잠시 후 다시 시도해 주세요.");
+            toastErrorMessage(serverErrorMessage);
         }
     }
 
     // 회원가입3단계
     async function setPassword() {
         if (passwordInput !== passwordConfirmInput) {
-            alert("비밀번호가 일치하지 않습니다.");
+            toastErrorMessage("비밀번호가 일치하지 않아요");
         } else {
             try {
                 const { data } = await axios.put(
                     `${server}/api/user/${emailInput}/${hash(passwordInput)}`
                 );
                 if (data.success) {
-                    alert("계정 생성이 완료되었습니다! 홈화면으로 돌아갑니다");
+                    toast.success(`😎 계정 생성이 완료되었습니다!`);
                     history.push("/");
                 } else {
-                    alert(data.message);
+                    toastErrorMessage(data.message);
                 }
             } catch (err) {
                 console.log(err);
-                alert("오류가 발생하였습니다. 잠시 후 다시 시도해 주세요");
+                toastErrorMessage(serverErrorMessage);
             }
         }
     }

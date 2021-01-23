@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { BrowserRouter } from "react-router-dom";
 import UserRouter from "./Router/UserRouter";
 import CommonRouter from "./Router/CommonRouter";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./Style/App.css";
 
 function App() {
@@ -24,6 +26,12 @@ function App() {
                     <CommonRouter setIsLoggedIn={setIsLoggedIn} />
                 )}
             </div>
+            <ToastContainer
+                position="bottom-left"
+                closeOnClick
+                newestOnTop={true}
+                pauseOnFocusLoss={false}
+            />
         </BrowserRouter>
     );
 }

@@ -1,0 +1,36 @@
+.mainpage {
+    margin-bottom: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 640px;
+    height: 480px;
+    padding: 50px;
+    background-color: whitesmoke;
+    border-radius: 25%;
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+input {
+    min-width: 240px;
+    min-height: 30px;
+}
+.email-input {
+    position: relative;
+}
+.placeholder {
+    position: absolute;
+    top: 6px;
+    right: 5px;
+    opacity: 40%;
+}
+
+.string-container,
+.link-container {
+}
