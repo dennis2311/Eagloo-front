@@ -13,7 +13,7 @@ function App() {
         } else {
             setIsLoggedIn(false);
         }
-    });
+    }, []);
 
     return (
         <BrowserRouter>

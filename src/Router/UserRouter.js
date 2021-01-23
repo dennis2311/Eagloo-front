@@ -4,6 +4,7 @@ import Lobby from "../Page/Lobby";
 import Room from "../Page/Room";
 import About from "../Page/About";
 import WrongPath from "../Page/WrongPath";
+import "../Style/UserRouter.css";
 
 function UserRouter({ setIsLoggedIn }) {
     function handleLogout() {
@@ -14,18 +15,23 @@ function UserRouter({ setIsLoggedIn }) {
     return (
         <>
             <header>
-                <h2>유저들은 이 헤더를 보게 됩니다 ㅋㅋㄹㅃㅃ</h2>
-                <button
-                    onClick={() => {
-                        handleLogout();
-                    }}
-                >
-                    로그아웃
-                </button>
+                <div className="header__common">
+                    <h2>유저들은 이 헤더를 보게 됩니다 ㅋㅋㄹㅃㅃ</h2>
+                    <button
+                        onClick={() => {
+                            handleLogout();
+                        }}
+                    >
+                        로그아웃
+                    </button>
+                </div>
+                <div className="header__notice">
+                    <h4>공지사항이 있는 경우, 이 곳에 나타납니다</h4>
+                </div>
             </header>
             <Switch>
                 <Route exact path="/" component={Lobby} />
-                <Route path="/group/:colname" component={Room} />
+                <Route path="/public/:colname" component={Room} />
                 <Route path="/about" component={About} />
                 <Route component={WrongPath} />
             </Switch>

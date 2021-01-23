@@ -1,0 +1,7 @@
+.header__common {
+    display: flex;
+    justify-content: space-evenly;
+}
+.header__notice {
+    justify-content: center;
+}

@@ -1,0 +1,36 @@
+section {
+    display: flex;
+    flex-direction: column;
+}
+
+/* 헤더 파트 */
+.schedule-header-row {
+}
+
+/* 바디 파트 */
+.schedule-body-row {
+    overflow: auto;
+}
+.schedule-each-row {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 5px;
+    padding: 5px;
+    border: 2px solid moccasin;
+}
+.schedule-each-row__btns {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* 스케쥴 추가 파트 */
+.schedule-create-row {
+    width: 90%;
+    min-height: 100px;
+    bottom: 0;
+}
+.schedule-create-row__input {
+    width: 90%;
+    height: inherit;
+}
