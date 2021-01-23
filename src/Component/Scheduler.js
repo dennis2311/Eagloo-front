@@ -85,6 +85,8 @@ function Scheduler() {
 
         function createSchedule() {
             if (newScheduleInput !== "") {
+                const newSchedule = { content: newScheduleInput, state: 0 };
+                setSchedules([...schedules, newSchedule]);
                 setNewScheduleInput("");
             }
             return;
@@ -100,7 +102,6 @@ function Scheduler() {
                         setNewScheduleInput(e.target.value);
                     }}
                     onKeyPress={(e) => {
-                        e.preventDefault();
                         if (e.key === "Enter") {
                             createSchedule();
                         }
@@ -129,36 +130,43 @@ function Scheduler() {
 
     return (
         <section>
-            <div className="schedule-header-row">
-                <ScheduleHeaderRow
-                    userEmail={userEmail}
-                    schedules={schedules}
-                />
+            <div className="scheduler-upper">
+                <div className="schedule-header-row">
+                    <ScheduleHeaderRow
+                        userEmail={userEmail}
+                        schedules={schedules}
+                    />
+                </div>
+                <div className="schedule-body-row">
+                    {loadComlete ? (
+                        <>
+                            {schedules.map((schedule) => (
+                                <ScheduleRow
+                                    schedule={schedule}
+                                    key={schedule.id}
+                                    schedules={schedules}
+                                    setSchedules={setSchedules}
+                                />
+                            ))}
+                        </>
+                    ) : (
+                        <div>
+                            <h3>
+                                네트워크 연결 상태를 확인해주세요. 문제가
+                                반복되면 관리자에게 문의해 주세요
+                            </h3>
+                            <button onClick={() => {}}>다시 시도</button>
+                        </div>
+                    )}
+                </div>
             </div>
-            <div className="schedule-body-row">
-                {loadComlete ? (
-                    <>
-                        {schedules.map((schedule) => (
-                            <ScheduleRow
-                                schedule={schedule}
-                                key={schedule.id}
-                                schedules={schedules}
-                                setSchedules={setSchedules}
-                            />
-                        ))}
-                    </>
-                ) : (
-                    <div>
-                        네트워크 연결 상태를 확인해주세요. 문제가 반복되면
-                        관리자에게 문의해 주세요
-                    </div>
-                )}
-            </div>
-            <div className="schedule-create-row">
-                <ScheduleCreateRow
-                    schedules={schedules}
-                    setSchedules={setSchedules}
-                />
+            <div className="scheduler-bottom">
+                <div className="schedule-create-row">
+                    <ScheduleCreateRow
+                        schedules={schedules}
+                        setSchedules={setSchedules}
+                    />
+                </div>
             </div>
         </section>
     );

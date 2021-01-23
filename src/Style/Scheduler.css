@@ -1,22 +1,27 @@
-section {
+.scheduler-upper {
     display: flex;
     flex-direction: column;
+    height: 540px;
 }
 
 /* 헤더 파트 */
 .schedule-header-row {
+    border: 2px solid darkslateblue;
+    height: 120px;
+    padding: 5px 30px;
 }
 
 /* 바디 파트 */
 .schedule-body-row {
+    border: 2px solid darkolivegreen;
     overflow: auto;
 }
 .schedule-each-row {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     margin-bottom: 5px;
-    padding: 5px;
+    padding: 10px 30px;
     border: 2px solid moccasin;
 }
 .schedule-each-row__btns {
@@ -26,11 +31,11 @@ section {
 
 /* 스케쥴 추가 파트 */
 .schedule-create-row {
-    width: 90%;
+    border: 2px solid darkorange;
+    padding: 5px 15px;
     min-height: 100px;
-    bottom: 0;
 }
 .schedule-create-row__input {
-    width: 90%;
+    width: 100%;
     height: inherit;
 }

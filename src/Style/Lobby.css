@@ -1,7 +1,3 @@
-header {
-    width: 100%;
-    background-color: antiquewhite;
-}
 #lobby {
     display: flex;
     justify-content: space-between;

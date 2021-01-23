@@ -16,7 +16,10 @@ function UserRouter({ setIsLoggedIn }) {
         <>
             <header>
                 <div className="header__common">
-                    <h2>유저들은 이 헤더를 보게 됩니다 ㅋㅋㄹㅃㅃ</h2>
+                    <h2>
+                        유저들은 이 헤더를 보게 됩니다 ㅋㅋㄹㅃㅃ 대략 이글루
+                        아이콘 넣을거임
+                    </h2>
                     <button
                         onClick={() => {
                             handleLogout();
