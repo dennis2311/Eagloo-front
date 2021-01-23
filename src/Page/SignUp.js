@@ -30,9 +30,12 @@ function SignUp({ history }) {
                 setSecretAuthenticated(false);
                 toast.info(
                     <div>
-                        {`😃 ${emailInput}@yonsei.ac.kr 로`}
+                        <span role="img" aria-label="smile-face">
+                            😃
+                        </span>
+                        &nbsp; {emailInput}@yonsei.ac.kr 로
                         <br />
-                        &emsp;인증 메일이 전송되었습니다
+                        &emsp; 인증 메일이 전송되었습니다
                     </div>
                 );
             } else {
@@ -54,7 +57,10 @@ function SignUp({ history }) {
                 setSecretAuthenticated(true);
                 toast.success(
                     <div>
-                        😆 메일 인증이 완료되었습니다!
+                        <span role="img" aria-label="smile-face">
+                            😆
+                        </span>
+                        &nbsp; 메일 인증이 완료되었습니다!
                         <br />
                         &emsp;비밀번호를 설정해주세요
                     </div>

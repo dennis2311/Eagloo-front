@@ -22,7 +22,10 @@ function MainPage({ setIsLoggedIn }) {
             setIsLoggedIn(true);
             toast(
                 <div>
-                    😀 어서오세요 ${emailInput}님!
+                    <span role="img" aria-label="smile-face">
+                        😀
+                    </span>
+                    &nbsp; 어서오세요 {emailInput}님!
                     <br />
                     &emsp; 오늘도 이글루와 공부해 볼까요?
                 </div>,
