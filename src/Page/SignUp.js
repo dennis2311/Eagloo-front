@@ -22,9 +22,9 @@ function SignUp({ history }) {
     // 회원가입1단계
     async function sendSecret() {
         try {
-            const { data } = await axios.post(
-                `${server}/api/user/${emailInput}`
-            );
+            const { data } = await axios.post(`${server}/api/user`, {
+                email: emailInput,
+            });
             if (data.success) {
                 setSecretSended(true);
                 setSecretAuthenticated(false);
@@ -50,9 +50,10 @@ function SignUp({ history }) {
     // 회원가입2단계
     async function confirmSecret() {
         try {
-            const { data } = await axios.get(
-                `${server}/api/user/${emailInput}/${secretInput}`
-            );
+            const { data } = await axios.put(`${server}/api/user/secret`, {
+                email: emailInput,
+                givenSecret: secretInput,
+            });
             if (data.success) {
                 setSecretAuthenticated(true);
                 toast.success(
@@ -81,7 +82,11 @@ function SignUp({ history }) {
         } else {
             try {
                 const { data } = await axios.put(
-                    `${server}/api/user/${emailInput}/${hash(passwordInput)}`
+                    `${server}/api/user/password`,
+                    {
+                        email: emailInput,
+                        givenPassword: hash(passwordInput),
+                    }
                 );
                 if (data.success) {
                     toast.success(`😎 계정 생성이 완료되었습니다!`);

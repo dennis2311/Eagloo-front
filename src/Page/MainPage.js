@@ -14,7 +14,7 @@ function MainPage({ setIsLoggedIn }) {
     async function handleLogin() {
         const { data } = await axios.get(
             // (api 원칙이 회원가입 2단계랑 충돌하는 중)
-            `${server}/api/auth/${emailInput}/${hash(passwordInput)}`
+            `${server}/api/user/${emailInput}/${hash(passwordInput)}`
         );
         if (data.success) {
             window.localStorage.setItem("email", emailInput);

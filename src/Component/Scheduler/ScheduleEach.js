@@ -32,6 +32,7 @@ function ScheduleEach({ schedule, schedules, setSchedules }) {
         }
     }
 
+    // TODO 전체 schedules에 반영되어야 함
     function changeScheduleState(input) {
         if (scheduleState === 0 || scheduleState !== input) {
             setScheduleState(input);
