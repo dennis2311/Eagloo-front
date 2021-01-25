@@ -1,5 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
+import toastErrorMessage from "../../Util/ToastErrorMessage";
+
+const server = "https://eaglooserver.herokuapp.com";
+const serverErrorMessage = "서버 통신 중 오류가 발생하였습니다";
 
 const ScheduleEachRow = styled.div`
     display: flex;
@@ -32,21 +37,38 @@ function ScheduleEach({ schedule, schedules, setSchedules }) {
         }
     }
 
-    // TODO 전체 schedules에 반영되어야 함
-    function changeScheduleState(input) {
-        if (scheduleState === 0 || scheduleState !== input) {
-            setScheduleState(input);
+    // TODO
+    // 전체 schedules에 반영되어야 함
+    function changeScheduleState(schedule, state) {
+        if (scheduleState === 0 || scheduleState !== state) {
+            setScheduleState(state);
         } else {
             setScheduleState(0);
         }
+
+        try {
+            axios.put(`${server}/api/schedule`, {
+                scheduleId: schedule.id,
+                content: schedule.content,
+                state,
+            });
+        } catch (error) {
+            toastErrorMessage(serverErrorMessage);
+        }
     }
 
-    function deleteSchedule() {
+    function deleteSchedule(schedule) {
         setSchedules(
             schedules.filter(
                 (originalSchedule) => originalSchedule.id !== schedule.id
             )
         );
+
+        try {
+            axios.delete(`${server}/api/schedule/${schedule.id}`);
+        } catch (error) {
+            toastErrorMessage(serverErrorMessage);
+        }
     }
 
     return (
@@ -57,7 +79,7 @@ function ScheduleEach({ schedule, schedules, setSchedules }) {
             <ButtonsContainer>
                 <button
                     onClick={() => {
-                        changeScheduleState(1);
+                        changeScheduleState(schedule, 1);
                     }}
                 >
                     진행중
@@ -65,7 +87,7 @@ function ScheduleEach({ schedule, schedules, setSchedules }) {
 
                 <button
                     onClick={() => {
-                        changeScheduleState(2);
+                        changeScheduleState(schedule, 2);
                     }}
                 >
                     완료
@@ -73,7 +95,7 @@ function ScheduleEach({ schedule, schedules, setSchedules }) {
 
                 <button
                     onClick={() => {
-                        deleteSchedule();
+                        deleteSchedule(schedule);
                     }}
                 >
                     삭제

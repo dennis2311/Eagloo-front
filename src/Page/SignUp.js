@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import toastErrorMessage from "../Util/ToastErrorMessage";
 
 var hash = require("object-hash");
 
@@ -15,9 +16,6 @@ function SignUp({ history }) {
     const [secretAuthenticated, setSecretAuthenticated] = useState(false);
 
     const serverErrorMessage = "서버 통신 중 오류가 발생하였습니다";
-    function toastErrorMessage(message) {
-        toast.error(`😥 ${message}`);
-    }
 
     // 회원가입1단계
     async function sendSecret() {

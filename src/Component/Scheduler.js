@@ -46,6 +46,7 @@ function Scheduler() {
             </SchedulerUpper>
             <SchedulerBottom>
                 <SchedulerFoot
+                    userEmail={userEmail}
                     schedules={schedules}
                     setSchedules={setSchedules}
                 />

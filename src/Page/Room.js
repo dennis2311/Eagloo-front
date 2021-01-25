@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import io from "socket.io-client";
 import Peer from "simple-peer";
 import styled from "styled-components";
-import collegename from "../Sharing/CollegeNameConverter";
+import collegename from "../Util/CollegeNameConverter";
 
 const Container = styled.div`
     padding: 20px;

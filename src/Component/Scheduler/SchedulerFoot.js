@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
+import toastErrorMessage from "../../Util/ToastErrorMessage";
+
+const server = "https://eaglooserver.herokuapp.com";
 
 const SchedulerFootRow = styled.div`
     border: 2px solid darkorange;
@@ -12,16 +16,20 @@ const ScheduleCreateInput = styled.input`
     height: inherit;
 `;
 
-function SchedulerFoot({ schedules, setSchedules }) {
+function SchedulerFoot({ userEmail, schedules, setSchedules }) {
     const [newScheduleInput, setNewScheduleInput] = useState("");
 
-    function createSchedule() {
-        if (newScheduleInput !== "") {
-            const newSchedule = { content: newScheduleInput, state: 0 };
-            setSchedules([...schedules, newSchedule]);
+    async function createSchedule() {
+        const { data } = await axios.post(`${server}/api/schedule`, {
+            email: userEmail,
+            content: newScheduleInput,
+        });
+        if (data.success) {
+            setSchedules([...schedules, data.schedule]);
             setNewScheduleInput("");
+        } else {
+            toastErrorMessage(data.message);
         }
-        return;
     }
 
     return (
@@ -33,7 +41,7 @@ function SchedulerFoot({ schedules, setSchedules }) {
                     setNewScheduleInput(e.target.value);
                 }}
                 onKeyPress={(e) => {
-                    if (e.key === "Enter") {
+                    if (e.key === "Enter" && newScheduleInput !== "") {
                         createSchedule();
                     }
                 }}
