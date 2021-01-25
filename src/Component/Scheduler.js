@@ -36,7 +36,7 @@ function Scheduler() {
     }, []);
 
     return (
-        <section>
+        <>
             <SchedulerUpper>
                 <SchedulerHead userEmail={userEmail} schedules={schedules} />
                 <SchedulerBody
@@ -51,7 +51,7 @@ function Scheduler() {
                     setSchedules={setSchedules}
                 />
             </SchedulerBottom>
-        </section>
+        </>
     );
 }
 
