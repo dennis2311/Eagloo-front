@@ -8,6 +8,12 @@ import SchedulerFoot from "./SchedulerFoot";
 
 const server = "https://eaglooserver.herokuapp.com";
 
+const SchedulerContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+`;
+
 const SchedulerUpper = styled.div`
     display: flex;
     flex-direction: column;
@@ -38,7 +44,7 @@ function Scheduler() {
     }, []);
 
     return (
-        <>
+        <SchedulerContainer>
             <SchedulerUpper>
                 <SchedulerHead userEmail={userEmail} schedules={schedules} />
                 {loadSuccess ? (
@@ -57,7 +63,7 @@ function Scheduler() {
                     setSchedules={setSchedules}
                 />
             </SchedulerBottom>
-        </>
+        </SchedulerContainer>
     );
 }
 

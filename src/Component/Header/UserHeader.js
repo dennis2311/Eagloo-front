@@ -7,9 +7,9 @@ const UserHeaderContainer = styled.div`
     justify-content: space-evenly;
 `;
 
-function UserHeader({ setIsLoggedIn }) {
+function UserHeader({ setIsLoggedIn, setFeedbackOpen }) {
     function makeFeedback() {
-        alert("피드백 생성창");
+        setFeedbackOpen(true);
     }
 
     function handleLogout() {

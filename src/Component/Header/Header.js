@@ -16,7 +16,7 @@ const MainHeader = styled.div`
     background-color: antiquewhite;
 `;
 
-function Header({ isLoggedIn, setIsLoggedIn }) {
+function Header({ isLoggedIn, setIsLoggedIn, setFeedbackOpen }) {
     return (
         <HeaderContainer>
             <MainHeader>
@@ -28,7 +28,10 @@ function Header({ isLoggedIn, setIsLoggedIn }) {
                     넣을거임
                 </h2>
                 {isLoggedIn ? (
-                    <UserHeader setIsLoggedIn={setIsLoggedIn} />
+                    <UserHeader
+                        setIsLoggedIn={setIsLoggedIn}
+                        setFeedbackOpen={setFeedbackOpen}
+                    />
                 ) : (
                     <CommonHeader />
                 )}

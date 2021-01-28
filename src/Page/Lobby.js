@@ -22,8 +22,6 @@ const SchedulerContainer = styled.div`
     padding: 30px;
     width: 50%;
     border: 5px greenyellow solid;
-    flex-direction: column;
-    align-content: space-between;
 `;
 
 function Lobby() {
