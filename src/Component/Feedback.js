@@ -18,27 +18,28 @@ function Feedback({ feedbackOpen, setFeedbackOpen }) {
             onClose={handleClose}
             aria-labelledby="form-dialog-title"
         >
-            <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+            <DialogTitle id="form-dialog-title">피드백 제공하기</DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                    To subscribe to this website, please enter your email
-                    address here. We will send updates occasionally.
+                    이글루 서비스를 이용해주셔서 감사합니다. 서비스를
+                    이용하시면서 좋았던 점이나 불편했던 점을 적어주시면 반영하여
+                    더 나은 시버스를 제공할 수 있도록 노력하겠습니다.
                 </DialogContentText>
                 <TextField
                     autoFocus
                     margin="dense"
                     id="name"
-                    label="Email Address"
-                    type="email"
+                    label="내용"
+                    type="text"
                     fullWidth
                 />
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleClose} color="primary">
-                    Cancel
+                    취소
                 </Button>
                 <Button onClick={handleClose} color="primary">
-                    Subscribe
+                    피드백 남기기
                 </Button>
             </DialogActions>
         </Dialog>

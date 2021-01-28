@@ -39,6 +39,7 @@ function ScheduleEach({ schedule, schedules, setSchedules }) {
 
     // TODO
     // 전체 schedules에 반영되어야 함
+    // ?????? 왜 버그 없이 되는건지 알 수가 없음
     function changeScheduleState(schedule, state) {
         if (scheduleState === 0 || scheduleState !== state) {
             setScheduleState(state);

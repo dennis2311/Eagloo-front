@@ -7,10 +7,12 @@ import NoticeHeader from "./NoticeHeader";
 
 const HeaderContainer = styled.header`
     width: 100%;
+    min-width: 1200px;
 `;
 
 const MainHeader = styled.div`
     display: flex;
+    height: 60px;
     justify-content: space-evenly;
     align-items: center;
     background-color: antiquewhite;

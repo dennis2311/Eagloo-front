@@ -7,6 +7,7 @@ const LobbyContainer = styled.div`
     display: flex;
     justify-content: space-between;
     width: 100%;
+    min-width: 1200px;
     height: 100%;
     padding: 30px;
     border: 5px brown solid;

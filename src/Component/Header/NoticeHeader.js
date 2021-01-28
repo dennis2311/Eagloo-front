@@ -3,7 +3,9 @@ import styled from "styled-components";
 
 const NoticeHeaderRow = styled.div`
     display: flex;
+    height: 32px;
     justify-content: center;
+    align-items: center;
     border: 2px solid darkmagenta;
 `;
 

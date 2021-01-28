@@ -4,9 +4,17 @@ import Header from "./Component/Header/Header";
 import UserRouter from "./Router/UserRouter";
 import CommonRouter from "./Router/CommonRouter";
 import Feedback from "./Component/Feedback";
+import styled from "styled-components";
+import GlobalStyles from "./Style/GlobalStyles";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "./Style/App.css";
+
+const AppContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: lightcyan;
+`;
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -27,17 +35,18 @@ function App() {
                 setIsLoggedIn={setIsLoggedIn}
                 setFeedbackOpen={setFeedbackOpen}
             />
-            <div className="app">
+            <AppContainer>
                 {isLoggedIn ? (
                     <UserRouter />
                 ) : (
                     <CommonRouter setIsLoggedIn={setIsLoggedIn} />
                 )}
-            </div>
+            </AppContainer>
             <Feedback
                 feedbackOpen={feedbackOpen}
                 setFeedbackOpen={setFeedbackOpen}
             />
+            <GlobalStyles />
             <ToastContainer
                 position="bottom-left"
                 closeOnClick
