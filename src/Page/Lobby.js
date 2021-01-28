@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Scheduler from "../Component/Scheduler";
+import Scheduler from "../Component/Scheduler/Scheduler";
 import styled from "styled-components";
 
 const LobbyContainer = styled.div`

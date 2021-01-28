@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter } from "react-router-dom";
+import Header from "./Component/Header/Header";
 import UserRouter from "./Router/UserRouter";
 import CommonRouter from "./Router/CommonRouter";
 import { ToastContainer } from "react-toastify";
@@ -19,9 +20,10 @@ function App() {
 
     return (
         <BrowserRouter>
+            <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
             <div className="app">
                 {isLoggedIn ? (
-                    <UserRouter setIsLoggedIn={setIsLoggedIn} />
+                    <UserRouter />
                 ) : (
                     <CommonRouter setIsLoggedIn={setIsLoggedIn} />
                 )}

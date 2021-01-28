@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import SchedulerHead from "./Scheduler/SchedulerHead";
-import SchedulerBody from "./Scheduler/SchedulerBody";
-import SchedulerError from "./Scheduler/SchedulerError";
-import SchedulerFoot from "./Scheduler/SchedulerFoot";
+import SchedulerHead from "./SchedulerHead";
+import SchedulerBody from "./SchedulerBody";
+import SchedulerError from "./SchedulerError";
+import SchedulerFoot from "./SchedulerFoot";
 
 const server = "https://eaglooserver.herokuapp.com";
 
