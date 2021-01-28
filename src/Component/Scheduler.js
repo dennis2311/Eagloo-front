@@ -3,7 +3,10 @@ import axios from "axios";
 import styled from "styled-components";
 import SchedulerHead from "./Scheduler/SchedulerHead";
 import SchedulerBody from "./Scheduler/SchedulerBody";
+import SchedulerError from "./Scheduler/SchedulerError";
 import SchedulerFoot from "./Scheduler/SchedulerFoot";
+
+const server = "https://eaglooserver.herokuapp.com";
 
 const SchedulerUpper = styled.div`
     display: flex;
@@ -14,22 +17,21 @@ const SchedulerUpper = styled.div`
 const SchedulerBottom = styled.div``;
 
 function Scheduler() {
-    const server = "https://eaglooserver.herokuapp.com";
     const [userEmail, setUserEmail] = useState("");
     const [schedules, setSchedules] = useState([]);
-    const [loadComlete, setLoadComplete] = useState(true);
+    const [loadSuccess, setLoadSuccess] = useState(true);
 
     useEffect(() => {
         const email = window.localStorage.getItem("email");
         setUserEmail(email);
-        async function getSchedules(email) {
+        async function getSchedules(userEmail) {
             try {
                 const { data } = await axios.get(
-                    `${server}/api/schedule/${email}/`
+                    `${server}/api/schedule/${userEmail}/`
                 );
                 setSchedules(data.schedules);
             } catch (err) {
-                setLoadComplete(false);
+                setLoadSuccess(false);
             }
         }
         getSchedules(email);
@@ -39,10 +41,14 @@ function Scheduler() {
         <>
             <SchedulerUpper>
                 <SchedulerHead userEmail={userEmail} schedules={schedules} />
-                <SchedulerBody
-                    schedules={schedules}
-                    setSchedules={setSchedules}
-                />
+                {loadSuccess ? (
+                    <SchedulerBody
+                        schedules={schedules}
+                        setSchedules={setSchedules}
+                    />
+                ) : (
+                    <SchedulerError userEmail={userEmail} />
+                )}
             </SchedulerUpper>
             <SchedulerBottom>
                 <SchedulerFoot

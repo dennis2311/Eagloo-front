@@ -1,6 +1,6 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
-import MainPage from "../Page/MainPage";
+import LoginPage from "../Page/LoginPage";
 import SignUp from "../Page/SignUp";
 import About from "../Page/About";
 import WrongPath from "../Page/WrongPath";
@@ -12,7 +12,7 @@ function CommonRouter({ setIsLoggedIn }) {
                 <Route
                     exact
                     path="/"
-                    render={() => <MainPage setIsLoggedIn={setIsLoggedIn} />}
+                    render={() => <LoginPage setIsLoggedIn={setIsLoggedIn} />}
                 ></Route>
                 <Route path="/signup" component={SignUp}></Route>
                 <Route path="/about" component={About}></Route>
