@@ -5,6 +5,11 @@ import toastErrorMessage from "../../Util/ToastErrorMessage";
 
 const server = "https://eaglooserver.herokuapp.com";
 const serverErrorMessage = "서버 통신 중 오류가 발생하였습니다";
+const PROGRESS = {
+    SCRATCH: "SCRATCH",
+    ONGOING: "ONGOING",
+    DONE: "DONE",
+};
 
 const ScheduleEachRow = styled.div`
     display: flex;
@@ -16,21 +21,21 @@ const ScheduleEachRow = styled.div`
     background-color: ${(props) => props.color};
 `;
 
+const ScheduleContent = styled.div``;
+
 const ButtonsContainer = styled.div`
     display: flex;
     justify-content: space-between;
 `;
 
 function ScheduleEach({ schedule, schedules, setSchedules }) {
-    const [scheduleState, setScheduleState] = useState(
-        parseInt(schedule.state)
-    );
+    const [scheduleProgress, setScheduleProgress] = useState(schedule.progress);
 
-    function stateToColor(state) {
-        switch (state) {
-            case 1:
+    function progressToColor(progress) {
+        switch (progress) {
+            case "ONGOING":
                 return "blue";
-            case 2:
+            case "DONE":
                 return "green";
             default:
                 return "white";
@@ -40,21 +45,35 @@ function ScheduleEach({ schedule, schedules, setSchedules }) {
     // TODO
     // 전체 schedules에 반영되어야 함
     // ?????? 왜 버그 없이 되는건지 알 수가 없음
-    function changeScheduleState(schedule, state) {
-        if (scheduleState === 0 || scheduleState !== state) {
-            setScheduleState(state);
-        } else {
-            setScheduleState(0);
-        }
+    // 서버 통신하면서 state가 초기화되는건가?
+    function changeScheduleState(schedule, progress) {
+        if (
+            scheduleProgress === PROGRESS.SCRATCH ||
+            scheduleProgress !== progress
+        ) {
+            setScheduleProgress(progress);
 
-        try {
-            axios.put(`${server}/api/schedule`, {
-                scheduleId: schedule.id,
-                content: schedule.content,
-                state,
-            });
-        } catch (error) {
-            toastErrorMessage(serverErrorMessage);
+            try {
+                axios.put(`${server}/api/schedule`, {
+                    scheduleId: schedule.id,
+                    content: schedule.content,
+                    progress,
+                });
+            } catch (error) {
+                toastErrorMessage(serverErrorMessage);
+            }
+        } else {
+            setScheduleProgress(PROGRESS.SCRATCH);
+
+            try {
+                axios.put(`${server}/api/schedule`, {
+                    scheduleId: schedule.id,
+                    content: schedule.content,
+                    progress: PROGRESS.SCRATCH,
+                });
+            } catch (error) {
+                toastErrorMessage(serverErrorMessage);
+            }
         }
     }
 
@@ -73,14 +92,14 @@ function ScheduleEach({ schedule, schedules, setSchedules }) {
     }
 
     return (
-        <ScheduleEachRow color={stateToColor(scheduleState)}>
-            <div className="schedule-each-row__content">
+        <ScheduleEachRow color={progressToColor(scheduleProgress)}>
+            <ScheduleContent>
                 <h2>{schedule.content}</h2>
-            </div>
+            </ScheduleContent>
             <ButtonsContainer>
                 <button
                     onClick={() => {
-                        changeScheduleState(schedule, 1);
+                        changeScheduleState(schedule, "ONGOING");
                     }}
                 >
                     진행중
@@ -88,7 +107,7 @@ function ScheduleEach({ schedule, schedules, setSchedules }) {
 
                 <button
                     onClick={() => {
-                        changeScheduleState(schedule, 2);
+                        changeScheduleState(schedule, "DONE");
                     }}
                 >
                     완료

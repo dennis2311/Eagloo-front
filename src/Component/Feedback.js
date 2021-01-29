@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
+import toastErrorMessage from "../Util/ToastErrorMessage";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -8,14 +11,41 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
 function Feedback({ feedbackOpen, setFeedbackOpen }) {
-    const handleClose = () => {
+    const email = window.localStorage.getItem("email");
+    const server = "https://eaglooserver.herokuapp.com";
+
+    const [feedbackContent, setFeedbackContent] = useState("");
+
+    function closeFeedback() {
         setFeedbackOpen(false);
-    };
+    }
+
+    async function submitFeedback() {
+        try {
+            const { data } = await axios.post(`${server}/api/feedback`, {
+                email,
+                content: feedbackContent,
+            });
+            if (data.success) {
+                setFeedbackContent("");
+                setFeedbackOpen(false);
+                toast.success(
+                    `😍 피드백이 등록되었습니다. 소중한 의견 감사합니다!`
+                );
+            } else {
+                toastErrorMessage(data.message);
+            }
+        } catch (err) {
+            toastErrorMessage(
+                "서버 통신 중 오류가 발생했습니다. 나중에 다시 시도해주세요"
+            );
+        }
+    }
 
     return (
         <Dialog
             open={feedbackOpen}
-            onClose={handleClose}
+            onClose={closeFeedback}
             aria-labelledby="form-dialog-title"
         >
             <DialogTitle id="form-dialog-title">피드백 제공하기</DialogTitle>
@@ -28,6 +58,10 @@ function Feedback({ feedbackOpen, setFeedbackOpen }) {
                 <TextField
                     autoFocus
                     margin="dense"
+                    value={feedbackContent}
+                    onChange={(e) => {
+                        setFeedbackContent(e.target.value);
+                    }}
                     id="name"
                     label="내용"
                     type="text"
@@ -35,10 +69,10 @@ function Feedback({ feedbackOpen, setFeedbackOpen }) {
                 />
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleClose} color="primary">
+                <Button onClick={closeFeedback} color="primary">
                     취소
                 </Button>
-                <Button onClick={handleClose} color="primary">
+                <Button onClick={submitFeedback} color="primary">
                     피드백 남기기
                 </Button>
             </DialogActions>

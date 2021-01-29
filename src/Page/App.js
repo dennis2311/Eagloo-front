@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter } from "react-router-dom";
-import Header from "./Component/Header/Header";
-import UserRouter from "./Router/UserRouter";
-import CommonRouter from "./Router/CommonRouter";
-import Feedback from "./Component/Feedback";
+import Header from "../Component/Header/Header";
+import UserRouter from "../Router/UserRouter";
+import CommonRouter from "../Router/CommonRouter";
+import Feedback from "../Component/Feedback";
 import styled from "styled-components";
-import GlobalStyles from "./Style/GlobalStyles";
+import GlobalStyles from "../Style/GlobalStyles";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
