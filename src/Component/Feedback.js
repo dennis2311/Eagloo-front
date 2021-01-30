@@ -10,7 +10,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
-function Feedback({ feedbackOpen, setFeedbackOpen }) {
+export default function Feedback({ feedbackOpen, setFeedbackOpen }) {
     const email = window.localStorage.getItem("email");
     const server = "https://eaglooserver.herokuapp.com";
 
@@ -79,5 +79,3 @@ function Feedback({ feedbackOpen, setFeedbackOpen }) {
         </Dialog>
     );
 }
-
-export default Feedback;

@@ -4,6 +4,7 @@ import styled from "styled-components";
 import ForumHead from "./ForumHead";
 import ForumBody from "./ForumBody";
 import ForumFoot from "./ForumFoot";
+import Foo from "./foo";
 
 const server = "https://eaglooserver.herokuapp.com";
 
@@ -16,8 +17,8 @@ const ForumContainer = styled.div`
     border: 2px solid blueviolet;
 `;
 
-function Forum() {
-    const category = useRef("");
+export default function Forum() {
+    const [college, setCollege] = useState("All");
     const [totalThreads, setTotalThreads] = useState(1);
     const [currentPage, setCurrentPage] = useState(1);
     const [currentThreads, setCurrentThreads] = useState([]);
@@ -30,11 +31,11 @@ function Forum() {
             } catch (error) {}
         }
         getThreads();
-    }, [category]);
+    }, []);
 
     return (
         <ForumContainer>
-            <ForumHead category={category} />
+            <ForumHead college={college} setCollege={setCollege} />
             <ForumBody currentThreads={currentThreads} />
             <ForumFoot
                 currentPage={currentPage}
@@ -44,5 +45,3 @@ function Forum() {
         </ForumContainer>
     );
 }
-
-export default Forum;

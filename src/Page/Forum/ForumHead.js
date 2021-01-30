@@ -5,39 +5,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
 
 const ForumHeadRow = styled.div`
     display: flex;
+    width: 100%;
 `;
-
-function TabPanel(props) {
-    const { children, value, index, ...other } = props;
-
-    return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`scrollable-auto-tabpanel-${index}`}
-            aria-labelledby={`scrollable-auto-tab-${index}`}
-            {...other}
-        >
-            {value === index && (
-                <Box p={3}>
-                    <Typography>{children}</Typography>
-                </Box>
-            )}
-        </div>
-    );
-}
-
-function a11yProps(index) {
-    return {
-        id: `scrollable-auto-tab-${index}`,
-        "aria-controls": `scrollable-auto-tabpanel-${index}`,
-    };
-}
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -47,12 +19,11 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function ForumHead() {
+export default function ForumHead({ college, setCollege }) {
     const classes = useStyles();
-    const [value, setValue] = useState(0);
 
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
+    const handleChange = (event, selectedCollege) => {
+        setCollege(selectedCollege);
     };
 
     return (
@@ -60,47 +31,47 @@ function ForumHead() {
             <div className={classes.root}>
                 <AppBar position="static" color="default">
                     <Tabs
-                        value={value}
+                        value={college}
                         onChange={handleChange}
                         indicatorColor="primary"
                         textColor="primary"
                         variant="scrollable"
                         scrollButtons="auto"
-                        aria-label="scrollable auto tabs example"
                     >
-                        <Tab label="Item One" {...a11yProps(0)} />
-                        <Tab label="Item Two" {...a11yProps(1)} />
-                        <Tab label="Item Three" {...a11yProps(2)} />
-                        <Tab label="Item Four" {...a11yProps(3)} />
-                        <Tab label="Item Five" {...a11yProps(4)} />
-                        <Tab label="Item Six" {...a11yProps(5)} />
-                        <Tab label="Item Seven" {...a11yProps(6)} />
+                        <Tab label="전체" value="All" />
+                        <Tab label="학교생활" value="General" />
+                        <Tab label="문과대학" value="Liberal_Arts" />
+                        <Tab label="상경대학" value="Commerce_and_Economics" />
+                        <Tab label="경영대학" value="Business" />
+                        <Tab label="이과대학" value="Science" />
+                        <Tab label="공과대학" value="Engineering" />
+                        <Tab
+                            label="생명시스템대학"
+                            value="Life_Science_and_Biotechnology"
+                        />
+                        <Tab label="신과대학" value="Theology" />
+                        <Tab label="사회과학대학" value="Social_Sciences" />
+                        <Tab label="법학대학" value="Law" />
+                        <Tab label="음악대학" value="Music" />
+                        <Tab label="생활과학대학" value="Human_Ecology" />
+                        <Tab label="교육과학대학" value="Educational_Science" />
+                        <Tab label="학부대학" value="University_College" />
+                        <Tab
+                            label="언더우드국제대학"
+                            value="Underwood_International_College"
+                        />
+                        <Tab
+                            label="글로벌인재대학"
+                            value="Global_Leadership_Division"
+                        />
+                        <Tab label="의과대학" value="Medicine" />
+                        <Tab label="치과대학" value="Dentistry" />
+                        <Tab label="간호대학" value="Nursing" />
+                        <Tab label="약학대학" value="Pharmacy" />
                     </Tabs>
                 </AppBar>
-                <TabPanel value={value} index={0}>
-                    Item One
-                </TabPanel>
-                <TabPanel value={value} index={1}>
-                    Item Two
-                </TabPanel>
-                <TabPanel value={value} index={2}>
-                    Item Three
-                </TabPanel>
-                <TabPanel value={value} index={3}>
-                    Item Four
-                </TabPanel>
-                <TabPanel value={value} index={4}>
-                    Item Five
-                </TabPanel>
-                <TabPanel value={value} index={5}>
-                    Item Six
-                </TabPanel>
-                <TabPanel value={value} index={6}>
-                    Item Seven
-                </TabPanel>
+                <div>{`선택된 값은 ${college}입니다.`}</div>
             </div>
         </ForumHeadRow>
     );
 }
-
-export default ForumHead;
