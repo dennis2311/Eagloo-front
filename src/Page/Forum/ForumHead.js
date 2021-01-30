@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -70,7 +70,6 @@ export default function ForumHead({ college, setCollege }) {
                         <Tab label="약학대학" value="Pharmacy" />
                     </Tabs>
                 </AppBar>
-                <div>{`선택된 값은 ${college}입니다.`}</div>
             </div>
         </ForumHeadRow>
     );

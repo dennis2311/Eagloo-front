@@ -22,7 +22,9 @@ const SchedulerUpper = styled.div`
 
 const SchedulerBottom = styled.div``;
 
-function Scheduler() {
+// TODO
+// useEffect 클린업 설정할 것
+export default function Scheduler() {
     const [userEmail, setUserEmail] = useState("");
     const [schedules, setSchedules] = useState([]);
     const [loadSuccess, setLoadSuccess] = useState(true);
@@ -66,5 +68,3 @@ function Scheduler() {
         </SchedulerContainer>
     );
 }
-
-export default Scheduler;

@@ -4,7 +4,7 @@ import styled from "styled-components";
 import ForumHead from "./ForumHead";
 import ForumBody from "./ForumBody";
 import ForumFoot from "./ForumFoot";
-import Foo from "./foo";
+import toastErrorMessage from "../../Util/ToastErrorMessage";
 
 const server = "https://eaglooserver.herokuapp.com";
 
@@ -17,6 +17,8 @@ const ForumContainer = styled.div`
     border: 2px solid blueviolet;
 `;
 
+// TODO
+// useEffect 클린업 설정할 것
 export default function Forum() {
     const [college, setCollege] = useState("All");
     const [totalThreads, setTotalThreads] = useState(1);
@@ -24,23 +26,112 @@ export default function Forum() {
     const [currentThreads, setCurrentThreads] = useState([]);
 
     useEffect(() => {
-        async function getThreads() {
+        // 전체 스레드 수 반환
+        async function getTotalThreads() {
             try {
-                // const { data } = await axios.get(`${server}/threads`);
-                // setTotalThreads(data.length);
-            } catch (error) {}
+                const { data } = await axios.get(
+                    `${server}/api/thread/all/total`
+                );
+                if (data.success) {
+                    console.log(data.totalThreads);
+                    setTotalThreads(data.totalThreads);
+                } else {
+                    toastErrorMessage(data.message);
+                }
+            } catch (error) {
+                toastErrorMessage("서버 통신 중 오류가 발생했습니다");
+            }
         }
-        getThreads();
+
+        // 표시할 스레드 반환
+        async function getCurrentThreads() {
+            try {
+                const { data } = await axios.get(
+                    `${server}/api/thread/all/page/${currentPage}`
+                );
+                if (data.success) {
+                    console.dir(data.threads);
+                    setCurrentThreads(data.threads);
+                } else {
+                    toastErrorMessage(data.message);
+                }
+            } catch (err) {
+                toastErrorMessage("서버 통신 중 오류가 발생했습니다");
+            }
+        }
+
+        getTotalThreads();
+        getCurrentThreads();
     }, []);
+
+    async function getTotalThreads() {
+        try {
+            // 전체 스레드
+            if (college === "All") {
+                const { data } = await axios.get(
+                    `${server}/api/thread/all/total`
+                );
+                if (data.success) {
+                    setTotalThreads(data.totalThreads);
+                } else {
+                    toastErrorMessage(data.message);
+                }
+
+                // 특정 대학 지정
+            } else {
+                const { data } = await axios.get(
+                    `${server}/api/thread/${college}/total`
+                );
+                if (data.success) {
+                    setTotalThreads(data.totalThreads);
+                } else {
+                    toastErrorMessage(data.message);
+                }
+            }
+        } catch (err) {}
+    }
+
+    async function getCurrentThreads() {
+        try {
+            // 전체 스레드
+            if (college === "All") {
+                const { data } = await axios.get(
+                    `${server}/api/thread/all/page/${currentPage}`
+                );
+                if (data.success) {
+                    setCurrentThreads(data.threads);
+                } else {
+                    toastErrorMessage(data.message);
+                }
+
+                // 특정 대학 지정
+            } else {
+                const { data } = await axios.get(
+                    `${server}/api/thread/${college}/page/${currentPage}`
+                );
+                if (data.success) {
+                    setCurrentThreads(data.threads);
+                } else {
+                    toastErrorMessage(data.message);
+                }
+            }
+        } catch (err) {
+            toastErrorMessage("서버 통신 중 오류가 발생했습니다");
+        }
+    }
 
     return (
         <ForumContainer>
             <ForumHead college={college} setCollege={setCollege} />
-            <ForumBody currentThreads={currentThreads} />
+            <ForumBody
+                totalThreads={totalThreads}
+                currentThreads={currentThreads}
+            />
             <ForumFoot
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}
-                setCurrentThreads={setCurrentThreads}
+                getCurrentThreads={getCurrentThreads}
+                getTotalThreads={getTotalThreads}
             />
         </ForumContainer>
     );
