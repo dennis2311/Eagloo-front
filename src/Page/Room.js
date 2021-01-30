@@ -60,7 +60,7 @@ function Room(props) {
     useEffect(() => {
         // 방에 입장하면 소켓을 열고 입장 가능한 상태인지 확인
         socketRef.current = io.connect(`https://eaglooserver.herokuapp.com`);
-        socketRef.current.emit("join", roomId);
+        socketRef.current.emit("join", 1);
         socketRef.current.on("reject", (message) => {
             socketRef.current.disconnect();
             alert(message);
