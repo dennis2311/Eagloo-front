@@ -31,8 +31,8 @@ function MainPage({ setIsLoggedIn }) {
                 </div>,
                 { pauseOnHover: false }
             );
-            if (emailInput === "dennis2311") {
-                alert("어서 와 세민아 😗");
+            if (emailInput === "minisemin") {
+                alert("어서 와 세민아 🥰");
             }
         } else {
             toast.error(`😥${data.message}`, { pauseOnHover: false });
