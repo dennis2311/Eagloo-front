@@ -1,48 +1,67 @@
 import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
+import styled from "styled-components";
+import SubthreadEach from "./SubthreadEach";
+import Accordion from "@material-ui/core/Accordion";
+import AccordionDetails from "@material-ui/core/AccordionDetails";
+import AccordionSummary from "@material-ui/core/AccordionSummary";
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 1,
-        width: "100%",
-        backgroundColor: theme.palette.background.paper,
-    },
-}));
+const ArcodionContainer = styled.div`
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    margin-top: 10px;
+    padding: 20px;
+    border: 2px solid brown;
+`;
 
-export default function ScrollableTabsButtonAuto() {
-    const classes = useStyles();
-    const [college, setCollege] = useState(2);
+const ArcodionHead = styled.div`
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+`;
 
-    const handleChange = (event, newValue) => {
-        setCollege(newValue);
+const ArcodionSubject = styled.div``;
+
+const ArcodionInfo = styled.div``;
+
+const ArcodionContent = styled.div`
+    display: flex;
+    flex-direction: column;
+`;
+
+export default function MainthreadEach({ mainthread }) {
+    const [expanded, setExpanded] = useState(false);
+
+    const handleChange = (panel) => (event, isExpanded) => {
+        setExpanded(isExpanded ? panel : false);
     };
 
     return (
-        <>
-            <div className={classes.root}>
-                <AppBar position="static" color="default">
-                    <Tabs
-                        value={college}
-                        onChange={handleChange}
-                        indicatorColor="primary"
-                        textColor="primary"
-                        variant="scrollable"
-                        scrollButtons="auto"
-                    >
-                        <Tab label="Item One" value="기호 일번" />
-                        <Tab label="Item Two" />
-                        <Tab label="Item Three" />
-                        <Tab label="Item Four" />
-                        <Tab label="Item Five" />
-                        <Tab label="Item Six" />
-                        <Tab label="Item Seven" />
-                    </Tabs>
-                </AppBar>
-                <div>{`당신이 선택한 값은 : ${college}`}</div>
-            </div>
-        </>
+        <ArcodionContainer>
+            <Accordion
+                expanded={expanded === "content"}
+                onChange={handleChange("content")}
+            >
+                <AccordionSummary>
+                    <ArcodionHead>
+                        <ArcodionSubject>{mainthread.subject}</ArcodionSubject>
+                        <ArcodionInfo>
+                            <div>{`작성자 : ${mainthread.user.email}`}</div>
+                            <div>{`작성일 : ${mainthread.createdAt}`}</div>
+                        </ArcodionInfo>
+                    </ArcodionHead>
+                </AccordionSummary>
+                <AccordionDetails>
+                    <ArcodionContent>{mainthread.content}</ArcodionContent>
+                    {mainthread.subthreads.map((subthread) => (
+                        <SubthreadEach
+                            key={subthread.id}
+                            subthread={subthread}
+                        />
+                    ))}
+                </AccordionDetails>
+            </Accordion>
+        </ArcodionContainer>
     );
 }

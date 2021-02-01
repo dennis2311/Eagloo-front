@@ -38,7 +38,7 @@ export default function ForumHead({ college, setCollege }) {
                         variant="scrollable"
                         scrollButtons="auto"
                     >
-                        <Tab label="전체" value="All" />
+                        <Tab label="전체" value="all" />
                         <Tab label="학교생활" value="General" />
                         <Tab label="문과대학" value="Liberal_Arts" />
                         <Tab label="상경대학" value="Commerce_and_Economics" />

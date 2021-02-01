@@ -21,24 +21,26 @@ export default function Feedback({ feedbackOpen, setFeedbackOpen }) {
     }
 
     async function submitFeedback() {
-        try {
-            const { data } = await axios.post(`${server}/api/feedback`, {
-                email,
-                content: feedbackContent,
-            });
-            if (data.success) {
-                setFeedbackContent("");
-                setFeedbackOpen(false);
-                toast.success(
-                    `😍 피드백이 등록되었습니다. 소중한 의견 감사합니다!`
+        if (feedbackContent !== "") {
+            try {
+                const { data } = await axios.post(`${server}/api/feedback`, {
+                    email,
+                    content: feedbackContent,
+                });
+                if (data.success) {
+                    setFeedbackContent("");
+                    setFeedbackOpen(false);
+                    toast.success(
+                        `😍 피드백이 등록되었습니다. 소중한 의견 감사합니다!`
+                    );
+                } else {
+                    toastErrorMessage(data.message);
+                }
+            } catch (err) {
+                toastErrorMessage(
+                    "서버 통신 중 오류가 발생했습니다. 나중에 다시 시도해주세요"
                 );
-            } else {
-                toastErrorMessage(data.message);
             }
-        } catch (err) {
-            toastErrorMessage(
-                "서버 통신 중 오류가 발생했습니다. 나중에 다시 시도해주세요"
-            );
         }
     }
 
@@ -61,6 +63,11 @@ export default function Feedback({ feedbackOpen, setFeedbackOpen }) {
                     value={feedbackContent}
                     onChange={(e) => {
                         setFeedbackContent(e.target.value);
+                    }}
+                    onKeyPress={(e) => {
+                        if (e.key === "Enter") {
+                            submitFeedback();
+                        }
                     }}
                     id="name"
                     label="내용"
