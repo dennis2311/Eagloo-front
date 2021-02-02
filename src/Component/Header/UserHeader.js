@@ -36,13 +36,15 @@ function UserHeader({ setIsLoggedIn, setFeedbackOpen }) {
                 <Link to={`/forum`}>포럼</Link>
             </div>
             <div>
-                <button
-                    onClick={() => {
-                        handleLogout();
-                    }}
-                >
-                    로그아웃
-                </button>
+                <Link to={`/`}>
+                    <button
+                        onClick={() => {
+                            handleLogout();
+                        }}
+                    >
+                        로그아웃
+                    </button>
+                </Link>
             </div>
         </UserHeaderContainer>
     );

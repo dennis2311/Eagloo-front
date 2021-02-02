@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter } from "react-router-dom";
 import Header from "../Component/Header/Header";
-import UserRouter from "../Router/UserRouter";
-import CommonRouter from "../Router/CommonRouter";
+import UserRouter from "./UserRouter";
+import CommonRouter from "./CommonRouter";
 import Feedback from "../Component/Feedback";
 import styled from "styled-components";
 import GlobalStyles from "../Style/GlobalStyles";
@@ -11,6 +11,8 @@ import "react-toastify/dist/ReactToastify.css";
 
 const AppContainer = styled.div`
     display: flex;
+    width: 100%;
+    height: 100%;
     flex-direction: column;
     align-items: center;
     background-color: lightcyan;

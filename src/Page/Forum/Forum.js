@@ -13,7 +13,6 @@ const ForumContainer = styled.div`
     min-width: 960px;
     width: 90%;
     flex-direction: column;
-    align-items: center;
     border: 2px solid blueviolet;
 `;
 
@@ -29,28 +28,26 @@ export default function Forum() {
     // 전체 스레드 수 반환
     useEffect(() => {
         async function getTotalThreads() {
-            console.log("선택한 옵션의 전체 스레드 수를 계산 중입니다");
             try {
                 const { data } = await axios.get(
-                    `${server}/api/thread/all/total`
+                    `${server}/api/thread/${college}/total`
                 );
                 if (data.success) {
-                    console.log(data.totalThreads);
                     setTotalThreads(data.totalThreads);
                 } else {
                     toastErrorMessage(data.message);
                 }
             } catch (error) {
-                toastErrorMessage("서버 통신 중 오류가 발생했습니다");
+                setTotalThreads(-1);
             }
         }
-
         getTotalThreads();
     }, [college]);
 
     // 표시할 스레드 반환
     useEffect(() => {
         async function getCurrentThreads() {
+            setLoading(true);
             try {
                 const { data } = await axios.get(
                     `${server}/api/thread/${college}/page/${currentPage}`
@@ -64,10 +61,9 @@ export default function Forum() {
             } catch (err) {
                 toastErrorMessage("서버 통신 중 오류가 발생했습니다");
             }
+            setLoading(false);
         }
-        setLoading(true);
         getCurrentThreads();
-        setLoading(false);
     }, [college, currentPage]);
 
     return (

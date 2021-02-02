@@ -4,10 +4,13 @@ import styled from "styled-components";
 const ForumFootRow = styled.div`
     display: flex;
     float: left;
+    padding: 15px;
 `;
 
-function ForumFoot() {
-    return <ForumFootRow>페이지 선택 및 검색</ForumFootRow>;
+export default function ForumFoot() {
+    return (
+        <ForumFootRow>
+            <div>페이지 선택 및 검색</div>
+        </ForumFootRow>
+    );
 }
-
-export default ForumFoot;

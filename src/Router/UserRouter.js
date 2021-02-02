@@ -11,7 +11,7 @@ function UserRouter() {
         <Switch>
             <Route exact path="/" component={Lobby} />
             <Route path="/about" component={About} />
-            <Route path="/forum" component={Forum}></Route>
+            <Route path="/forum" component={Forum} />
             <Route path="/public/:colname" component={Room} />
             <Route component={WrongPath} />
         </Switch>
