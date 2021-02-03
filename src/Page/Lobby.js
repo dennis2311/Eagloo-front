@@ -1,7 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Scheduler from "../Component/Scheduler/Scheduler";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+
+const slideUp = keyframes`
+  from {
+    transform: translateY(100px);
+    opacity: 0
+  }
+  to {
+    transform: translateY(0px);
+    opacity: 1
+  }
+`;
 
 const LobbyContainer = styled.div`
     display: flex;
@@ -11,6 +22,10 @@ const LobbyContainer = styled.div`
     height: 100%;
     padding: 30px;
     border: 5px brown solid;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-out;
+    animation-name: ${slideUp};
+    animation-fill-mode: forwards;
 `;
 
 const RoomsContainer = styled.div`

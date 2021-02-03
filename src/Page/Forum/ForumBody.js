@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import MainthreadEach from "./MainthreadEach";
@@ -12,9 +12,25 @@ const ForumBodyRow = styled.div`
     flex-direction: column;
 `;
 
-const TotalThreadsTeller = styled.div`
+const ContentHead = styled.div`
+    display: flex;
+    justify-newcontent: space-between;
     padding: 15px;
     background-color: #dddddd;
+`;
+
+const NewThreadContent = styled.textarea.attrs({
+    placeholder: "내용을 입력하세요",
+})`
+    border-radius: 5px;
+    padding: 20px;
+    font-size: 20px;
+    width: 600px;
+    height: 400px;
+    resize: none;
+    :focus {
+        outline: none;
+    }
 `;
 
 const ForumLoading = styled.div`
@@ -36,14 +52,57 @@ const LoadingMessage = styled.h1`
 `;
 
 export default function ForumBody({ loading, totalThreads, currentThreads }) {
+    const [addThread, setAddThread] = useState(false);
+    const [newThreadSubject, setNewThreadSubject] = useState("");
+    const [newThreadContent, setNewThreadContent] = useState("");
+
     return (
         <ForumBodyRow>
-            <TotalThreadsTeller>
-                {`총 ${totalThreads}개의 게시물`}
-            </TotalThreadsTeller>
-            {currentThreads.map((mainthread) => (
-                <MainthreadEach key={mainthread.id} mainthread={mainthread} />
-            ))}
+            {addThread ? (
+                <div>
+                    <input
+                        type="text"
+                        placeholder="제목"
+                        value={newThreadSubject}
+                        onChange={(e) => {
+                            setNewThreadSubject(e.target.value);
+                        }}
+                    />
+                    <NewThreadContent />
+
+                    <button
+                        onClick={() => {
+                            setAddThread(false);
+                        }}
+                    >
+                        취소
+                    </button>
+                    <button>등록</button>
+                </div>
+            ) : (
+                <>
+                    <ContentHead>
+                        <div>{`총 ${totalThreads}개의 게시물`}</div>
+                        <div>
+                            <button
+                                onClick={() => {
+                                    setAddThread(true);
+                                }}
+                            >
+                                글쓰기
+                            </button>
+                        </div>
+                    </ContentHead>
+                    {currentThreads.map((mainthread) => (
+                        <MainthreadEach
+                            key={mainthread.id}
+                            mainthread={mainthread}
+                        />
+                    ))}
+                </>
+            )}
+
+            {/* 포럼 콘텐츠 로딩중 */}
             {loading && (
                 <ForumLoading>
                     <CircularProgress />

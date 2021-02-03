@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
+import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import SubthreadEach from "./SubthreadEach";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
+import toastErrorMessage from "../../Util/ToastErrorMessage";
+
+const server = "https://eaglooserver.herokuapp.com";
 
 const ArcodionContainer = styled.div`
     display: flex;
@@ -32,10 +37,26 @@ const ArcodionContent = styled.div`
 
 export default function MainthreadEach({ mainthread }) {
     const [expanded, setExpanded] = useState(false);
+    const [makeReply, setMakeReply] = useState(false);
+    const [replyContent, setReplyContent] = useState("");
 
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
     };
+
+    async function submitSubthread() {
+        try {
+            await axios.post(`${server}/api/thread/sub`, {
+                email: window.localStorage.getItem("email"),
+                mainthreadId: mainthread.id,
+                content: replyContent,
+            });
+            setMakeReply(false);
+            setReplyContent("");
+        } catch (err) {
+            toastErrorMessage("서버 통신 중 오류가 발생했습니다");
+        }
+    }
 
     return (
         <ArcodionContainer>
@@ -53,13 +74,52 @@ export default function MainthreadEach({ mainthread }) {
                     </ArcodionHead>
                 </AccordionSummary>
                 <AccordionDetails>
-                    <ArcodionContent>{mainthread.content}</ArcodionContent>
-                    {mainthread.subthreads.map((subthread) => (
-                        <SubthreadEach
-                            key={subthread.id}
-                            subthread={subthread}
-                        />
-                    ))}
+                    <ArcodionContent>
+                        {mainthread.content}
+                        {mainthread.subthreads.map((subthread) => (
+                            <SubthreadEach
+                                key={subthread.id}
+                                subthread={subthread}
+                            />
+                        ))}
+
+                        {/* TODO // 이 부분도 styled component로 깔끔하게 줄일 것 */}
+                        {makeReply ? (
+                            <div>
+                                <TextareaAutosize
+                                    rowsMin={5}
+                                    rowsMax={12}
+                                    placeholder="새로운 의견을 남겨주세요"
+                                    value={replyContent}
+                                    onChange={(e) => {
+                                        setReplyContent(e.target.value);
+                                    }}
+                                />
+                                <button
+                                    onClick={() => {
+                                        setMakeReply(false);
+                                    }}
+                                >
+                                    취소
+                                </button>
+                                <button
+                                    onClick={() => {
+                                        submitSubthread();
+                                    }}
+                                >
+                                    등록
+                                </button>
+                            </div>
+                        ) : (
+                            <button
+                                onClick={() => {
+                                    setMakeReply(true);
+                                }}
+                            >
+                                답글 남기기
+                            </button>
+                        )}
+                    </ArcodionContent>
                 </AccordionDetails>
             </Accordion>
         </ArcodionContainer>
