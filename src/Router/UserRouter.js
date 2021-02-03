@@ -9,7 +9,7 @@ import Room from "../Page/Room";
 import WrongPath from "../Page/WrongPath";
 import Chatting from "../Component/Chatting/Chatting";
 
-const socket = io.connect(`http://localhost:8000`);
+const socket = io.connect(`https://eaglooserver.herokuapp.com`);
 
 const UserRouterContainer = styled.div`
     position: relative;
