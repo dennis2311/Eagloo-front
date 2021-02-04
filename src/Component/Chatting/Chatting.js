@@ -8,13 +8,22 @@ const ChattingContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 600px;
+    width: 400px;
     height: 80vh;
     padding: 20px;
+    position: fixed;
+    top: 90px;
+    right: 0;
+    transition: all 0.3s ease-out;
+    transform: translate(
+        ${(props) => {
+            return props.chattingOpen ? "0" : "400px";
+        }}
+    );
     background-color: whitesmoke;
 `;
 
-export default function Chatting({ socket }) {
+export default function Chatting({ socket, chattingOpen }) {
     const [messages, setMessages] = useState([]);
 
     socket.on("new message", (message) => {
@@ -22,7 +31,7 @@ export default function Chatting({ socket }) {
     });
 
     return (
-        <ChattingContainer>
+        <ChattingContainer chattingOpen={chattingOpen}>
             <ChattingBody messages={messages} />
             <ChattingFoot
                 socket={socket}

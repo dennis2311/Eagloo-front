@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Route, Switch } from "react-router-dom";
 import io from "socket.io-client";
 import styled from "styled-components";
@@ -9,6 +9,7 @@ import Room from "../Page/Room";
 import WrongPath from "../Page/WrongPath";
 import Chatting from "../Component/Chatting/Chatting";
 
+// 소켓은 유저당 하나씩
 const socket = io.connect(`https://eaglooserver.herokuapp.com`);
 
 const UserRouterContainer = styled.div`
@@ -26,6 +27,12 @@ const ChattingOpenButton = styled.button`
 `;
 
 function UserRouter() {
+    const [chattingOpen, setChattingOpen] = useState(false);
+
+    function toggleChatting() {
+        setChattingOpen(!chattingOpen);
+    }
+
     return (
         <UserRouterContainer>
             <Switch>
@@ -35,8 +42,14 @@ function UserRouter() {
                 <Route path="/public/:colname" component={Room} />
                 <Route component={WrongPath} />
             </Switch>
-            <Chatting socket={socket} />
-            <ChattingOpenButton>채팅 열기</ChattingOpenButton>
+            <Chatting socket={socket} chattingOpen={chattingOpen} />
+            <ChattingOpenButton
+                onClick={() => {
+                    toggleChatting();
+                }}
+            >
+                채팅
+            </ChattingOpenButton>
         </UserRouterContainer>
     );
 }
