@@ -18,6 +18,7 @@ const LoginPage = styled.div`
     width: 100vw;
     height: 100vh;
     background-color: ${(props) => props.theme.mainBlue};
+    background: linear-gradient(50deg, #5924ff, #1d74ff, #5924ff);
 `;
 
 const LoginContainer = styled.div`
