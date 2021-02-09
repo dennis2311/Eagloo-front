@@ -14,7 +14,7 @@ const ForumBodyRow = styled.div`
 
 const ContentHead = styled.div`
     display: flex;
-    justify-newcontent: space-between;
+    justify-content: space-between;
     padding: 15px;
     background-color: #dddddd;
 `;
@@ -54,7 +54,7 @@ const LoadingMessage = styled.h1`
 export default function ForumBody({ loading, totalThreads, currentThreads }) {
     const [addThread, setAddThread] = useState(false);
     const [newThreadSubject, setNewThreadSubject] = useState("");
-    const [newThreadContent, setNewThreadContent] = useState("");
+    // const [newThreadContent, setNewThreadContent] = useState("");
 
     return (
         <ForumBodyRow>

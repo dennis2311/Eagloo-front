@@ -21,10 +21,9 @@ const LobbyContainer = styled.div`
     min-width: 1200px;
     height: 100%;
     padding: 30px;
-    border: 5px brown solid;
+    animation-name: ${slideUp};
     animation-duration: 0.5s;
     animation-timing-function: ease-out;
-    animation-name: ${slideUp};
     animation-fill-mode: forwards;
 `;
 
@@ -40,7 +39,7 @@ const SchedulerContainer = styled.div`
     border: 5px greenyellow solid;
 `;
 
-function Lobby() {
+export default function Lobby() {
     return (
         <LobbyContainer>
             <RoomsContainer>
@@ -61,5 +60,3 @@ function Lobby() {
         </LobbyContainer>
     );
 }
-
-export default Lobby;

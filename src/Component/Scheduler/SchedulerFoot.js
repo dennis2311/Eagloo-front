@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import toastErrorMessage from "../../Util/ToastErrorMessage";
+import { toastErrorMessage } from "../../Util/ToastMessages";
 
 const server = "https://eaglooserver.herokuapp.com";
 

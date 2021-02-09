@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function WrongPath() {
+export default function WrongPath() {
     return (
         <div>
             올바른 주소가 아니예요 :/
@@ -9,5 +9,3 @@ function WrongPath() {
         </div>
     );
 }
-
-export default WrongPath;

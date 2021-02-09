@@ -3,3 +3,9 @@
     font-style: normal;
     src: url("./JejuGothic.ttf");
 }
+
+@font-face {
+    font-family: "SamlipHopang";
+    font-style: normal;
+    src: url("./SDSamliphopangcheTTFBasic.ttf");
+}

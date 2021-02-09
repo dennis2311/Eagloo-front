@@ -10,7 +10,8 @@ const MainHeaderContainer = styled.div`
     align-items: center;
     position: relative;
     height: 88px;
-    background-color: #1d74ff;
+    background-color: ${(props) => props.theme.mainBlue};
+    box-shadow: 0 5px 10px -3px black;
 `;
 
 const MainHeaderComponentsContainer = styled.div`
@@ -27,13 +28,13 @@ const MainHeaderComponent = styled.div`
     padding: 0 15px;
     font-size: 18px;
     font-family: "JejuGothic";
-    color: #c0d1ff;
+    color: ${(props) => props.theme.headerGray};
 `;
 
 const WhiteVerticalLine = styled.div`
     width: 1px;
     height: 24px;
-    border-right: 2px solid #c0d1ff;
+    border-right: 2px solid ${(props) => props.theme.headerGray};
 `;
 
 export default function MainHeaer({ setIsLoggedIn }) {
@@ -48,7 +49,7 @@ export default function MainHeaer({ setIsLoggedIn }) {
     return (
         <MainHeaderContainer>
             <Link to="/">
-                <img src={headerIcon} />
+                <img src={headerIcon} alt="eagloo icon" />
             </Link>
             <MainHeaderComponentsContainer>
                 <MainHeaderComponent>{`${email} 님`}</MainHeaderComponent>

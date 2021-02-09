@@ -6,7 +6,7 @@ import SubthreadEach from "./SubthreadEach";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
-import toastErrorMessage from "../../Util/ToastErrorMessage";
+import { toastErrorMessage } from "../../Util/ToastMessages";
 
 const server = "https://eaglooserver.herokuapp.com";
 

@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
-import toastErrorMessage from "../Util/ToastErrorMessage";
+import { toastErrorMessage } from "../Util/ToastMessages";
 
 var hash = require("object-hash");
 
-function SignUp({ history }) {
+export default function SignUp({ history }) {
     const server = "https://eaglooserver.herokuapp.com";
     const [emailInput, setEmailInput] = useState("");
     const [secretInput, setSecretInput] = useState("");
@@ -156,5 +156,3 @@ function SignUp({ history }) {
         </div>
     );
 }
-
-export default SignUp;

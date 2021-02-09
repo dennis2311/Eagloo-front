@@ -15,7 +15,7 @@ const HeaderContainer = styled.header`
     top: 0;
 `;
 
-function Header({ setIsLoggedIn, setFeedbackOpen }) {
+export default function Header({ setIsLoggedIn, setFeedbackOpen }) {
     return (
         <HeaderContainer>
             <MainHeader setIsLoggedIn={setIsLoggedIn} />
@@ -23,5 +23,3 @@ function Header({ setIsLoggedIn, setFeedbackOpen }) {
         </HeaderContainer>
     );
 }
-
-export default Header;
