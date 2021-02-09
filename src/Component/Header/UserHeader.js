@@ -1,3 +1,5 @@
+// DEPRECATED : 로그아웃시 헤더 보이지 않음
+
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";

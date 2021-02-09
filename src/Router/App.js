@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter } from "react-router-dom";
-import Header from "../Component/Header/Header";
 import UserRouter from "./UserRouter";
 import CommonRouter from "./CommonRouter";
 import Feedback from "../Component/Feedback";
@@ -11,11 +10,12 @@ import "react-toastify/dist/ReactToastify.css";
 
 const AppContainer = styled.div`
     display: flex;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
+    padding-top: 140px;
     flex-direction: column;
     align-items: center;
-    background-color: lightcyan;
+    background-color: #ffffff;
 `;
 
 function App() {
@@ -32,14 +32,12 @@ function App() {
 
     return (
         <BrowserRouter>
-            <Header
-                isLoggedIn={isLoggedIn}
-                setIsLoggedIn={setIsLoggedIn}
-                setFeedbackOpen={setFeedbackOpen}
-            />
             <AppContainer>
                 {isLoggedIn ? (
-                    <UserRouter />
+                    <UserRouter
+                        setIsLoggedIn={setIsLoggedIn}
+                        setFeedbackOpen={setFeedbackOpen}
+                    />
                 ) : (
                     <CommonRouter setIsLoggedIn={setIsLoggedIn} />
                 )}

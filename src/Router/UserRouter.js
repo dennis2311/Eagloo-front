@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Route, Switch } from "react-router-dom";
 import io from "socket.io-client";
 import styled from "styled-components";
+import Header from "../Component/Header/Header";
 import Lobby from "../Page/Lobby";
 import About from "../Page/About";
 import Forum from "../Page/Forum/Forum";
@@ -26,7 +27,7 @@ const ChattingOpenButton = styled.button`
     right: 0;
 `;
 
-function UserRouter() {
+function UserRouter({ setIsLoggedIn, setFeedbackOpen }) {
     const [chattingOpen, setChattingOpen] = useState(false);
 
     function toggleChatting() {
@@ -35,6 +36,10 @@ function UserRouter() {
 
     return (
         <UserRouterContainer>
+            <Header
+                setIsLoggedIn={setIsLoggedIn}
+                setFeedbackOpen={setFeedbackOpen}
+            />
             <Switch>
                 <Route exact path="/" component={Lobby} />
                 <Route path="/about" component={About} />

@@ -1,3 +1,5 @@
+// DEPRECATED : 로그아웃시 헤더 보이지 않음
+
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
@@ -7,7 +9,7 @@ const CommonHeaderContainer = styled.div`
     justify-content: space-evenly;
 `;
 
-function CommonHeader() {
+export default function CommonHeader() {
     return (
         <CommonHeaderContainer>
             <div>
@@ -19,5 +21,3 @@ function CommonHeader() {
         </CommonHeaderContainer>
     );
 }
-
-export default CommonHeader;

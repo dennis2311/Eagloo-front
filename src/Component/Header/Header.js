@@ -1,44 +1,25 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
-import UserHeader from "./UserHeader";
-import CommonHeader from "./CommonHeader";
-import NoticeHeader from "./NoticeHeader";
+import MainHeader from "./MainHeader";
+import SubHeader from "./SubHeader";
+// import UserHeader from "./UserHeader";
+// import CommonHeader from "./CommonHeader";
+// import NoticeHeader from "./NoticeHeader";
 
 const HeaderContainer = styled.header`
-    width: 100%;
-    min-width: 1200px;
-`;
-
-const MainHeader = styled.div`
     display: flex;
-    height: 60px;
-    justify-content: space-evenly;
+    flex-direction: column;
     align-items: center;
-    background-color: antiquewhite;
+    width: 100vw;
+    position: fixed;
+    top: 0;
 `;
 
-function Header({ isLoggedIn, setIsLoggedIn, setFeedbackOpen }) {
+function Header({ setIsLoggedIn, setFeedbackOpen }) {
     return (
         <HeaderContainer>
-            <MainHeader>
-                <div>
-                    <Link to={`/`}>홈으로</Link>
-                </div>
-                <h2>
-                    유저들은 이 헤더를 보게 됩니다 ㅋㅋㄹㅃㅃ 대략 이글루 아이콘
-                    넣을거임
-                </h2>
-                {isLoggedIn ? (
-                    <UserHeader
-                        setIsLoggedIn={setIsLoggedIn}
-                        setFeedbackOpen={setFeedbackOpen}
-                    />
-                ) : (
-                    <CommonHeader />
-                )}
-            </MainHeader>
-            <NoticeHeader />
+            <MainHeader setIsLoggedIn={setIsLoggedIn} />
+            <SubHeader setFeedbackOpen={setFeedbackOpen} />
         </HeaderContainer>
     );
 }
