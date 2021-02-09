@@ -17,8 +17,7 @@ const LoginPage = styled.div`
     align-items: center;
     width: 100vw;
     height: 100vh;
-    background-color: ${(props) => props.theme.mainBlue};
-    background: linear-gradient(50deg, #5924ff, #1d74ff, #5924ff);
+    background: ${(props) => props.theme.loginPageGradient};
 `;
 
 const LoginContainer = styled.div`
@@ -95,7 +94,7 @@ const UtilButtonsContainer = styled.div`
     display: flex;
     justify-content: space-between;
     width: 92%;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
 `;
 
 const UtilButton = styled.div`
