@@ -12,7 +12,7 @@ export default function SchedulerBody({ schedules, setSchedules }) {
         <SchedulerBodyRow>
             {schedules.map((scheduleEach) => (
                 <ScheduleEach
-                    key={schedule.id}
+                    key={scheduleEach.id}
                     scheduleEach={scheduleEach}
                     schedules={schedules}
                     setSchedules={setSchedules}
