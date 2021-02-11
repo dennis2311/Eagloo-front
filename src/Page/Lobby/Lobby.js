@@ -1,7 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Scheduler from "../Component/Scheduler/Scheduler";
 import styled, { keyframes } from "styled-components";
+import YonseiLink from "../../Component/Link/YonseiLink";
+import ForumLink from "../../Component/Link/ForumLink";
+import Scheduler from "../../Component/Scheduler/Scheduler";
 
 const slideUp = keyframes`
   from {
@@ -20,7 +22,9 @@ const LobbyContainer = styled.div`
     width: 100%;
     min-width: 1200px;
     height: 100%;
+    min-height: 720px;
     padding: 0 max(50px, 4%);
+    padding-top: 65px;
     animation: ${slideUp} 0.5s ease-out;
 `;
 
@@ -29,7 +33,6 @@ const LeftLobbyContainer = styled.div`
     flex-direction: column;
     width: 25%;
     min-width: 210px;
-    border: 1px solid red;
 `;
 
 const MiddleLobbyContainer = styled.div`
@@ -49,11 +52,35 @@ const RightLobbyContainer = styled.div`
     border: 1px solid red;
 `;
 
+const LeftUpperLobbyContainer = styled.div`
+    margin-bottom: 50px;
+`;
+
+const LeftBottomLobbyContainer = styled.div``;
+
+const MiddleUpperLobbyContainer = styled.div``;
+
+const MiddleBottomLobbyContainer = styled.div``;
+
+const RightUpperLobbyContainer = styled.div``;
+
+const RightBottomLobbyContainer = styled.div``;
+
 export default function Lobby() {
     return (
         <LobbyContainer>
-            <LeftLobbyContainer></LeftLobbyContainer>
-            <MiddleLobbyContainer></MiddleLobbyContainer>
+            <LeftLobbyContainer>
+                <LeftUpperLobbyContainer>
+                    <YonseiLink />
+                </LeftUpperLobbyContainer>
+                <LeftBottomLobbyContainer>
+                    <ForumLink />
+                </LeftBottomLobbyContainer>
+            </LeftLobbyContainer>
+            <MiddleLobbyContainer>
+                <MiddleUpperLobbyContainer></MiddleUpperLobbyContainer>
+                <MiddleBottomLobbyContainer></MiddleBottomLobbyContainer>
+            </MiddleLobbyContainer>
             <RightLobbyContainer>
                 <Scheduler />
             </RightLobbyContainer>

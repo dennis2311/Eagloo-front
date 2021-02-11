@@ -3,7 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import io from "socket.io-client";
 import styled from "styled-components";
 import Header from "../Component/Header/Header";
-import Lobby from "../Page/Lobby";
+import Lobby from "../Page/Lobby/Lobby";
 import About from "../Page/About";
 import Forum from "../Page/Forum/Forum";
 import Room from "../Page/Room";
