@@ -6,6 +6,7 @@ import headerIcon from "../../resource/img/header-icon.png";
 const MainHeaderContainer = styled.div`
     display: flex;
     width: 100%;
+    min-width: 1200px;
     justify-content: center;
     align-items: center;
     position: relative;

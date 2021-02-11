@@ -28,7 +28,7 @@ const ChattingOpenButton = styled.button`
     right: 0;
 `;
 
-function UserRouter({ setIsLoggedIn, setFeedbackOpen }) {
+export default function UserRouter({ setIsLoggedIn, setFeedbackOpen }) {
     const [chattingOpen, setChattingOpen] = useState(false);
 
     function toggleChatting() {
@@ -59,5 +59,3 @@ function UserRouter({ setIsLoggedIn, setFeedbackOpen }) {
         </UserRouterContainer>
     );
 }
-
-export default UserRouter;

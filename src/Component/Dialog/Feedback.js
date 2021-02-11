@@ -10,8 +10,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
-export default function Feedback({ feedbackOpen, setFeedbackOpen }) {
-    const email = window.localStorage.getItem("email");
+export default function Feedback({ email, feedbackOpen, setFeedbackOpen }) {
     const server = "https://eaglooserver.herokuapp.com";
 
     const [feedbackContent, setFeedbackContent] = useState("");

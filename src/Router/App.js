@@ -19,6 +19,7 @@ const AppContainer = styled.div`
 `;
 
 function App() {
+    const [email, setEmail] = useState("");
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [feedbackOpen, setFeedbackOpen] = useState(false);
 
@@ -40,10 +41,14 @@ function App() {
                             setFeedbackOpen={setFeedbackOpen}
                         />
                     ) : (
-                        <CommonRouter setIsLoggedIn={setIsLoggedIn} />
+                        <CommonRouter
+                            setEmail={setEmail}
+                            setIsLoggedIn={setIsLoggedIn}
+                        />
                     )}
                 </AppContainer>
                 <Feedback
+                    email={email}
                     feedbackOpen={feedbackOpen}
                     setFeedbackOpen={setFeedbackOpen}
                 />

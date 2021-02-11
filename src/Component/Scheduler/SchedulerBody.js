@@ -7,13 +7,13 @@ const SchedulerBodyRow = styled.div`
     overflow: auto;
 `;
 
-function SchedulerBody({ schedules, setSchedules }) {
+export default function SchedulerBody({ schedules, setSchedules }) {
     return (
         <SchedulerBodyRow>
-            {schedules.map((schedule) => (
+            {schedules.map((scheduleEach) => (
                 <ScheduleEach
                     key={schedule.id}
-                    schedule={schedule}
+                    scheduleEach={scheduleEach}
                     schedules={schedules}
                     setSchedules={setSchedules}
                 />
@@ -21,5 +21,3 @@ function SchedulerBody({ schedules, setSchedules }) {
         </SchedulerBodyRow>
     );
 }
-
-export default SchedulerBody;

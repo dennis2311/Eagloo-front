@@ -28,8 +28,14 @@ const ButtonsContainer = styled.div`
     justify-content: space-between;
 `;
 
-function ScheduleEach({ schedule, schedules, setSchedules }) {
-    const [scheduleProgress, setScheduleProgress] = useState(schedule.progress);
+export default function ScheduleEach({
+    scheduleEach,
+    schedules,
+    setSchedules,
+}) {
+    const [scheduleProgress, setScheduleProgress] = useState(
+        scheduleEach.progress
+    );
 
     function progressToColor(progress) {
         switch (progress) {
@@ -46,7 +52,10 @@ function ScheduleEach({ schedule, schedules, setSchedules }) {
     // 전체 schedules에 반영되어야 함
     // ?????? 왜 버그 없이 되는건지 알 수가 없음
     // 서버 통신하면서 state가 초기화되는건가?
-    function changeScheduleState(schedule, progress) {
+
+    // TODO
+    // 중복 코드 줄일 것
+    function changeScheduleState(scheduleEach, progress) {
         if (
             scheduleProgress === PROGRESS.SCRATCH ||
             scheduleProgress !== progress
@@ -55,8 +64,8 @@ function ScheduleEach({ schedule, schedules, setSchedules }) {
 
             try {
                 axios.put(`${server}/api/schedule`, {
-                    scheduleId: schedule.id,
-                    content: schedule.content,
+                    scheduleId: scheduleEach.id,
+                    content: scheduleEach.content,
                     progress,
                 });
             } catch (error) {
@@ -67,8 +76,8 @@ function ScheduleEach({ schedule, schedules, setSchedules }) {
 
             try {
                 axios.put(`${server}/api/schedule`, {
-                    scheduleId: schedule.id,
-                    content: schedule.content,
+                    scheduleId: scheduleEach.id,
+                    content: scheduleEach.content,
                     progress: PROGRESS.SCRATCH,
                 });
             } catch (error) {
@@ -77,15 +86,15 @@ function ScheduleEach({ schedule, schedules, setSchedules }) {
         }
     }
 
-    function deleteSchedule(schedule) {
+    function deleteSchedule(scheduleEach) {
         setSchedules(
             schedules.filter(
-                (originalSchedule) => originalSchedule.id !== schedule.id
+                (originalSchedule) => originalSchedule.id !== scheduleEach.id
             )
         );
 
         try {
-            axios.delete(`${server}/api/schedule/${schedule.id}`);
+            axios.delete(`${server}/api/schedule/${scheduleEach.id}`);
         } catch (error) {
             toastErrorMessage(serverErrorMessage);
         }
@@ -94,12 +103,12 @@ function ScheduleEach({ schedule, schedules, setSchedules }) {
     return (
         <ScheduleEachRow color={progressToColor(scheduleProgress)}>
             <ScheduleContent>
-                <h2>{schedule.content}</h2>
+                <h2>{scheduleEach.content}</h2>
             </ScheduleContent>
             <ButtonsContainer>
                 <button
                     onClick={() => {
-                        changeScheduleState(schedule, "ONGOING");
+                        changeScheduleState(scheduleEach, "ONGOING");
                     }}
                 >
                     진행중
@@ -107,7 +116,7 @@ function ScheduleEach({ schedule, schedules, setSchedules }) {
 
                 <button
                     onClick={() => {
-                        changeScheduleState(schedule, "DONE");
+                        changeScheduleState(scheduleEach, "DONE");
                     }}
                 >
                     완료
@@ -115,7 +124,7 @@ function ScheduleEach({ schedule, schedules, setSchedules }) {
 
                 <button
                     onClick={() => {
-                        deleteSchedule(schedule);
+                        deleteSchedule(scheduleEach);
                     }}
                 >
                     삭제
@@ -124,5 +133,3 @@ function ScheduleEach({ schedule, schedules, setSchedules }) {
         </ScheduleEachRow>
     );
 }
-
-export default ScheduleEach;

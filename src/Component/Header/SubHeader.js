@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import { StylelessButton } from "../../Style/component/button";
 import { Link } from "react-router-dom";
 
 const SubHeaderContainer = styled.div`
     display: flex;
     justify-content: space-around;
     width: 90%;
+    min-width: 1100px;
     height: 52px;
     padding: 0 350px;
     background-color: #0043a5;
@@ -25,18 +25,24 @@ const SubThreadButtonContainer = styled.div`
     color: #ffffff;
 `;
 
+const SubThreadButton = styled.div`
+    &:hover {
+        cursor: pointer;
+    }
+`;
+
 export default function SubHeader({ setFeedbackOpen }) {
     return (
         <SubHeaderContainer>
             <SubThreadButtonContainer>HOME</SubThreadButtonContainer>
             <SubThreadButtonContainer>
-                <StylelessButton
+                <SubThreadButton
                     onClick={() => {
                         setFeedbackOpen(true);
                     }}
                 >
                     Feedback
-                </StylelessButton>
+                </SubThreadButton>
             </SubThreadButtonContainer>
             <SubThreadButtonContainer>
                 <Link

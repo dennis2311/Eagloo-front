@@ -16,47 +16,47 @@ const slideUp = keyframes`
 
 const LobbyContainer = styled.div`
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     width: 100%;
     min-width: 1200px;
     height: 100%;
-    padding: 30px;
-    animation-name: ${slideUp};
-    animation-duration: 0.5s;
-    animation-timing-function: ease-out;
-    animation-fill-mode: forwards;
+    padding: 0 max(50px, 4%);
+    animation: ${slideUp} 0.5s ease-out;
 `;
 
-const RoomsContainer = styled.div`
-    padding: 30px;
-    width: 50%;
-    border: 5px aqua solid;
+const LeftLobbyContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    min-width: 210px;
+    border: 1px solid red;
 `;
 
-const SchedulerContainer = styled.div`
-    padding: 30px;
-    width: 50%;
-    border: 5px greenyellow solid;
+const MiddleLobbyContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 41%;
+    min-width: 465px;
+    margin: 0 40px;
+    border: 1px solid red;
+`;
+
+const RightLobbyContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 36.5%;
+    min-width: 365px;
+    border: 1px solid red;
 `;
 
 export default function Lobby() {
     return (
         <LobbyContainer>
-            <RoomsContainer>
-                <p>
-                    <span>
-                        자신이 속한 대학, 혹은 듣고 있는 강의가 열린 대학으로
-                        들어가 공부하세요!
-                    </span>
-                </p>
-                <Link to={`/public/business`}>경영대학</Link>
-                <Link to={`/public/engineer`}>공학대학</Link>
-                <Link to={`/public/underwood`}>국제대학</Link>
-                <Link to={`/public/socsci`}>사회과학대학</Link>
-            </RoomsContainer>
-            <SchedulerContainer>
+            <LeftLobbyContainer></LeftLobbyContainer>
+            <MiddleLobbyContainer></MiddleLobbyContainer>
+            <RightLobbyContainer>
                 <Scheduler />
-            </SchedulerContainer>
+            </RightLobbyContainer>
         </LobbyContainer>
     );
 }

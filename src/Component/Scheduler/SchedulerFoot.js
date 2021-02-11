@@ -16,12 +16,12 @@ const ScheduleCreateInput = styled.input`
     height: inherit;
 `;
 
-function SchedulerFoot({ userEmail, schedules, setSchedules }) {
+export default function SchedulerFoot({ email, schedules, setSchedules }) {
     const [newScheduleInput, setNewScheduleInput] = useState("");
 
     async function createSchedule() {
         const { data } = await axios.post(`${server}/api/schedule`, {
-            email: userEmail,
+            email,
             content: newScheduleInput,
         });
         if (data.success) {
@@ -50,5 +50,3 @@ function SchedulerFoot({ userEmail, schedules, setSchedules }) {
         </SchedulerFootRow>
     );
 }
-
-export default SchedulerFoot;
