@@ -1,21 +1,55 @@
 import React from "react";
 import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 
 const SchedulerHeadRow = styled.div`
-    border: 2px solid darkslateblue;
-    height: 120px;
-    padding: 5px 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+    color: ${(props) => props.theme.mainDarkBlue};
+    :hover {
+        cursor: pointer;
+    }
 `;
 
-export default function SchedulerHead({ email, schedules, loadSuccess }) {
+const SchedulerHeadText = styled.div`
+    display: flex;
+    justify-content: right;
+    width: 42.5px;
+    margin-right: 5px;
+    font-size: 14px;
+    font-family: "JejuGothic";
+    letter-spacing: 1.2px;
+`;
+
+const SchedulerToggleIcon = styled.div`
+    transform: rotate(
+        ${(props) => {
+            return props.schedulerOpen ? "0" : "-180deg";
+        }}
+    );
+    transition: all 0.2s linear;
+`;
+
+export default function SchedulerHead({ schedulerOpen, setSchedulerOpen }) {
+    function toggleSchedulerOpen() {
+        setSchedulerOpen(!schedulerOpen);
+    }
+
     return (
-        <SchedulerHeadRow>
-            <h2>{`${email}님, 환영합니다`}</h2>
-            {schedules.length === 0 && loadSuccess && (
-                <div>
-                    아직 당신의 일정이 없습니다. 새로운 일정을 등록해보세요!
-                </div>
-            )}
+        <SchedulerHeadRow
+            onClick={() => {
+                toggleSchedulerOpen();
+            }}
+        >
+            <SchedulerHeadText>
+                {schedulerOpen ? `접기` : `펼치기`}
+            </SchedulerHeadText>
+            <SchedulerToggleIcon schedulerOpen={schedulerOpen}>
+                <FontAwesomeIcon icon={faCaretDown} size="1x" />
+            </SchedulerToggleIcon>
         </SchedulerHeadRow>
     );
 }

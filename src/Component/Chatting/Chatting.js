@@ -14,12 +14,12 @@ const ChattingContainer = styled.div`
     position: fixed;
     top: 90px;
     right: 0;
-    transition: all 0.3s ease-out;
     transform: translate(
         ${(props) => {
             return props.chattingOpen ? "0" : "400px";
         }}
     );
+    transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
     background-color: whitesmoke;
 `;
 

@@ -1,5 +1,6 @@
 export default {
     mainBlue: "#1d74ff",
+    mainLightBlue: "#b3d2ff",
     mainDarkBlue: "#004884",
     placeholder: "#8FBDFF",
     mailPlaceholder: "#ADADAD",

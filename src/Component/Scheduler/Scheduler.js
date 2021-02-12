@@ -3,7 +3,6 @@ import axios from "axios";
 import styled from "styled-components";
 import SchedulerHead from "./SchedulerHead";
 import SchedulerBody from "./SchedulerBody";
-import SchedulerError from "./SchedulerError";
 import SchedulerFoot from "./SchedulerFoot";
 import { toastErrorMessage } from "../../Util/ToastMessages";
 
@@ -13,24 +12,22 @@ const SchedulerContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    position: absolute;
+    bottom: 0;
+    width: 96%;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    background-color: ${(props) => props.theme.mainLightBlue};
 `;
-
-const SchedulerUpper = styled.div`
-    display: flex;
-    flex-direction: column;
-    height: 540px;
-`;
-
-const SchedulerBottom = styled.div``;
 
 // TODO
 // useEffect 클린업 설정할 것
 // (스케쥴러 로딩이 되기 전에 라우터로 움직이는 경우 메모리 누수 발생)
 export default function Scheduler() {
+    const [schedulerOpen, setSchedulerOpen] = useState(true);
     const [loading, setLoading] = useState(true);
     const email = window.localStorage.getItem("email");
     const [schedules, setSchedules] = useState([]);
-    const [loadSuccess, setLoadSuccess] = useState(true);
 
     useEffect(() => {
         async function getSchedules(email) {
@@ -54,28 +51,20 @@ export default function Scheduler() {
 
     return (
         <SchedulerContainer>
-            <SchedulerUpper>
-                <SchedulerHead
-                    email={email}
-                    schedules={schedules}
-                    loadSuccess={loadSuccess}
-                />
-                {loadSuccess ? (
-                    <SchedulerBody
-                        schedules={schedules}
-                        setSchedules={setSchedules}
-                    />
-                ) : (
-                    <SchedulerError email={email} />
-                )}
-            </SchedulerUpper>
-            <SchedulerBottom>
-                <SchedulerFoot
-                    email={email}
-                    schedules={schedules}
-                    setSchedules={setSchedules}
-                />
-            </SchedulerBottom>
+            <SchedulerHead
+                schedulerOpen={schedulerOpen}
+                setSchedulerOpen={setSchedulerOpen}
+            />
+            <SchedulerBody
+                schedulerOpen={schedulerOpen}
+                schedules={schedules}
+                setSchedules={setSchedules}
+            />
+            <SchedulerFoot
+                email={email}
+                schedules={schedules}
+                setSchedules={setSchedules}
+            />
         </SchedulerContainer>
     );
 }

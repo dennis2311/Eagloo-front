@@ -46,9 +46,12 @@ const MiddleLobbyContainer = styled.div`
 const RightLobbyContainer = styled.div`
     display: flex;
     flex-direction: column;
+    align-items: center;
+    position: relative;
     width: 36.5%;
     min-width: 365px;
-    min-height: 720px;
+    height: 720px;
+    min-height: 640px;
     border: 1px solid red;
 `;
 

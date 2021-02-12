@@ -3,13 +3,20 @@ import ScheduleEach from "./ScheduleEach";
 import styled from "styled-components";
 
 const SchedulerBodyRow = styled.div`
-    border: 2px solid darkolivegreen;
-    overflow: auto;
+    display: flex;
+    height: ${(props) => (props.schedulerOpen ? "540px" : "36px")};
+    flex-direction: column;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
 `;
 
-export default function SchedulerBody({ schedules, setSchedules }) {
+export default function SchedulerBody({
+    schedulerOpen,
+    schedules,
+    setSchedules,
+}) {
     return (
-        <SchedulerBodyRow>
+        <SchedulerBodyRow schedulerOpen={schedulerOpen}>
             {schedules.map((scheduleEach) => (
                 <ScheduleEach
                     key={scheduleEach.id}

@@ -1,15 +1,24 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import axios from "axios";
 import { toastErrorMessage } from "../../Util/ToastMessages";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const server = "https://eaglooserver.herokuapp.com";
 const serverErrorMessage = "서버 통신 중 오류가 발생하였습니다";
-const PROGRESS = {
-    SCRATCH: "SCRATCH",
-    ONGOING: "ONGOING",
-    DONE: "DONE",
-};
+
+const RemoveIcon = styled.div`
+    opacity: 0;
+    width: max-content;
+    height: max-content;
+    color: #79a4d8;
+    cursor: pointer;
+    :hover {
+        color: #3e7bb7;
+    }
+    transition: opacity 0.2s linear;
+`;
 
 const ScheduleEachRow = styled.div`
     display: flex;
@@ -17,76 +26,110 @@ const ScheduleEachRow = styled.div`
     align-items: center;
     margin-bottom: 5px;
     padding: 10px 30px;
-    border: 2px solid moccasin;
+    &:hover {
+        ${RemoveIcon} {
+            opacity: 1;
+        }
+    }
+`;
+
+const LeftRow = styled.div`
+    display: flex;
+    align-items: center;
+`;
+
+const RightRow = styled.div`
+    display: flex;
+    align-items: center;
+`;
+
+const CheckBox = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+    border: 2.5px solid #ffffff;
+    border-radius: 25%;
+    color: #ffffff;
+    cursor: pointer;
+`;
+
+const ScheduleContent = styled.div`
+    font-family: "JejuGothic";
+    ${(props) =>
+        props.scheduleDone &&
+        css`
+            color: #79a4d8;
+        `}
+`;
+
+const ImportanceCircleContainer = styled.div`
+    display: flex;
+    width: 63px;
+`;
+
+const ImportanceCircle = styled.div`
+    width: 10px;
+    height: 10px;
+    margin: 0 3px;
+    border-radius: 50%;
     background-color: ${(props) => props.color};
 `;
 
-const ScheduleContent = styled.div``;
-
-const ButtonsContainer = styled.div`
-    display: flex;
-    justify-content: space-between;
-`;
+function ScheduleImportance({ importance }) {
+    if (importance === 1) {
+        return (
+            <ImportanceCircleContainer>
+                <ImportanceCircle color="#71af78" />
+                <ImportanceCircle color="#c0daff" />
+                <ImportanceCircle color="#c0daff" />
+            </ImportanceCircleContainer>
+        );
+    } else if (importance === 2) {
+        return (
+            <ImportanceCircleContainer>
+                <ImportanceCircle color="#f9d953" />
+                <ImportanceCircle color="#f9d953" />
+                <ImportanceCircle color="#c0daff" />
+            </ImportanceCircleContainer>
+        );
+    } else {
+        return (
+            <ImportanceCircleContainer>
+                <ImportanceCircle color="#f27872" />
+                <ImportanceCircle color="#f27872" />
+                <ImportanceCircle color="#f27872" />
+            </ImportanceCircleContainer>
+        );
+    }
+}
 
 export default function ScheduleEach({
     scheduleEach,
     schedules,
     setSchedules,
 }) {
-    const [scheduleProgress, setScheduleProgress] = useState(
-        scheduleEach.progress
-    );
+    const [scheduleDone, setScheduleDone] = useState(scheduleEach.done);
 
-    function progressToColor(progress) {
-        switch (progress) {
-            case "ONGOING":
-                return "blue";
-            case "DONE":
-                return "green";
-            default:
-                return "white";
+    function toggleScheduleDone() {
+        setScheduleDone(!scheduleDone);
+    }
+
+    function changeSchedule() {
+        try {
+            axios.put(`${server}/api/schedule`, {
+                scheduleId: scheduleEach.id,
+                content: scheduleEach.content,
+                done: !scheduleDone,
+            });
+        } catch (error) {
+            toastErrorMessage(serverErrorMessage);
         }
     }
 
-    // TODO
-    // 전체 schedules에 반영되어야 함
-    // ?????? 왜 버그 없이 되는건지 알 수가 없음
-    // 서버 통신하면서 state가 초기화되는건가?
-
-    // TODO
-    // 중복 코드 줄일 것
-    function changeScheduleState(scheduleEach, progress) {
-        if (
-            scheduleProgress === PROGRESS.SCRATCH ||
-            scheduleProgress !== progress
-        ) {
-            setScheduleProgress(progress);
-
-            try {
-                axios.put(`${server}/api/schedule`, {
-                    scheduleId: scheduleEach.id,
-                    content: scheduleEach.content,
-                    progress,
-                });
-            } catch (error) {
-                toastErrorMessage(serverErrorMessage);
-            }
-        } else {
-            setScheduleProgress(PROGRESS.SCRATCH);
-
-            try {
-                axios.put(`${server}/api/schedule`, {
-                    scheduleId: scheduleEach.id,
-                    content: scheduleEach.content,
-                    progress: PROGRESS.SCRATCH,
-                });
-            } catch (error) {
-                toastErrorMessage(serverErrorMessage);
-            }
-        }
-    }
-
-    function deleteSchedule(scheduleEach) {
+    function deleteSchedule() {
         setSchedules(
             schedules.filter(
                 (originalSchedule) => originalSchedule.id !== scheduleEach.id
@@ -101,35 +144,31 @@ export default function ScheduleEach({
     }
 
     return (
-        <ScheduleEachRow color={progressToColor(scheduleProgress)}>
-            <ScheduleContent>
-                <h2>{scheduleEach.content}</h2>
-            </ScheduleContent>
-            <ButtonsContainer>
-                <button
+        <ScheduleEachRow>
+            <LeftRow>
+                <CheckBox
                     onClick={() => {
-                        changeScheduleState(scheduleEach, "ONGOING");
+                        toggleScheduleDone();
+                        changeSchedule();
                     }}
                 >
-                    진행중
-                </button>
-
-                <button
-                    onClick={() => {
-                        changeScheduleState(scheduleEach, "DONE");
-                    }}
-                >
-                    완료
-                </button>
-
-                <button
-                    onClick={() => {
-                        deleteSchedule(scheduleEach);
-                    }}
-                >
-                    삭제
-                </button>
-            </ButtonsContainer>
+                    {scheduleDone && <FontAwesomeIcon icon={faCheck} />}
+                </CheckBox>
+                <ScheduleContent scheduleDone={scheduleDone}>
+                    {scheduleEach.content}
+                </ScheduleContent>
+            </LeftRow>
+            <RightRow>
+                <ScheduleImportance importance={scheduleEach.importance} />
+                <RemoveIcon>
+                    <FontAwesomeIcon
+                        icon={faTrash}
+                        onClick={() => {
+                            deleteSchedule();
+                        }}
+                    />
+                </RemoveIcon>
+            </RightRow>
         </ScheduleEachRow>
     );
 }
