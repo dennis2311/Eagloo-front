@@ -47,35 +47,19 @@ export default function YonseiLink() {
             <YonseiLinkBody>
                 <YonseiLinkRow href="https://www.yonsei.kr">
                     연세대학교 홈페이지&nbsp;&nbsp;
-                    <FontAwesomeIcon
-                        icon={faCaretRight}
-                        size="1.5x"
-                        color="#4c4c4c"
-                    />
+                    <FontAwesomeIcon icon={faCaretRight} color="#4c4c4c" />
                 </YonseiLinkRow>
                 <YonseiLinkRow href="https://portal.yonsei.ac.kr">
                     연세포탈서비스&nbsp;&nbsp;
-                    <FontAwesomeIcon
-                        icon={faCaretRight}
-                        size="1.5x"
-                        color="#4c4c4c"
-                    />
+                    <FontAwesomeIcon icon={faCaretRight} color="#4c4c4c" />
                 </YonseiLinkRow>
                 <YonseiLinkRow href="https://library.yonsei.ac.kr/">
                     연세대학교 학술정보원&nbsp;&nbsp;
-                    <FontAwesomeIcon
-                        icon={faCaretRight}
-                        size="1.5x"
-                        color="#4c4c4c"
-                    />
+                    <FontAwesomeIcon icon={faCaretRight} color="#4c4c4c" />
                 </YonseiLinkRow>
                 <YonseiLinkRow href="https://yscec.yonsei.ac.kr/">
                     YSCEC&nbsp;&nbsp;
-                    <FontAwesomeIcon
-                        icon={faCaretRight}
-                        size="1.5x"
-                        color="#4c4c4c"
-                    />
+                    <FontAwesomeIcon icon={faCaretRight} color="#4c4c4c" />
                 </YonseiLinkRow>
             </YonseiLinkBody>
         </YonseiLinkContainer>

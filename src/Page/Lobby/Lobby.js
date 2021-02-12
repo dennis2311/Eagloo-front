@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 import YonseiLink from "../../Component/Link/YonseiLink";
 import ForumLink from "../../Component/Link/ForumLink";
+import MainBanner from "../../Component/Banner/MainBanner";
 import Scheduler from "../../Component/Scheduler/Scheduler";
 
 const slideUp = keyframes`
@@ -31,17 +32,16 @@ const LobbyContainer = styled.div`
 const LeftLobbyContainer = styled.div`
     display: flex;
     flex-direction: column;
-    width: 25%;
+    width: 21%;
     min-width: 210px;
 `;
 
 const MiddleLobbyContainer = styled.div`
     display: flex;
     flex-direction: column;
-    width: 41%;
+    width: 45.5%;
     min-width: 465px;
     margin: 0 40px;
-    border: 1px solid red;
 `;
 
 const RightLobbyContainer = styled.div`
@@ -58,9 +58,14 @@ const LeftUpperLobbyContainer = styled.div`
 
 const LeftBottomLobbyContainer = styled.div``;
 
-const MiddleUpperLobbyContainer = styled.div``;
+const MiddleUpperLobbyContainer = styled.div`
+    height: 200px;
+    margin-bottom: 50px;
+`;
 
-const MiddleBottomLobbyContainer = styled.div``;
+const MiddleBottomLobbyContainer = styled.div`
+    border: 1px solid red;
+`;
 
 const RightUpperLobbyContainer = styled.div``;
 
@@ -78,7 +83,9 @@ export default function Lobby() {
                 </LeftBottomLobbyContainer>
             </LeftLobbyContainer>
             <MiddleLobbyContainer>
-                <MiddleUpperLobbyContainer></MiddleUpperLobbyContainer>
+                <MiddleUpperLobbyContainer>
+                    <MainBanner />
+                </MiddleUpperLobbyContainer>
                 <MiddleBottomLobbyContainer></MiddleBottomLobbyContainer>
             </MiddleLobbyContainer>
             <RightLobbyContainer>
