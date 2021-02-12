@@ -13,6 +13,7 @@ const HeaderContainer = styled.header`
     width: 100vw;
     position: fixed;
     top: 0;
+    z-index: 1000;
 `;
 
 export default function Header({ setIsLoggedIn, setFeedbackOpen }) {

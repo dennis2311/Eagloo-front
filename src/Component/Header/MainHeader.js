@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import headerIcon from "../../resource/img/header-icon.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 const MainHeaderContainer = styled.div`
     display: flex;
@@ -22,6 +24,7 @@ const MainHeaderComponentsContainer = styled.div`
     position: absolute;
     right: 40px;
     bottom: 27px;
+    color: ${(props) => props.theme.headerGray};
 `;
 
 const MainHeaderComponent = styled.div`
@@ -29,7 +32,6 @@ const MainHeaderComponent = styled.div`
     padding: 0 15px;
     font-size: 18px;
     font-family: "JejuGothic";
-    color: ${(props) => props.theme.headerGray};
 `;
 
 const WhiteVerticalLine = styled.div`
@@ -54,6 +56,7 @@ export default function MainHeaer({ setIsLoggedIn }) {
             </Link>
             <MainHeaderComponentsContainer>
                 <MainHeaderComponent>{`${email} 님`}</MainHeaderComponent>
+                <FontAwesomeIcon icon={faUser} />
                 <MainHeaderComponent>
                     <Link
                         style={{ color: "inherit", textDecoration: "none" }}

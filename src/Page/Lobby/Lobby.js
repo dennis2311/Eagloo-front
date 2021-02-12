@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 import YonseiLink from "../../Component/Link/YonseiLink";
 import ForumLink from "../../Component/Link/ForumLink";
@@ -49,6 +48,7 @@ const RightLobbyContainer = styled.div`
     flex-direction: column;
     width: 36.5%;
     min-width: 365px;
+    min-height: 720px;
     border: 1px solid red;
 `;
 

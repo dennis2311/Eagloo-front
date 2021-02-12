@@ -9,6 +9,8 @@ import Forum from "../Page/Forum/Forum";
 import Room from "../Page/Room";
 import WrongPath from "../Page/WrongPath";
 import Chatting from "../Component/Chatting/Chatting";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCommentDots } from "@fortawesome/free-solid-svg-icons";
 
 // 소켓은 유저당 하나씩
 const socket = io.connect(`https://eaglooserver.herokuapp.com`);
@@ -22,10 +24,22 @@ const UserRouterContainer = styled.div`
     padding-top: 140px;
 `;
 
-const ChattingOpenButton = styled.button`
+const ChattingOpenButton = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: absolute;
-    top: 10px;
+    top: 160px;
     right: 0;
+    width: 65px;
+    height: 65px;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+    color: #ffffff;
+    background-color: ${(props) => props.theme.mainBlue};
+    :hover {
+        cursor: pointer;
+    }
 `;
 
 export default function UserRouter({ setIsLoggedIn, setFeedbackOpen }) {
@@ -54,7 +68,7 @@ export default function UserRouter({ setIsLoggedIn, setFeedbackOpen }) {
                     toggleChatting();
                 }}
             >
-                채팅
+                <FontAwesomeIcon icon={faCommentDots} size="2x" />
             </ChattingOpenButton>
         </UserRouterContainer>
     );
