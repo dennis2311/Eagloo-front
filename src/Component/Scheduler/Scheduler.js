@@ -14,7 +14,7 @@ const SchedulerContainer = styled.div`
     justify-content: space-between;
     position: absolute;
     bottom: 0;
-    width: 96%;
+    width: 100%;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
     background-color: ${(props) => props.theme.mainLightBlue};
@@ -40,6 +40,8 @@ export default function Scheduler() {
                 }
             } catch (err) {
                 toastErrorMessage("스케쥴러를 받아오지 못했습니다");
+            } finally {
+                setLoading(false);
             }
         }
         getSchedules(email);
@@ -56,6 +58,7 @@ export default function Scheduler() {
                 setSchedulerOpen={setSchedulerOpen}
             />
             <SchedulerBody
+                loading={loading}
                 schedulerOpen={schedulerOpen}
                 schedules={schedules}
                 setSchedules={setSchedules}

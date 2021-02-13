@@ -3,7 +3,7 @@ import styled, { keyframes } from "styled-components";
 import YonseiLink from "../../Component/Link/YonseiLink";
 import ForumLink from "../../Component/Link/ForumLink";
 import MainBanner from "../../Component/Banner/MainBanner";
-import Scheduler from "../../Component/Scheduler/Scheduler";
+import Calendar from "../../Component/Calendar/Calendar";
 
 const slideUp = keyframes`
   from {
@@ -45,14 +45,10 @@ const MiddleLobbyContainer = styled.div`
 
 const RightLobbyContainer = styled.div`
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
     width: 36.5%;
     min-width: 365px;
     height: 720px;
     min-height: 640px;
-    border: 1px solid red;
 `;
 
 const LeftUpperLobbyContainer = styled.div`
@@ -69,10 +65,6 @@ const MiddleUpperLobbyContainer = styled.div`
 const MiddleBottomLobbyContainer = styled.div`
     border: 1px solid red;
 `;
-
-const RightUpperLobbyContainer = styled.div``;
-
-const RightBottomLobbyContainer = styled.div``;
 
 export default function Lobby() {
     return (
@@ -92,7 +84,7 @@ export default function Lobby() {
                 <MiddleBottomLobbyContainer></MiddleBottomLobbyContainer>
             </MiddleLobbyContainer>
             <RightLobbyContainer>
-                <Scheduler />
+                <Calendar />
             </RightLobbyContainer>
         </LobbyContainer>
     );
