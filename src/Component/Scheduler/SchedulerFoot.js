@@ -4,6 +4,7 @@ import axios from "axios";
 import { toastErrorMessage } from "../../Util/ToastMessages";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinusSquare, faPlusSquare } from "@fortawesome/free-solid-svg-icons";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const server = "https://eaglooserver.herokuapp.com";
 
@@ -54,6 +55,10 @@ const ScheduleCreateInput = styled.input`
     :focus {
         outline: none;
     }
+`;
+
+const UploadingCircleContainer = styled.div`
+    color: #ffffff;
 `;
 
 const ImportanceDiv = styled(NewScheduleDiv)`
@@ -115,6 +120,7 @@ function Importance({ newScheduleImportance }) {
 }
 
 export default function SchedulerFoot({ email, schedules, setSchedules }) {
+    const [uploading, setUploading] = useState(false);
     const [newScheduleInput, setNewScheduleInput] = useState("");
     const [newScheduleImportance, setNewScheduleImportance] = useState(1);
 
@@ -131,6 +137,7 @@ export default function SchedulerFoot({ email, schedules, setSchedules }) {
     }
 
     async function createSchedule() {
+        setUploading(true);
         const { data } = await axios.post(`${server}/api/schedule`, {
             email,
             content: newScheduleInput,
@@ -143,6 +150,7 @@ export default function SchedulerFoot({ email, schedules, setSchedules }) {
         } else {
             toastErrorMessage(data.message);
         }
+        setUploading(false);
     }
 
     return (
@@ -161,6 +169,15 @@ export default function SchedulerFoot({ email, schedules, setSchedules }) {
                         }
                     }}
                 />
+                {uploading && (
+                    <UploadingCircleContainer>
+                        <CircularProgress
+                            color="inherit"
+                            size={20}
+                            thickness={5.4}
+                        />
+                    </UploadingCircleContainer>
+                )}
             </LeftFoot>
             <RightFoot>
                 <ImportanceDiv>중요도</ImportanceDiv>

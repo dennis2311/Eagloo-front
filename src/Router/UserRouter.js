@@ -6,7 +6,7 @@ import Header from "../Component/Header/Header";
 import Lobby from "../Page/Lobby/Lobby";
 import About from "../Page/About";
 import Forum from "../Page/Forum/Forum";
-import Room from "../Page/Room";
+import PublicRoom from "../Page/PublicRoom/PublicRoom";
 import WrongPath from "../Page/WrongPath";
 import Chatting from "../Component/Chatting/Chatting";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -59,7 +59,7 @@ export default function UserRouter({ setIsLoggedIn, setFeedbackOpen }) {
                 <Route exact path="/" component={Lobby} />
                 <Route path="/about" component={About} />
                 <Route path="/forum" component={Forum} />
-                <Route path="/public/:colname" component={Room} />
+                <Route path="/public/:index" component={PublicRoom} />
                 <Route component={WrongPath} />
             </Switch>
             <Chatting socket={socket} chattingOpen={chattingOpen} />

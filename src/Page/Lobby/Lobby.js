@@ -3,11 +3,12 @@ import styled, { keyframes } from "styled-components";
 import YonseiLink from "../../Component/Link/YonseiLink";
 import ForumLink from "../../Component/Link/ForumLink";
 import MainBanner from "../../Component/Banner/MainBanner";
+import RoomLink from "../../Component/Link/RoomLink";
 import Calendar from "../../Component/Calendar/Calendar";
 
 const slideUp = keyframes`
   from {
-    transform: translateY(100px);
+    transform: translateY(60px);
     opacity: 0
   }
   to {
@@ -62,9 +63,7 @@ const MiddleUpperLobbyContainer = styled.div`
     margin-bottom: 50px;
 `;
 
-const MiddleBottomLobbyContainer = styled.div`
-    border: 1px solid red;
-`;
+const MiddleBottomLobbyContainer = styled.div``;
 
 export default function Lobby() {
     return (
@@ -81,7 +80,9 @@ export default function Lobby() {
                 <MiddleUpperLobbyContainer>
                     <MainBanner />
                 </MiddleUpperLobbyContainer>
-                <MiddleBottomLobbyContainer></MiddleBottomLobbyContainer>
+                <MiddleBottomLobbyContainer>
+                    <RoomLink />
+                </MiddleBottomLobbyContainer>
             </MiddleLobbyContainer>
             <RightLobbyContainer>
                 <Calendar />

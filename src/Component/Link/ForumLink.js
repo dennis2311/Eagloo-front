@@ -44,7 +44,6 @@ const ForumLinkEachRow = styled.div`
 const ForumLinkEachRowCollege = styled.div`
     display: inline;
     min-width: 90px;
-    color: #4c4c4c;
     font-size: 18.5px;
     font-family: "JejuGothic";
 `;

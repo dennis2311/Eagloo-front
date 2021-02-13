@@ -17,7 +17,7 @@ const CalendarBodyContainer = styled.div`
 export default function CalendarBody() {
     return (
         <CalendarBodyContainer>
-            월간 스케쥴러 업데이트 예정입니다
+            서비스 업데이트 예정입니다
         </CalendarBodyContainer>
     );
 }
