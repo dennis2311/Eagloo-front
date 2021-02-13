@@ -1,10 +1,23 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
+const ChattingFootContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 10px;
+`;
+
 const ChattingInput = styled.input`
-    border: 2px solid black;
+    width: 85%;
+    height: 24px;
+    padding: 0 10px;
+    font-size: 17px;
+    font-family: "JejuGothic";
+    border: none;
     :focus {
-        border: none;
+        outline: none;
     }
 `;
 
@@ -13,28 +26,30 @@ export default function ChattingFoot({ socket, messages, setMessages }) {
     const [chattingInput, setChattingInput] = useState("");
 
     return (
-        <ChattingInput
-            value={chattingInput}
-            onChange={(e) => {
-                setChattingInput(e.target.value);
-            }}
-            onKeyPress={(e) => {
-                if (e.key === "Enter" && chattingInput !== "") {
-                    try {
-                        socket.emit(
-                            "message send",
-                            `${email} : ${chattingInput}`
-                        );
-                        setChattingInput("");
-                        setMessages([
-                            ...messages,
-                            `${email} : ${chattingInput}`,
-                        ]);
-                    } catch (err) {
-                        console.log(err);
+        <ChattingFootContainer>
+            <ChattingInput
+                value={chattingInput}
+                onChange={(e) => {
+                    setChattingInput(e.target.value);
+                }}
+                onKeyPress={(e) => {
+                    if (e.key === "Enter" && chattingInput !== "") {
+                        try {
+                            socket.emit(
+                                "message send",
+                                `${email} : ${chattingInput}`
+                            );
+                            setChattingInput("");
+                            setMessages([
+                                ...messages,
+                                `${email} : ${chattingInput}`,
+                            ]);
+                        } catch (err) {
+                            console.log(err);
+                        }
                     }
-                }
-            }}
-        />
+                }}
+            />
+        </ChattingFootContainer>
     );
 }

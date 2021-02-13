@@ -8,19 +8,20 @@ const ChattingContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 400px;
-    height: 80vh;
-    padding: 20px;
     position: fixed;
-    top: 90px;
+    top: 160px;
     right: 0;
+    width: 540px;
+    height: max(700px, 78vh);
+    background-color: #e6f1ff;
+    padding: 15px;
+    border-radius: 20px;
     transform: translate(
         ${(props) => {
-            return props.chattingOpen ? "0" : "400px";
+            return props.chattingOpen ? "0" : "540px";
         }}
     );
     transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
-    background-color: whitesmoke;
 `;
 
 export default function Chatting({ socket, chattingOpen }) {
