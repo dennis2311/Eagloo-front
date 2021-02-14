@@ -8,6 +8,7 @@ import About from "../Page/About";
 import Forum from "../Page/Forum/Forum";
 import PublicRoom from "../Page/PublicRoom/PublicRoom";
 import WrongPath from "../Page/WrongPath";
+import FeedbackDialog from "../Component/Dialog/FeedbackDialog";
 import Chatting from "../Component/Chatting/Chatting";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCommentDots } from "@fortawesome/free-solid-svg-icons";
@@ -21,7 +22,7 @@ const UserRouterContainer = styled.div`
     justify-content: center;
     width: 100%;
     height: 100%;
-    padding-top: 140px;
+    padding-top: 88px;
 `;
 
 const ChattingOpenButton = styled.div`
@@ -42,7 +43,8 @@ const ChattingOpenButton = styled.div`
     }
 `;
 
-export default function UserRouter({ setIsLoggedIn, setFeedbackOpen }) {
+export default function UserRouter({ setIsLoggedIn }) {
+    const [feedbackOpen, setFeedbackOpen] = useState(false);
     const [chattingOpen, setChattingOpen] = useState(false);
 
     function toggleChatting() {
@@ -56,12 +58,20 @@ export default function UserRouter({ setIsLoggedIn, setFeedbackOpen }) {
                 setFeedbackOpen={setFeedbackOpen}
             />
             <Switch>
-                <Route exact path="/" component={Lobby} />
-                <Route path="/about" component={About} />
-                <Route path="/forum" component={Forum} />
-                <Route path="/public/:index" component={PublicRoom} />
-                <Route component={WrongPath} />
+                <Route exact path="/" render={() => <Lobby />} />
+                <Route path="/about" render={() => <About />} />
+                <Route path="/forum" render={() => <Forum />} />
+                <Route
+                    path="/public/:index"
+                    render={(props) => <PublicRoom {...props} />}
+                />
+                <Route render={() => <WrongPath />} />
             </Switch>
+
+            <FeedbackDialog
+                feedbackOpen={feedbackOpen}
+                setFeedbackOpen={setFeedbackOpen}
+            />
             <Chatting socket={socket} chattingOpen={chattingOpen} />
             <ChattingOpenButton
                 onClick={() => {

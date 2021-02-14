@@ -4,7 +4,6 @@ import Theme from "../Style/Theme";
 import { BrowserRouter } from "react-router-dom";
 import UserRouter from "./UserRouter";
 import CommonRouter from "./CommonRouter";
-import Feedback from "../Component/Dialog/Feedback";
 import GlobalStyles from "../Style/GlobalStyles";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -19,9 +18,7 @@ const AppContainer = styled.div`
 `;
 
 function App() {
-    const [email, setEmail] = useState("");
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [feedbackOpen, setFeedbackOpen] = useState(false);
 
     useEffect(() => {
         if (window.localStorage.getItem("isLoggedIn")) {
@@ -36,22 +33,11 @@ function App() {
             <ThemeProvider theme={Theme}>
                 <AppContainer>
                     {isLoggedIn ? (
-                        <UserRouter
-                            setIsLoggedIn={setIsLoggedIn}
-                            setFeedbackOpen={setFeedbackOpen}
-                        />
+                        <UserRouter setIsLoggedIn={setIsLoggedIn} />
                     ) : (
-                        <CommonRouter
-                            setEmail={setEmail}
-                            setIsLoggedIn={setIsLoggedIn}
-                        />
+                        <CommonRouter setIsLoggedIn={setIsLoggedIn} />
                     )}
                 </AppContainer>
-                <Feedback
-                    email={email}
-                    feedbackOpen={feedbackOpen}
-                    setFeedbackOpen={setFeedbackOpen}
-                />
                 <GlobalStyles />
                 <ToastContainer
                     position="bottom-left"

@@ -25,7 +25,8 @@ const LobbyContainer = styled.div`
     height: 100%;
     min-height: 720px;
     padding: 0 max(50px, 4%);
-    padding-top: 65px;
+    padding-top: 117px;
+    background-color: ${(props) => props.theme.backgroundWhite};
     animation: ${slideUp} 0.5s ease-out;
 `;
 
