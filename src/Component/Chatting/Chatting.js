@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import io from "socket.io-client";
 import ChattingBody from "./ChattingBody";
 import ChattingFoot from "./ChattingFoot";
+
+const socket = io.connect(`https://eaglooserver.herokuapp.com`);
 
 const ChattingContainer = styled.div`
     display: flex;
@@ -24,7 +27,7 @@ const ChattingContainer = styled.div`
     transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
 `;
 
-export default function Chatting({ socket, chattingOpen }) {
+export default function Chatting({ chattingOpen }) {
     const [messages, setMessages] = useState([]);
 
     socket.on("new message", (message) => {

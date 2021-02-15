@@ -19,6 +19,12 @@ const OthersMessage = styled(MessageRow)``;
 
 export default function ChattingContent({ message }) {
     const email = window.localStorage.getItem("email");
+    const noon = message.hour < 12 ? "오전" : "오후";
+    const hour = message.hour < 10 ? `0${message.hour}` : `${message.hour}`;
+    const minute =
+        message.hour < 10 ? `0${message.minute}` : `${message.minute}`;
 
-    return <MessageRow>{message}</MessageRow>;
+    return (
+        <MessageRow>{`${message.email} : ${message.content} (${noon} ${hour}:${minute})`}</MessageRow>
+    );
 }

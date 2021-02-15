@@ -117,13 +117,22 @@ export default function ScheduleEach({
         setScheduleDone(!scheduleDone);
     }
 
+    // TODO
+    // 예쁘지 않음
     function changeSchedule() {
         try {
-            axios.put(`${server}/api/schedule`, {
-                scheduleId: scheduleEach.id,
-                content: scheduleEach.content,
-                done: !scheduleDone,
-            });
+            if (scheduleDone) {
+                axios.put(`${server}/api/schedule`, {
+                    scheduleId: scheduleEach.id,
+                    content: scheduleEach.content,
+                });
+            } else {
+                axios.put(`${server}/api/schedule`, {
+                    scheduleId: scheduleEach.id,
+                    content: scheduleEach.content,
+                    done: true,
+                });
+            }
         } catch (error) {
             toastErrorMessage(serverErrorMessage);
         }

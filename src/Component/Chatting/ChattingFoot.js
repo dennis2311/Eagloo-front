@@ -34,19 +34,18 @@ export default function ChattingFoot({ socket, messages, setMessages }) {
                 }}
                 onKeyPress={(e) => {
                     if (e.key === "Enter" && chattingInput !== "") {
-                        try {
-                            socket.emit(
-                                "message send",
-                                `${email} : ${chattingInput}`
-                            );
-                            setChattingInput("");
-                            setMessages([
-                                ...messages,
-                                `${email} : ${chattingInput}`,
-                            ]);
-                        } catch (err) {
-                            console.log(err);
-                        }
+                        const time = new Date();
+                        const hour = time.getHours();
+                        const minute = time.getMinutes();
+                        const newMessage = {
+                            email,
+                            content: chattingInput,
+                            hour,
+                            minute,
+                        };
+                        socket.emit("message send", newMessage);
+                        setChattingInput("");
+                        setMessages([...messages, newMessage]);
                     }
                 }}
             />

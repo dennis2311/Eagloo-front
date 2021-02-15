@@ -15,8 +15,11 @@ const ChattingBodyContainer = styled.div`
 export default function ChattingBody({ messages }) {
     return (
         <ChattingBodyContainer>
-            {messages.map((message) => (
-                <ChattingContent message={message} />
+            {messages.map((message, index) => (
+                <ChattingContent
+                    key={`${message.hour}:${message.minute}/${index}`}
+                    message={message}
+                />
             ))}
         </ChattingBodyContainer>
     );

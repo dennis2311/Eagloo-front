@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Route, Switch } from "react-router-dom";
-import io from "socket.io-client";
 import styled from "styled-components";
 import Header from "../Component/Header/Header";
 import Lobby from "../Page/Lobby/Lobby";
@@ -12,9 +11,6 @@ import FeedbackDialog from "../Component/Dialog/FeedbackDialog";
 import Chatting from "../Component/Chatting/Chatting";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCommentDots } from "@fortawesome/free-solid-svg-icons";
-
-// 소켓은 유저당 하나씩
-const socket = io.connect(`https://eaglooserver.herokuapp.com`);
 
 const UserRouterContainer = styled.div`
     position: relative;
@@ -61,10 +57,7 @@ export default function UserRouter({ setIsLoggedIn }) {
                 <Route exact path="/" render={() => <Lobby />} />
                 <Route path="/about" render={() => <About />} />
                 <Route path="/forum" render={() => <Forum />} />
-                <Route
-                    path="/public/:index"
-                    render={(props) => <PublicRoom {...props} />}
-                />
+                <Route path="/public/:index" render={() => <PublicRoom />} />
                 <Route render={() => <WrongPath />} />
             </Switch>
 
@@ -72,7 +65,7 @@ export default function UserRouter({ setIsLoggedIn }) {
                 feedbackOpen={feedbackOpen}
                 setFeedbackOpen={setFeedbackOpen}
             />
-            <Chatting socket={socket} chattingOpen={chattingOpen} />
+            <Chatting chattingOpen={chattingOpen} />
             <ChattingOpenButton
                 onClick={() => {
                     toggleChatting();
