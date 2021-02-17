@@ -63,7 +63,7 @@ function PeerCam(props) {
 export default function PublicRoom(props) {
     const socket = useContext(SocketContext);
     const roomNo = props.match.params.roomNo;
-    const selfCamRef = useRef();
+    const selfCamRef = useRef(null);
     const [peers, setPeers] = useState([]);
     const peersRef = useRef([]);
     const [camAccepted, setCamAccepted] = useState(false);
@@ -125,7 +125,9 @@ export default function PublicRoom(props) {
         });
 
         socket.on("accepted", (allPeerId) => {
-            console.dir(allPeerId);
+            toast.success(
+                `방 입장에 성공하였습니다. 현재 인원 : ${allPeerId.length + 1}`
+            );
             const peers = [];
             allPeerId.forEach((peerId) => {
                 const peer = createPeer(
@@ -161,15 +163,21 @@ export default function PublicRoom(props) {
 
         socket.on("peer quit");
 
-        return () => {
+        return function quitRoom() {
+            socket.off("rejected");
+            socket.off("accepted");
+            socket.off("cam requested");
+            socket.off("cam request accepted");
+            socket.off("peer quit");
+
             socket.emit("quit");
             if (selfCamRef.current.srcObject) {
                 const tracks = selfCamRef.current.srcObject.getTracks();
                 tracks.forEach((track) => {
                     track.stop();
                 });
-                selfCamRef.current.srcObject = null;
             }
+            selfCamRef.current = null;
         };
     }, []);
 
