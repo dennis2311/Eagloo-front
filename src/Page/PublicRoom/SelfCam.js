@@ -13,11 +13,19 @@ const SelfCamStream = styled.video`
     border-radius: 15px;
 `;
 
-export default function SelfCam({ selfCamRef, camAccepted }) {
+export default function SelfCam({ selfCamRef, camAccepted, enterRoom }) {
     return (
         <SelfCamContainer>
             <SelfCamStream ref={selfCamRef} autoPlay playsInline />
-            {camAccepted && <button>방 입장하기</button>}
+            {camAccepted && (
+                <button
+                    onClick={() => {
+                        enterRoom();
+                    }}
+                >
+                    방 입장하기
+                </button>
+            )}
         </SelfCamContainer>
     );
 }

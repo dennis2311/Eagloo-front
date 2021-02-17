@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Route, Switch } from "react-router-dom";
 import styled from "styled-components";
+import { SocketContext, socket } from "../Service/Socket";
 import Header from "../Component/Header/Header";
 import Lobby from "../Page/Lobby/Lobby";
 import About from "../Page/About";
@@ -49,30 +50,35 @@ export default function UserRouter({ setIsLoggedIn }) {
 
     return (
         <UserRouterContainer>
-            <Header
-                setIsLoggedIn={setIsLoggedIn}
-                setFeedbackOpen={setFeedbackOpen}
-            />
-            <Switch>
-                <Route exact path="/" render={() => <Lobby />} />
-                <Route path="/about" render={() => <About />} />
-                <Route path="/forum" render={() => <Forum />} />
-                <Route path="/public/:index" render={() => <PublicRoom />} />
-                <Route render={() => <WrongPath />} />
-            </Switch>
+            <SocketContext.Provider value={socket}>
+                <Header
+                    setIsLoggedIn={setIsLoggedIn}
+                    setFeedbackOpen={setFeedbackOpen}
+                />
+                <Switch>
+                    <Route exact path="/" render={() => <Lobby />} />
+                    <Route path="/about" render={() => <About />} />
+                    <Route path="/forum" render={() => <Forum />} />
+                    <Route
+                        path="/public/:index"
+                        render={(props) => <PublicRoom {...props} />}
+                    />
+                    <Route render={() => <WrongPath />} />
+                </Switch>
 
-            <FeedbackDialog
-                feedbackOpen={feedbackOpen}
-                setFeedbackOpen={setFeedbackOpen}
-            />
-            <Chatting chattingOpen={chattingOpen} />
-            <ChattingOpenButton
-                onClick={() => {
-                    toggleChatting();
-                }}
-            >
-                <FontAwesomeIcon icon={faCommentDots} size="2x" />
-            </ChattingOpenButton>
+                <FeedbackDialog
+                    feedbackOpen={feedbackOpen}
+                    setFeedbackOpen={setFeedbackOpen}
+                />
+                <Chatting chattingOpen={chattingOpen} />
+                <ChattingOpenButton
+                    onClick={() => {
+                        toggleChatting();
+                    }}
+                >
+                    <FontAwesomeIcon icon={faCommentDots} size="2x" />
+                </ChattingOpenButton>
+            </SocketContext.Provider>
         </UserRouterContainer>
     );
 }
