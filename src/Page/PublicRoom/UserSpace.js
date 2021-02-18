@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { StylelessButton } from "../../Component/Icon/button";
 
 const UserSpaceContainer = styled.div`
@@ -9,17 +9,49 @@ const UserSpaceContainer = styled.div`
     padding: 0 20px;
 `;
 
+const LocationNoticer = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 80px;
+    font-family: "SamlipHopang";
+    border-radius: 12px;
+    padding: 0 45px;
+    margin-bottom: 15px;
+    background-color: ${(props) => props.theme.headerGray};
+`;
+
+const LocationHeader = styled.div`
+    font-size: 20px;
+`;
+
+const LocationContent = styled.div`
+    font-size: 32px;
+`;
+
 const CamContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
     height: auto;
-    min-height: 400px;
-    padding-bottom: 10px;
+    min-height: 360px;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 2px solid ${(props) => props.theme.headerGray};
+    border-radius: 15px;
 `;
 
-const SelfCam = styled.video`
+const CamRequestMessage = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    font-family: "JejuGothic";
+`;
+
+const UserCam = styled.video`
     width: 100%;
     height: auto;
     border-radius: 15px;
@@ -42,7 +74,7 @@ const UserSpaceButton = styled(StylelessButton)`
     border-radius: 8px;
 `;
 
-const GetSelfCamBtn = styled(UserSpaceButton)`
+const GetUserCamBtn = styled(UserSpaceButton)`
     width: 80%;
     background-color: ${(props) => props.theme.mainDarkBlue};
 `;
@@ -65,8 +97,9 @@ const QuitRoomBtn = styled(UserSpaceButton)`
 `;
 
 export default function UserSpace({
-    getSelfCam,
-    selfCamRef,
+    roomNo,
+    getUserCam,
+    userCamRef,
     camAccepted,
     enterRoom,
     quitRoom,
@@ -75,24 +108,31 @@ export default function UserSpace({
 
     return (
         <UserSpaceContainer>
-            <CamContainer>
+            <LocationNoticer>
+                <LocationHeader>현재 위치 :</LocationHeader>
+                <LocationContent>
+                    {`${roomNo} 번`}
+                    {roomEntered ? " 독서실" : " 대기실"}
+                </LocationContent>
+            </LocationNoticer>
+            <CamContainer camAccepted={camAccepted}>
                 {!camAccepted ? (
-                    <div>
+                    <CamRequestMessage>
                         입장하기 위해 먼저 카메라 이용 권한을 설정해주세요
-                    </div>
+                    </CamRequestMessage>
                 ) : (
-                    <SelfCam ref={selfCamRef} autoPlay playsInline />
+                    <UserCam ref={userCamRef} autoPlay playsInline />
                 )}
             </CamContainer>
             <ButtonsContainer camAccepted={camAccepted}>
                 {!camAccepted ? (
-                    <GetSelfCamBtn
+                    <GetUserCamBtn
                         onClick={() => {
-                            getSelfCam();
+                            getUserCam();
                         }}
                     >
                         내 화면 받아오기
-                    </GetSelfCamBtn>
+                    </GetUserCamBtn>
                 ) : (
                     <>
                         <EnterRoomBtn

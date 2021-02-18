@@ -62,18 +62,20 @@ function TestPeer({ peerCamRef }) {
 export default function PublicRoom(props) {
     const socket = useContext(SocketContext);
     const roomNo = props.match.params.roomNo;
-    const selfCamRef = useRef(null);
+
+    const userCamRef = useRef(null);
+    const camAcceptedRef = useRef(false);
     const [camAccepted, setCamAccepted] = useState(false);
+
     const peersRef = useRef(new Array(4).fill(null));
-    const peersOnlineRef = useRef(new Array(4).fill(false));
 
     const streamsRef = useRef(new Array(4).fill(null));
-
     const peer0CamRef = useRef(null);
     const peer1CamRef = useRef(null);
     const peer2CamRef = useRef(null);
     const peer3CamRef = useRef(null);
 
+    const peersOnlineRef = useRef(new Array(4).fill(false));
     const [peer0Online, setPeer0Online] = useState(peersOnlineRef.current[0]);
     const [peer1Online, setPeer1Online] = useState(peersOnlineRef.current[1]);
     const [peer2Online, setPeer2Online] = useState(peersOnlineRef.current[2]);
@@ -92,7 +94,7 @@ export default function PublicRoom(props) {
                     index,
                     peerId,
                     socket.id,
-                    selfCamRef.current.srcObject
+                    userCamRef.current.srcObject
                 );
                 peersRef.current[index] = peer;
             });
@@ -105,7 +107,7 @@ export default function PublicRoom(props) {
                 peerIndex,
                 payload.callerId,
                 payload.signal,
-                selfCamRef.current.srcObject,
+                userCamRef.current.srcObject,
                 payload.index
             );
             peersRef.current[peerIndex] = peer;
@@ -130,22 +132,22 @@ export default function PublicRoom(props) {
             socket.off("peer quit");
 
             socket.emit("quit");
-            if (selfCamRef.current.srcObject) {
-                const tracks = selfCamRef.current.srcObject.getTracks();
+            if (userCamRef.current.srcObject) {
+                const tracks = userCamRef.current.srcObject.getTracks();
                 tracks.forEach((track) => {
                     track.stop();
                 });
             }
-            selfCamRef.current = null;
+            userCamRef.current = null;
         };
     }, []);
 
-    function getSelfCam() {
+    function getUserCam() {
         navigator.mediaDevices
             .getUserMedia({ video: true })
             .then((stream) => {
                 setCamAccepted(true);
-                selfCamRef.current.srcObject = stream;
+                userCamRef.current.srcObject = stream;
             })
             .catch(() => {});
     }
@@ -325,8 +327,9 @@ export default function PublicRoom(props) {
             </LeftRoomContainer>
             <MiddleRoomContainer>
                 <UserSpace
-                    getSelfCam={getSelfCam}
-                    selfCamRef={selfCamRef}
+                    roomNo={roomNo}
+                    getUserCam={getUserCam}
+                    userCamRef={userCamRef}
                     camAccepted={camAccepted}
                     enterRoom={enterRoom}
                     quitRoom={quitRoom}
