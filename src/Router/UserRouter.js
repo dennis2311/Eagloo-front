@@ -20,6 +20,7 @@ const UserRouterContainer = styled.div`
     width: 100%;
     height: 100%;
     padding-top: 88px;
+    background-color: ${(props) => props.theme.backgroundWhite};
 `;
 
 const ChattingOpenButton = styled.div`
@@ -60,7 +61,7 @@ export default function UserRouter({ setIsLoggedIn }) {
                     <Route path="/about" render={() => <About />} />
                     <Route path="/forum" render={() => <Forum />} />
                     <Route
-                        path="/public/:index"
+                        path="/public/:roomNo"
                         render={(props) => <PublicRoom {...props} />}
                     />
                     <Route render={() => <WrongPath />} />
