@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState, useContext } from "react";
 import styled from "styled-components";
 import { SocketContext } from "../../Service/Socket";
 import Peer from "simple-peer";
+import PeerSpace from "./PeerSpace";
 import UserSpace from "./UserSpace";
 import Calendar from "../../Component/Calendar/Calendar";
 import { toast } from "react-toastify";
@@ -20,9 +21,9 @@ const PublicRoomContainer = styled.div`
 const LeftRoomContainer = styled.div`
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
     width: 33.25%;
     min-width: 337.5px;
-    border: 1px solid red;
 `;
 
 const MiddleRoomContainer = styled.div`
@@ -41,33 +42,15 @@ const RightRoomContainer = styled.div`
     min-height: 640px;
 `;
 
-const Cont = styled.div`
-    width: 40%;
-    height: auto;
-    padding: 20px;
-    border: 2px solid lightseagreen;
-`;
-
-const CamBox = styled.video`
-    width: 40%;
-    height: auto;
-    padding: 20px;
-    border: 2px solid lightyellow;
-`;
-
-function TestPeer({ peerCamRef }) {
-    return <CamBox ref={peerCamRef} autoPlay playsInline />;
-}
-
 export default function PublicRoom(props) {
     const socket = useContext(SocketContext);
     const roomNo = props.match.params.roomNo;
 
     const userCamRef = useRef(null);
-    const camAcceptedRef = useRef(false);
     const [camAccepted, setCamAccepted] = useState(false);
 
     const peersRef = useRef(new Array(4).fill(null));
+    const peerToIndexRef = useRef({});
 
     const streamsRef = useRef(new Array(4).fill(null));
     const peer0CamRef = useRef(null);
@@ -97,12 +80,12 @@ export default function PublicRoom(props) {
                     userCamRef.current.srcObject
                 );
                 peersRef.current[index] = peer;
+                peerToIndexRef.current[peerId] = index;
             });
         });
 
         socket.on("cam requested", (payload) => {
             const peerIndex = findVacancy();
-            console.log(`새로운 ${peerIndex}번 참여자에게 캠 요청 수신`);
             const peer = addPeer(
                 peerIndex,
                 payload.callerId,
@@ -111,15 +94,15 @@ export default function PublicRoom(props) {
                 payload.index
             );
             peersRef.current[peerIndex] = peer;
+            peerToIndexRef.current[payload.callerId] = peerIndex;
         });
 
         socket.on("cam request accepted", (payload) => {
-            console.log(`${payload.index}번 참여자가 캠 요청을 수락`);
             peersRef.current[payload.index].signal(payload.signal);
         });
 
-        socket.on("peer quit", (payload) => {
-            handlePeerQuit(payload.quitPeerId);
+        socket.on("peer quit", (quitPeerId) => {
+            handlePeerQuit(quitPeerId);
         });
 
         // 방 나가는 경우 socket on 전부 off
@@ -156,10 +139,6 @@ export default function PublicRoom(props) {
         socket.emit("enter", roomNo);
     }
 
-    function quitRoom() {
-        socket.emit("quit");
-    }
-
     function findVacancy() {
         const index = peersOnlineRef.current.findIndex((online) => {
             return !online;
@@ -168,7 +147,6 @@ export default function PublicRoom(props) {
     }
 
     function createPeer(index, peerId, callerId, stream) {
-        // updatePeerOnline(index);
         setEachPeerOnline(index);
         const peer = new Peer({
             initiator: true,
@@ -177,7 +155,6 @@ export default function PublicRoom(props) {
         });
 
         peer.on("signal", (signal) => {
-            console.log(`${index}번 참여자에게 캠 요청`);
             socket.emit("request peer cam", {
                 index,
                 peerId,
@@ -187,10 +164,8 @@ export default function PublicRoom(props) {
         });
 
         peer.on("stream", (stream) => {
-            console.log(`${index}번 참여자로부터 stream 수신 완료`);
             streamsRef.current[index] = stream;
             assignStream(index, stream);
-            // refreshStream();
         });
 
         return peer;
@@ -216,7 +191,6 @@ export default function PublicRoom(props) {
             console.log(`${peerIndex}번 참여자로부터 stream 수신 완료`);
             streamsRef.current[peerIndex] = stream;
             assignStream(peerIndex, stream);
-            // refreshStream();
         });
 
         peer.signal(callerSignal);
@@ -224,7 +198,37 @@ export default function PublicRoom(props) {
         return peer;
     }
 
-    function handlePeerQuit() {}
+    function quitRoom() {
+        socket.emit("quit");
+        peersRef.current.forEach((peer) => {
+            if (peer) {
+                peer.destroy();
+            }
+        });
+        peersRef.current = [null, null, null, null];
+        peerToIndexRef.current = {};
+        streamsRef.current = [null, null, null, null];
+        peer0CamRef.current = null;
+        peer1CamRef.current = null;
+        peer2CamRef.current = null;
+        peer3CamRef.current = null;
+        peersOnlineRef.current = [false, false, false, false];
+        setPeer0Online(false);
+        setPeer1Online(false);
+        setPeer2Online(false);
+        setPeer3Online(false);
+    }
+
+    function handlePeerQuit(quitPeerId) {
+        const quitPeerIndex = peerToIndexRef.current[quitPeerId];
+        delete peerToIndexRef.current[quitPeerId];
+        if (peersRef.current[quitPeerIndex]) {
+            peersRef.current[quitPeerIndex].destroy();
+        }
+        peersRef.current[quitPeerIndex] = null;
+        setEachPeerOffline(quitPeerIndex);
+        deleteStream(quitPeerIndex);
+    }
 
     function handlePeerQuitWhileRequest() {}
 
@@ -242,6 +246,25 @@ export default function PublicRoom(props) {
                 break;
             case 3:
                 setPeer3Online(true);
+                break;
+            default:
+        }
+    }
+
+    function setEachPeerOffline(index) {
+        peersOnlineRef.current[index] = false;
+        switch (index) {
+            case 0:
+                setPeer0Online(false);
+                break;
+            case 1:
+                setPeer1Online(false);
+                break;
+            case 2:
+                setPeer2Online(false);
+                break;
+            case 3:
+                setPeer3Online(false);
                 break;
             default:
         }
@@ -273,57 +296,56 @@ export default function PublicRoom(props) {
         }
     }
 
-    function refreshStream() {
-        if (peer0CamRef.current) {
-            peer0CamRef.current.srcObject = streamsRef.current[0];
-        }
-        if (peer1CamRef.current) {
-            peer1CamRef.current.srcObject = streamsRef.current[1];
-        }
-        if (peer2CamRef.current) {
-            peer2CamRef.current.srcObject = streamsRef.current[2];
-        }
-        if (peer3CamRef.current) {
-            peer3CamRef.current.srcObject = streamsRef.current[3];
+    function deleteStream(index) {
+        streamsRef.current[index] = null;
+        switch (index) {
+            case 0:
+                if (peer0CamRef.current) {
+                    peer0CamRef.current = null;
+                }
+                break;
+            case 1:
+                if (peer1CamRef.current) {
+                    peer1CamRef.current = null;
+                }
+                break;
+            case 2:
+                if (peer2CamRef.current) {
+                    peer2CamRef.current = null;
+                }
+                break;
+            case 3:
+                if (peer3CamRef.current) {
+                    peer3CamRef.current = null;
+                }
+                break;
+            default:
         }
     }
 
     return (
         <PublicRoomContainer>
             <LeftRoomContainer>
-                {/* {peersOnline.map((online, index) =>
-                    !online ? (
-                        <Cont key={`${index}th-peer`}>
-                            {`${index}번 참여자는 현재 오프라인 상태입니다`}
-                        </Cont>
-                    ) : (
-                        <TestPeer
-                            key={`${index}th-peer`}
-                            index={index}
-                            stream={streams[index]}
-                        />
-                    )
-                )} */}
-                {!peer0Online ? (
-                    <Cont>{`0번 참여자는 현재 오프라인 상태입니다`}</Cont>
-                ) : (
-                    <TestPeer key={`0th-peer`} peerCamRef={peer0CamRef} />
-                )}
-                {!peer1Online ? (
-                    <Cont>{`1번 참여자는 현재 오프라인 상태입니다`}</Cont>
-                ) : (
-                    <TestPeer key={`1th-peer`} peerCamRef={peer1CamRef} />
-                )}
-                {!peer2Online ? (
-                    <Cont>{`2번 참여자는 현재 오프라인 상태입니다`}</Cont>
-                ) : (
-                    <TestPeer key={`2th-peer`} peerCamRef={peer2CamRef} />
-                )}
-                {!peer3Online ? (
-                    <Cont>{`3번 참여자는 현재 오프라인 상태입니다`}</Cont>
-                ) : (
-                    <TestPeer key={`3th-peer`} peerCamRef={peer3CamRef} />
-                )}
+                <PeerSpace
+                    key={`0thPeer`}
+                    peerOnline={peer0Online}
+                    peerCamRef={peer0CamRef}
+                />
+                <PeerSpace
+                    key={`1thPeer`}
+                    peerOnline={peer1Online}
+                    peerCamRef={peer1CamRef}
+                />
+                <PeerSpace
+                    key={`2thPeer`}
+                    peerOnline={peer2Online}
+                    peerCamRef={peer2CamRef}
+                />
+                <PeerSpace
+                    key={`3thPeer`}
+                    peerOnline={peer3Online}
+                    peerCamRef={peer3CamRef}
+                />
             </LeftRoomContainer>
             <MiddleRoomContainer>
                 <UserSpace

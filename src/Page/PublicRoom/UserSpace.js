@@ -30,7 +30,7 @@ const LocationContent = styled.div`
     font-size: 32px;
 `;
 
-const CamContainer = styled.div`
+const UserCamContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -115,7 +115,7 @@ export default function UserSpace({
                     {roomEntered ? " 독서실" : " 대기실"}
                 </LocationContent>
             </LocationNoticer>
-            <CamContainer camAccepted={camAccepted}>
+            <UserCamContainer camAccepted={camAccepted}>
                 {!camAccepted ? (
                     <CamRequestMessage>
                         입장하기 위해 먼저 카메라 이용 권한을 설정해주세요
@@ -123,7 +123,7 @@ export default function UserSpace({
                 ) : (
                     <UserCam ref={userCamRef} autoPlay playsInline />
                 )}
-            </CamContainer>
+            </UserCamContainer>
             <ButtonsContainer camAccepted={camAccepted}>
                 {!camAccepted ? (
                     <GetUserCamBtn
