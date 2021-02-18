@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Route, Switch } from "react-router-dom";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { SocketContext, socket } from "../Service/Socket";
 import Header from "../Component/Header/Header";
 import Lobby from "../Page/Lobby/Lobby";
@@ -13,6 +13,15 @@ import Chatting from "../Component/Chatting/Chatting";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCommentDots } from "@fortawesome/free-solid-svg-icons";
 
+const buttonShow = keyframes`
+    from{
+        transform: translateX(65px);
+    }
+    to{
+        transform: translateX(0);
+    }
+`;
+
 const UserRouterContainer = styled.div`
     position: relative;
     display: flex;
@@ -20,7 +29,6 @@ const UserRouterContainer = styled.div`
     width: 100%;
     height: 100%;
     padding-top: 88px;
-    background-color: ${(props) => props.theme.backgroundWhite};
 `;
 
 const ChattingOpenButton = styled.div`
@@ -36,6 +44,7 @@ const ChattingOpenButton = styled.div`
     border-bottom-left-radius: 12px;
     color: #ffffff;
     background-color: ${(props) => props.theme.mainBlue};
+    animation: ${buttonShow} 0.8s ${(props) => props.theme.animationCubic};
     :hover {
         cursor: pointer;
     }

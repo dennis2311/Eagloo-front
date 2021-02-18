@@ -22,7 +22,7 @@ const ChattingContainer = styled.div`
             return props.chattingOpen ? "0" : "540px";
         }}
     );
-    transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+    transition: all 0.5s ${(props) => props.theme.animationCubic};
 `;
 
 export default function Chatting({ chattingOpen }) {

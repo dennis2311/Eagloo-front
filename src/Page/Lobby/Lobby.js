@@ -1,5 +1,6 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
+import { FullPageContainer } from "../../Component/StyledComponent/div";
 import YonseiLink from "../../Component/Link/YonseiLink";
 import ForumLink from "../../Component/Link/ForumLink";
 import MainBanner from "../../Component/Banner/MainBanner";
@@ -8,7 +9,7 @@ import Calendar from "../../Component/Calendar/Calendar";
 
 const slideUp = keyframes`
   from {
-    transform: translateY(60px);
+    transform: translateY(40px);
     opacity: 0
   }
   to {
@@ -17,15 +18,7 @@ const slideUp = keyframes`
   }
 `;
 
-const LobbyContainer = styled.div`
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    min-width: 1200px;
-    height: 100%;
-    min-height: 720px;
-    padding: 0 max(50px, 4%);
-    padding-top: 117px;
+const LobbyContainer = styled(FullPageContainer)`
     animation: ${slideUp} 0.5s ease-out;
 `;
 

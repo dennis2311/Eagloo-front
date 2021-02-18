@@ -1,5 +1,11 @@
 import React from "react";
+import styled from "styled-components";
+import { FullPageContainer } from "../Component/StyledComponent/div";
+
+const AboutContainer = styled(FullPageContainer)``;
 
 export default function About() {
-    return <div>{`In association with YCC & 연희동 장사꾼`}</div>;
+    return (
+        <AboutContainer>{`In association with YCC & 연희동 장사꾼`}</AboutContainer>
+    );
 }

@@ -9,7 +9,7 @@ const SchedulerBodyRow = styled.div`
     height: ${(props) => (props.schedulerOpen ? "540px" : "36px")};
     overflow: ${(props) => (props.schedulerOpen ? "auto" : "hidden")};
     flex-direction: column;
-    transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+    transition: all 0.5s ${(props) => props.theme.animationCubic};
 `;
 
 const Loading = styled.div`

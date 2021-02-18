@@ -14,7 +14,7 @@ const AppContainer = styled.div`
     height: 100vh;
     flex-direction: column;
     align-items: center;
-    background-color: #ffffff;
+    background-color: ${(props) => props.theme.backgroundWhite};
 `;
 
 function App() {

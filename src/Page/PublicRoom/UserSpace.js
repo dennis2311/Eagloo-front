@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { StylelessButton } from "../../Component/Icon/button";
+import { StylelessButton } from "../../Component/StyledComponent/button";
 
 const UserSpaceContainer = styled.div`
     display: flex;

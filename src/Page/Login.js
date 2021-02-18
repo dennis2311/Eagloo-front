@@ -7,7 +7,7 @@ import {
     toastErrorMessage,
 } from "../Util/ToastMessages";
 import loginIcon from "../resource/img/login-icon.png";
-import { StylelessButton } from "../Component/Icon/button";
+import { StylelessButton } from "../Component/StyledComponent/button";
 
 var hash = require("object-hash");
 
