@@ -99,7 +99,7 @@ export default function PublicRoom(props) {
 
         // 방 나가는 경우 socket on 전부 off
         // (안 하면 재입장시 기능 중복됨)
-        return function quitRoom() {
+        return () => {
             socket.off("rejected");
             socket.off("accepted");
             socket.off("cam requested");
@@ -114,6 +114,19 @@ export default function PublicRoom(props) {
                 });
             }
             userCamRef.current = null;
+
+            peersRef.current = [null, null, null, null];
+            peerToIndexRef.current = {};
+            streamsRef.current = [null, null, null, null];
+            peer0CamRef.current = null;
+            peer1CamRef.current = null;
+            peer2CamRef.current = null;
+            peer3CamRef.current = null;
+            peersOnlineRef.current = [false, false, false, false];
+            setPeer0Online(false);
+            setPeer1Online(false);
+            setPeer2Online(false);
+            setPeer3Online(false);
         };
     }, []);
 
