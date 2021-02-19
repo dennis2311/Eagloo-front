@@ -9,7 +9,7 @@ import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 const MainBannerContainer = styled.div`
     position: relative;
     display: flex;
-    height: 100%;
+    min-height: 200px;
     justify-content: center;
     align-items: center;
 `;

@@ -36,6 +36,7 @@ const RightRoomContainer = styled.div`
 
 export default function PublicRoom(props) {
     const socket = useContext(SocketContext);
+    const email = window.localStorage.getItem("email");
     const roomNo = props.match.params.roomNo;
 
     const userCamRef = useRef(null);
@@ -106,7 +107,7 @@ export default function PublicRoom(props) {
             socket.off("cam request accepted");
             socket.off("peer quit");
 
-            socket.emit("quit");
+            socket.emit("quit", email);
             if (userCamRef.current) {
                 const tracks = userCamRef.current.srcObject.getTracks();
                 tracks.forEach((track) => {
@@ -141,7 +142,7 @@ export default function PublicRoom(props) {
     }
 
     function enterRoom() {
-        socket.emit("enter", roomNo);
+        socket.emit("enter", { roomNo, email });
     }
 
     function findVacancy() {
@@ -204,7 +205,7 @@ export default function PublicRoom(props) {
     }
 
     function quitRoom() {
-        socket.emit("quit");
+        socket.emit("quit", email);
         peersRef.current.forEach((peer) => {
             if (peer) {
                 peer.destroy();
