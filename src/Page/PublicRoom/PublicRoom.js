@@ -34,10 +34,14 @@ const RightRoomContainer = styled.div`
     min-height: 640px;
 `;
 
+// TODO
+// 새로고침 했을 때 Ref 들이 그대로 남아있어서 오류 발생
+// (반드시 고쳐야 함)
 export default function PublicRoom(props) {
     const socket = useContext(SocketContext);
     const email = window.localStorage.getItem("email");
     const roomNo = props.match.params.roomNo;
+    const [roomEntered, setRoomEntered] = useState(false);
 
     const userCamRef = useRef(null);
     const [camAccepted, setCamAccepted] = useState(false);
@@ -52,10 +56,10 @@ export default function PublicRoom(props) {
     const peer3CamRef = useRef(null);
 
     const peersOnlineRef = useRef(new Array(4).fill(false));
-    const [peer0Online, setPeer0Online] = useState(peersOnlineRef.current[0]);
-    const [peer1Online, setPeer1Online] = useState(peersOnlineRef.current[1]);
-    const [peer2Online, setPeer2Online] = useState(peersOnlineRef.current[2]);
-    const [peer3Online, setPeer3Online] = useState(peersOnlineRef.current[3]);
+    const [peer0Online, setPeer0Online] = useState(false);
+    const [peer1Online, setPeer1Online] = useState(false);
+    const [peer2Online, setPeer2Online] = useState(false);
+    const [peer3Online, setPeer3Online] = useState(false);
 
     // TODO
     // 접근 거부시 다시 물어볼 수 있는 장치 필요
@@ -65,15 +69,18 @@ export default function PublicRoom(props) {
         });
 
         socket.on("accepted", (allPeerId) => {
+            setRoomEntered(true);
             allPeerId.forEach((peerId, index) => {
-                const peer = createPeer(
-                    index,
-                    peerId,
-                    socket.id,
-                    userCamRef.current.srcObject
-                );
-                peersRef.current[index] = peer;
-                peerToIndexRef.current[peerId] = index;
+                if (peerId !== socket.id) {
+                    const peer = createPeer(
+                        index,
+                        peerId,
+                        socket.id,
+                        userCamRef.current.srcObject
+                    );
+                    peersRef.current[index] = peer;
+                    peerToIndexRef.current[peerId] = index;
+                }
             });
         });
 
@@ -91,6 +98,9 @@ export default function PublicRoom(props) {
         });
 
         socket.on("cam request accepted", (payload) => {
+            // TODO
+            // stream 받아온 후 한번 더 확인
+            // socket.emit("peer still alive")
             peersRef.current[payload.index].signal(payload.signal);
         });
 
@@ -98,7 +108,9 @@ export default function PublicRoom(props) {
             handlePeerQuit(quitPeerId);
         });
 
-        // 방 나가는 경우 socket on 전부 off
+        // socket.on("peer dead")
+
+        // unmount되는 경우 socket on 전부 off
         // (안 하면 재입장시 기능 중복됨)
         return () => {
             socket.off("rejected");
@@ -106,6 +118,7 @@ export default function PublicRoom(props) {
             socket.off("cam requested");
             socket.off("cam request accepted");
             socket.off("peer quit");
+            // socket.off("peer dead")
 
             socket.emit("quit", email);
             if (userCamRef.current) {
@@ -116,6 +129,11 @@ export default function PublicRoom(props) {
             }
             userCamRef.current = null;
 
+            peersRef.current.forEach((peer) => {
+                if (peer) {
+                    peer.destroy();
+                }
+            });
             peersRef.current = [null, null, null, null];
             peerToIndexRef.current = {};
             streamsRef.current = [null, null, null, null];
@@ -143,6 +161,28 @@ export default function PublicRoom(props) {
 
     function enterRoom() {
         socket.emit("enter", { roomNo, email });
+    }
+
+    function quitRoom() {
+        setRoomEntered(false);
+        socket.emit("quit", email);
+        peersRef.current.forEach((peer) => {
+            if (peer) {
+                peer.destroy();
+            }
+        });
+        peersRef.current = [null, null, null, null];
+        peerToIndexRef.current = {};
+        streamsRef.current = [null, null, null, null];
+        peer0CamRef.current = null;
+        peer1CamRef.current = null;
+        peer2CamRef.current = null;
+        peer3CamRef.current = null;
+        peersOnlineRef.current = [false, false, false, false];
+        setPeer0Online(false);
+        setPeer1Online(false);
+        setPeer2Online(false);
+        setPeer3Online(false);
     }
 
     function findVacancy() {
@@ -202,27 +242,6 @@ export default function PublicRoom(props) {
         peer.signal(callerSignal);
 
         return peer;
-    }
-
-    function quitRoom() {
-        socket.emit("quit", email);
-        peersRef.current.forEach((peer) => {
-            if (peer) {
-                peer.destroy();
-            }
-        });
-        peersRef.current = [null, null, null, null];
-        peerToIndexRef.current = {};
-        streamsRef.current = [null, null, null, null];
-        peer0CamRef.current = null;
-        peer1CamRef.current = null;
-        peer2CamRef.current = null;
-        peer3CamRef.current = null;
-        peersOnlineRef.current = [false, false, false, false];
-        setPeer0Online(false);
-        setPeer1Online(false);
-        setPeer2Online(false);
-        setPeer3Online(false);
     }
 
     function handlePeerQuit(quitPeerId) {
@@ -356,6 +375,7 @@ export default function PublicRoom(props) {
             <MiddleRoomContainer>
                 <UserSpace
                     roomNo={roomNo}
+                    roomEntered={roomEntered}
                     getUserCam={getUserCam}
                     userCamRef={userCamRef}
                     camAccepted={camAccepted}

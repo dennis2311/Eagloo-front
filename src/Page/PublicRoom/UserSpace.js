@@ -98,14 +98,13 @@ const QuitRoomBtn = styled(UserSpaceButton)`
 
 export default function UserSpace({
     roomNo,
+    roomEntered,
     getUserCam,
     userCamRef,
     camAccepted,
     enterRoom,
     quitRoom,
 }) {
-    const [roomEntered, setRoomEntered] = useState(false);
-
     return (
         <UserSpaceContainer>
             <LocationNoticer>
@@ -138,7 +137,6 @@ export default function UserSpace({
                         <EnterRoomBtn
                             onClick={() => {
                                 enterRoom();
-                                setRoomEntered(true);
                             }}
                             roomEntered={roomEntered}
                             disabled={roomEntered}
@@ -148,7 +146,6 @@ export default function UserSpace({
                         <QuitRoomBtn
                             onClick={() => {
                                 quitRoom();
-                                setRoomEntered(false);
                             }}
                             roomEntered={roomEntered}
                             disabled={!roomEntered}
