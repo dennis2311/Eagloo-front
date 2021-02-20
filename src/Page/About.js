@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { FullPageContainer } from "../Component/StyledComponent/div";
+import { UserRouterPageContainer } from "../Component/StyledComponent/div";
 
-const AboutContainer = styled(FullPageContainer)``;
+const AboutContainer = styled(UserRouterPageContainer)``;
 
 export default function About() {
     return (

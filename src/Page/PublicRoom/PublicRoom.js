@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState, useContext } from "react";
 import styled from "styled-components";
-import { FullPageContainer } from "../../Component/StyledComponent/div";
+import { UserRouterPageContainer } from "../../Component/StyledComponent/div";
 import { SocketContext } from "../../Service/Socket";
 import Peer from "simple-peer";
 import PeerSpace from "./PeerSpace";
@@ -8,7 +8,7 @@ import UserSpace from "./UserSpace";
 import Calendar from "../../Component/Calendar/Calendar";
 import { toast } from "react-toastify";
 
-const PublicRoomContainer = styled(FullPageContainer)``;
+const PublicRoomContainer = styled(UserRouterPageContainer)``;
 
 const LeftRoomContainer = styled.div`
     display: flex;

@@ -1,24 +1,19 @@
 import React, { useState } from "react";
-import styled from "styled-components";
-import axios from "axios";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import styled from "styled-components";
+import { FullPageContainer } from "../Component/StyledComponent/div";
+import { StylelessButton } from "../Component/StyledComponent/button";
 import {
     toastLoginSuccessMessage,
     toastErrorMessage,
 } from "../Util/ToastMessages";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import loginIcon from "../resource/img/login-icon.png";
-import { StylelessButton } from "../Component/StyledComponent/button";
 
 var hash = require("object-hash");
 
-const LoginPage = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100vw;
-    height: 100vh;
-    background: ${(props) => props.theme.loginPageGradient};
-`;
+const LoginPage = styled(FullPageContainer)``;
 
 const LoginContainer = styled.div`
     display: flex;
@@ -46,7 +41,7 @@ const EaglooSubLabel = styled.h2`
     padding-bottom: 40px;
 `;
 
-const IdBoxContainer = styled.div`
+const EmailBoxContainer = styled.div`
     position: relative;
     width: 100%;
 `;
@@ -60,7 +55,7 @@ const YonseiMailPlaceholder = styled.h4`
     font-family: "JejuGothic";
 `;
 
-const IdBox = styled.input`
+const EmailBox = styled.input`
     width: 100%;
     height: 46px;
     font-size: 18px;
@@ -77,9 +72,9 @@ const IdBox = styled.input`
     }
 `;
 
-const PasswordBox = styled(IdBox)``;
+const PasswordBox = styled(EmailBox)``;
 
-const SignInButton = styled(StylelessButton)`
+const ToSignInButton = styled(StylelessButton)`
     width: 100%;
     height: 46px;
     color: #ffffff;
@@ -88,6 +83,12 @@ const SignInButton = styled(StylelessButton)`
     border-radius: 8px;
     background-color: ${(props) => props.theme.buttonBlue};
     margin-bottom: 38px;
+`;
+
+const SigningInButton = styled(ToSignInButton)`
+    :hover {
+        cursor: auto;
+    }
 `;
 
 const UtilButtonsContainer = styled.div`
@@ -103,12 +104,34 @@ const UtilButton = styled.div`
     font-family: "JejuGothic";
 `;
 
+function SignInButton({ signingIn, handleLogin }) {
+    return (
+        <>
+            {!signingIn ? (
+                <ToSignInButton
+                    onClick={() => {
+                        handleLogin();
+                    }}
+                >
+                    sign in
+                </ToSignInButton>
+            ) : (
+                <SigningInButton>
+                    <CircularProgress color="inherit" size={30} thickness={5} />
+                </SigningInButton>
+            )}
+        </>
+    );
+}
+
 export default function Login({ setIsLoggedIn }) {
     const server = "https://eaglooserver.herokuapp.com";
+    const [signingIn, setSigningIn] = useState(false);
     const [emailInput, setEmailInput] = useState("");
     const [passwordInput, setPasswordInput] = useState("");
 
     async function handleLogin() {
+        setSigningIn(true);
         const { data } = await axios.get(
             `${server}/api/user/${emailInput}/${hash(passwordInput)}`
         );
@@ -118,6 +141,7 @@ export default function Login({ setIsLoggedIn }) {
             setIsLoggedIn(true);
             toastLoginSuccessMessage(emailInput);
         } else {
+            setSigningIn(false);
             toastErrorMessage(data.message);
         }
     }
@@ -128,8 +152,8 @@ export default function Login({ setIsLoggedIn }) {
                 <EaglooIcon src={loginIcon} alt="login icon" />
                 <EaglooLabel>EAGLOO</EaglooLabel>
                 <EaglooSubLabel>연세대학교 온라인 스터디공간</EaglooSubLabel>
-                <IdBoxContainer className="idboxcontainer">
-                    <IdBox
+                <EmailBoxContainer className="idboxcontainer">
+                    <EmailBox
                         type="text"
                         value={emailInput}
                         placeholder="id"
@@ -141,7 +165,7 @@ export default function Login({ setIsLoggedIn }) {
                         }}
                     />
                     <YonseiMailPlaceholder>@yonsei.ac.kr</YonseiMailPlaceholder>
-                </IdBoxContainer>
+                </EmailBoxContainer>
                 <PasswordBox
                     type="password"
                     value={passwordInput}
@@ -153,9 +177,8 @@ export default function Login({ setIsLoggedIn }) {
                         }
                     }}
                 />
-                <SignInButton onClick={() => handleLogin()}>
-                    sign in
-                </SignInButton>
+                <SignInButton signingIn={signingIn} handleLogin={handleLogin} />
+
                 <UtilButtonsContainer>
                     <UtilButton>
                         <Link

@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
-import { FullPageContainer } from "../../Component/StyledComponent/div";
+import { UserRouterPageContainer } from "../../Component/StyledComponent/div";
 import YonseiLink from "../../Component/Link/YonseiLink";
 import ForumLink from "../../Component/Link/ForumLink";
 import MainBanner from "../../Component/Banner/MainBanner";
@@ -18,7 +18,7 @@ const slideUp = keyframes`
   }
 `;
 
-const LobbyContainer = styled(FullPageContainer)`
+const LobbyContainer = styled(UserRouterPageContainer)`
     animation: ${slideUp} 0.5s ease-out;
 `;
 
