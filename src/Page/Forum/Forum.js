@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { server } from "../../Util/server";
 import styled from "styled-components";
 import { UserRouterPageContainer } from "../../Component/StyledComponent/div";
 import ForumHead from "./ForumHead";
 import ForumBody from "./ForumBody";
 import ForumFoot from "./ForumFoot";
 import { toastErrorMessage } from "../../Util/ToastMessages";
-
-const server = "https://eaglooserver.herokuapp.com";
 
 const ForumContainer = styled(UserRouterPageContainer)``;
 

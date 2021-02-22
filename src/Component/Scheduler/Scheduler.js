@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { server } from "../../Util/server";
 import styled from "styled-components";
 import SchedulerHead from "./SchedulerHead";
 import SchedulerBody from "./SchedulerBody";
 import SchedulerFoot from "./SchedulerFoot";
 import { toastErrorMessage } from "../../Util/ToastMessages";
-
-const server = "https://eaglooserver.herokuapp.com";
 
 const SchedulerContainer = styled.div`
     display: flex;

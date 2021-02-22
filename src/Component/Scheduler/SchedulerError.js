@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import axios from "axios";
-
-const server = "https://eaglooserver.herokuapp.com";
+import { server } from "../../Util/server";
 
 const SchedulerErrorRow = styled.div`
     border: 2px solid red;

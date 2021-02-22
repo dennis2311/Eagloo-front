@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { toastErrorMessage } from "../../Util/ToastMessages";
+import { server } from "../../Util/server";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -10,12 +11,8 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
-export default function FeedbackDialog({
-    email,
-    feedbackOpen,
-    setFeedbackOpen,
-}) {
-    const server = "https://eaglooserver.herokuapp.com";
+export default function FeedbackDialog({ feedbackOpen, setFeedbackOpen }) {
+    const email = window.localStorage.getItem("email");
 
     const [feedbackContent, setFeedbackContent] = useState("");
 

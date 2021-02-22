@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import { server } from "../../Util/server";
 import { toastErrorMessage } from "../../Util/ToastMessages";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinusSquare, faPlusSquare } from "@fortawesome/free-solid-svg-icons";
 import CircularProgress from "@material-ui/core/CircularProgress";
-
-const server = "https://eaglooserver.herokuapp.com";
 
 const SchedulerFootRow = styled.div`
     display: flex;

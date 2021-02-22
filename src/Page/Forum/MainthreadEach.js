@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import { server } from "../../Util/server";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import SubthreadEach from "./SubthreadEach";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import { toastErrorMessage } from "../../Util/ToastMessages";
-
-const server = "https://eaglooserver.herokuapp.com";
 
 const ArcodionContainer = styled.div`
     display: flex;

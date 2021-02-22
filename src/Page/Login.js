@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { server } from "../Util/server";
 import styled from "styled-components";
 import { FullPageContainer } from "../Component/StyledComponent/div";
 import { StylelessButton } from "../Component/StyledComponent/button";
@@ -125,7 +126,6 @@ function SignInButton({ signingIn, handleLogin }) {
 }
 
 export default function Login({ setIsLoggedIn }) {
-    const server = "https://eaglooserver.herokuapp.com";
     const [signingIn, setSigningIn] = useState(false);
     const [emailInput, setEmailInput] = useState("");
     const [passwordInput, setPasswordInput] = useState("");

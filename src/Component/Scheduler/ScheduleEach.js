@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import axios from "axios";
+import { server } from "../../Util/server";
 import { toastErrorMessage } from "../../Util/ToastMessages";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faTrash } from "@fortawesome/free-solid-svg-icons";
 
-const server = "https://eaglooserver.herokuapp.com";
 const serverErrorMessage = "서버 통신 중 오류가 발생하였습니다";
 
 const RemoveIcon = styled.div`

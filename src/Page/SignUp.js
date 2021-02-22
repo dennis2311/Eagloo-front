@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { server } from "../Util/server";
 import styled from "styled-components";
 import { FullPageContainer } from "../Component/StyledComponent/div";
 import { StylelessButton } from "../Component/StyledComponent/button";
@@ -155,7 +156,6 @@ function ShowProgressButton({ buttonContent, buttonActive, buttonFunction }) {
 }
 
 export default function SignUp({ history }) {
-    const server = "https://eaglooserver.herokuapp.com";
     const [emailInput, setEmailInput] = useState("");
     const [secretInput, setSecretInput] = useState("");
     const [passwordInput, setPasswordInput] = useState("");
