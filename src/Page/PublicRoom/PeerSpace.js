@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import styled from "styled-components";
 import peerOfflineImage from "../../resource/img/peer-offline.gif";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const PeerSpaceContainer = styled.div`
     display: flex;
@@ -39,19 +40,41 @@ const PeerCam = styled.video`
     border-radius: 12px;
 `;
 
-export default function PeerSpace({ peerOnline, peerCamRef }) {
+function PeerUnready({ peerOnline }) {
+    return (
+        <>
+            {!peerOnline ? (
+                <PeerOfflineImageContainer>
+                    <PeerOfflineImage
+                        src={peerOfflineImage}
+                        alt="peer-offline-image"
+                    />
+                </PeerOfflineImageContainer>
+            ) : (
+                <CircularProgress />
+            )}
+        </>
+    );
+}
+
+function PeerReady({ peerStream }) {
+    const camRef = useRef(null);
+    useEffect(() => {
+        if (!camRef.current) return;
+        camRef.current.srcObject = peerStream ? peerStream : null;
+    }, [peerStream]);
+
+    return <PeerCam ref={camRef} autoPlay playsInline />;
+}
+
+export default function PeerSpace({ peerOnline, peerLoading, peerStream }) {
     return (
         <PeerSpaceContainer>
             <PeerCamContainer>
-                {!peerOnline ? (
-                    <PeerOfflineImageContainer>
-                        <PeerOfflineImage
-                            src={peerOfflineImage}
-                            alt="peer-offline-image"
-                        />
-                    </PeerOfflineImageContainer>
+                {!peerOnline || peerLoading ? (
+                    <PeerUnready peerOnline={peerOnline} />
                 ) : (
-                    <PeerCam ref={peerCamRef} autoPlay playsInline />
+                    <PeerReady peerStream={peerStream} />
                 )}
             </PeerCamContainer>
         </PeerSpaceContainer>

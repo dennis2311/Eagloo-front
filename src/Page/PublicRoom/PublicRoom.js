@@ -49,17 +49,21 @@ export default function PublicRoom(props) {
     const peersRef = useRef(new Array(4).fill(null));
     const peerToIndexRef = useRef({});
 
-    const streamsRef = useRef(new Array(4).fill(null));
-    const peer0CamRef = useRef(null);
-    const peer1CamRef = useRef(null);
-    const peer2CamRef = useRef(null);
-    const peer3CamRef = useRef(null);
+    const [peer0Stream, setPeer0Stream] = useState(null);
+    const [peer1Stream, setPeer1Stream] = useState(null);
+    const [peer2Stream, setPeer2Stream] = useState(null);
+    const [peer3Stream, setPeer3Stream] = useState(null);
 
     const peersOnlineRef = useRef(new Array(4).fill(false));
     const [peer0Online, setPeer0Online] = useState(false);
     const [peer1Online, setPeer1Online] = useState(false);
     const [peer2Online, setPeer2Online] = useState(false);
     const [peer3Online, setPeer3Online] = useState(false);
+
+    const [peer0Loading, setPeer0Loading] = useState(false);
+    const [peer1Loading, setPeer1Loading] = useState(false);
+    const [peer2Loading, setPeer2Loading] = useState(false);
+    const [peer3Loading, setPeer3Loading] = useState(false);
 
     // TODO
     // 접근 거부시 다시 물어볼 수 있는 장치 필요
@@ -136,11 +140,10 @@ export default function PublicRoom(props) {
             });
             peersRef.current = [null, null, null, null];
             peerToIndexRef.current = {};
-            streamsRef.current = [null, null, null, null];
-            peer0CamRef.current = null;
-            peer1CamRef.current = null;
-            peer2CamRef.current = null;
-            peer3CamRef.current = null;
+            setPeer0Stream(null);
+            setPeer1Stream(null);
+            setPeer2Stream(null);
+            setPeer3Stream(null);
             peersOnlineRef.current = [false, false, false, false];
             setPeer0Online(false);
             setPeer1Online(false);
@@ -173,11 +176,10 @@ export default function PublicRoom(props) {
         });
         peersRef.current = [null, null, null, null];
         peerToIndexRef.current = {};
-        streamsRef.current = [null, null, null, null];
-        peer0CamRef.current = null;
-        peer1CamRef.current = null;
-        peer2CamRef.current = null;
-        peer3CamRef.current = null;
+        setPeer0Stream(null);
+        setPeer1Stream(null);
+        setPeer2Stream(null);
+        setPeer3Stream(null);
         peersOnlineRef.current = [false, false, false, false];
         setPeer0Online(false);
         setPeer1Online(false);
@@ -194,6 +196,7 @@ export default function PublicRoom(props) {
 
     function createPeer(index, peerId, callerId, stream) {
         setEachPeerOnline(index);
+        setEachPeerLoading(index);
         const peer = new Peer({
             initiator: true,
             trickle: false,
@@ -210,7 +213,7 @@ export default function PublicRoom(props) {
         });
 
         peer.on("stream", (stream) => {
-            streamsRef.current[index] = stream;
+            setEachPeerUnloading(index);
             assignStream(index, stream);
         });
 
@@ -219,6 +222,7 @@ export default function PublicRoom(props) {
 
     function addPeer(peerIndex, callerId, callerSignal, stream, myIndex) {
         setEachPeerOnline(peerIndex);
+        setEachPeerLoading(peerIndex);
         const peer = new Peer({
             initiator: false,
             trickle: false,
@@ -234,8 +238,7 @@ export default function PublicRoom(props) {
         });
 
         peer.on("stream", (stream) => {
-            console.log(`${peerIndex}번 참여자로부터 stream 수신 완료`);
-            streamsRef.current[peerIndex] = stream;
+            setEachPeerUnloading(peerIndex);
             assignStream(peerIndex, stream);
         });
 
@@ -254,8 +257,6 @@ export default function PublicRoom(props) {
         setEachPeerOffline(quitPeerIndex);
         deleteStream(quitPeerIndex);
     }
-
-    function handlePeerQuitWhileRequest() {}
 
     function setEachPeerOnline(index) {
         peersOnlineRef.current[index] = true;
@@ -295,54 +296,73 @@ export default function PublicRoom(props) {
         }
     }
 
+    function setEachPeerLoading(index) {
+        switch (index) {
+            case 0:
+                setPeer0Loading(true);
+                break;
+            case 1:
+                setPeer1Loading(true);
+                break;
+            case 2:
+                setPeer2Loading(true);
+                break;
+            case 3:
+                setPeer3Loading(true);
+                break;
+            default:
+        }
+    }
+
+    function setEachPeerUnloading(index) {
+        switch (index) {
+            case 0:
+                setPeer0Loading(false);
+                break;
+            case 1:
+                setPeer1Loading(false);
+                break;
+            case 2:
+                setPeer2Loading(false);
+                break;
+            case 3:
+                setPeer3Loading(false);
+                break;
+            default:
+        }
+    }
+
     function assignStream(index, stream) {
         switch (index) {
             case 0:
-                if (peer0CamRef.current) {
-                    peer0CamRef.current.srcObject = stream;
-                }
+                setPeer0Stream(stream);
                 break;
             case 1:
-                if (peer1CamRef.current) {
-                    peer1CamRef.current.srcObject = stream;
-                }
+                setPeer1Stream(stream);
                 break;
             case 2:
-                if (peer2CamRef.current) {
-                    peer2CamRef.current.srcObject = stream;
-                }
+                setPeer2Stream(stream);
                 break;
             case 3:
-                if (peer3CamRef.current) {
-                    peer3CamRef.current.srcObject = stream;
-                }
+                setPeer3Stream(stream);
                 break;
             default:
         }
     }
 
     function deleteStream(index) {
-        streamsRef.current[index] = null;
         switch (index) {
             case 0:
-                if (peer0CamRef.current) {
-                    peer0CamRef.current = null;
-                }
+                setPeer0Stream(null);
                 break;
             case 1:
-                if (peer1CamRef.current) {
-                    peer1CamRef.current = null;
-                }
+                setPeer1Stream(null);
                 break;
             case 2:
-                if (peer2CamRef.current) {
-                    peer2CamRef.current = null;
-                }
+                setPeer2Stream(null);
                 break;
             case 3:
-                if (peer3CamRef.current) {
-                    peer3CamRef.current = null;
-                }
+                setPeer3Stream(null);
                 break;
             default:
         }
@@ -354,22 +374,26 @@ export default function PublicRoom(props) {
                 <PeerSpace
                     key={`0thPeer`}
                     peerOnline={peer0Online}
-                    peerCamRef={peer0CamRef}
+                    peerLoading={peer0Loading}
+                    peerStream={peer0Stream}
                 />
                 <PeerSpace
                     key={`1thPeer`}
                     peerOnline={peer1Online}
-                    peerCamRef={peer1CamRef}
+                    peerLoading={peer1Loading}
+                    peerStream={peer1Stream}
                 />
                 <PeerSpace
                     key={`2thPeer`}
                     peerOnline={peer2Online}
-                    peerCamRef={peer2CamRef}
+                    peerLoading={peer2Loading}
+                    peerStream={peer2Stream}
                 />
                 <PeerSpace
                     key={`3thPeer`}
                     peerOnline={peer3Online}
-                    peerCamRef={peer3CamRef}
+                    peerLoading={peer3Loading}
+                    peerStream={peer3Stream}
                 />
             </LeftRoomContainer>
             <MiddleRoomContainer>
