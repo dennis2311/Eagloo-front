@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { UserRouterPageContainer } from "../../Component/StyledComponent/div";
 import { SocketContext } from "../../Service/Socket";
 import Peer from "simple-peer";
-import PeerSpace from "./PeerSpace";
+import PeerSpaceEach from "./PeerSpaceEach";
 import UserSpace from "./UserSpace";
 import Calendar from "../../Component/Calendar/Calendar";
 import { toast } from "react-toastify";
@@ -12,18 +12,20 @@ const PublicRoomContainer = styled(UserRouterPageContainer)``;
 
 const LeftRoomContainer = styled.div`
     display: flex;
+    align-items: center;
     flex-direction: column;
     overflow-y: auto;
-    width: 33.25%;
-    min-width: 337.5px;
+    direction: rtl;
+    width: 28%;
+    min-width: 270px;
 `;
 
 const MiddleRoomContainer = styled.div`
     display: flex;
     flex-direction: column;
-    width: 33.25%;
-    min-width: 337.5px;
-    padding: 0 15px;
+    width: 38.25%;
+    min-width: 380px;
+    padding: 0 45px;
 `;
 
 const RightRoomContainer = styled.div`
@@ -371,25 +373,25 @@ export default function PublicRoom(props) {
     return (
         <PublicRoomContainer>
             <LeftRoomContainer>
-                <PeerSpace
+                <PeerSpaceEach
                     key={`0thPeer`}
                     peerOnline={peer0Online}
                     peerLoading={peer0Loading}
                     peerStream={peer0Stream}
                 />
-                <PeerSpace
+                <PeerSpaceEach
                     key={`1thPeer`}
                     peerOnline={peer1Online}
                     peerLoading={peer1Loading}
                     peerStream={peer1Stream}
                 />
-                <PeerSpace
+                <PeerSpaceEach
                     key={`2thPeer`}
                     peerOnline={peer2Online}
                     peerLoading={peer2Loading}
                     peerStream={peer2Stream}
                 />
-                <PeerSpace
+                <PeerSpaceEach
                     key={`3thPeer`}
                     peerOnline={peer3Online}
                     peerLoading={peer3Loading}

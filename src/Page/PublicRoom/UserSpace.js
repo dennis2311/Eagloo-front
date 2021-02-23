@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { StylelessButton } from "../../Component/StyledComponent/button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faVideo } from "@fortawesome/free-solid-svg-icons";
 
 const UserSpaceContainer = styled.div`
     display: flex;
@@ -43,12 +45,21 @@ const UserCamContainer = styled.div`
     border-radius: 15px;
 `;
 
+const CamRequestContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: ${(props) => props.theme.buttonBlue};
+`;
+
 const CamRequestMessage = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 16px;
     font-family: "JejuGothic";
+    margin-top: 40px;
 `;
 
 const UserCam = styled.video`
@@ -64,6 +75,7 @@ const ButtonsContainer = styled.div`
     align-items: center;
     width: 100%;
     padding: 0 20px;
+    margin-bottom: 40px;
 `;
 
 const UserSpaceButton = styled(StylelessButton)`
@@ -96,6 +108,46 @@ const QuitRoomBtn = styled(UserSpaceButton)`
     }
 `;
 
+const GuideMessage = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    min-height: 120px;
+    font-family: "SamlipHopang";
+    line-height: 1.6;
+    border-radius: 10px;
+`;
+
+function Guide({ roomNo, camAccepted, roomEntered }) {
+    return (
+        <>
+            {!camAccepted && (
+                <GuideMessage>
+                    먼저 '내 화면 받아오기' 버튼을 눌러 카메라 권한을 허용해
+                    주세요
+                </GuideMessage>
+            )}
+            {camAccepted && !roomEntered && (
+                <GuideMessage>
+                    준비가 완료되었습니다!
+                    <br />
+                    '방 입장하기' 버튼을 눌러 독서실에 들어갈 수 있습니다.
+                </GuideMessage>
+            )}
+            {roomEntered && (
+                <GuideMessage>
+                    {`${roomNo}번 독서실에 입장하였습니다`}
+                    <br />
+                    새로고침 버튼 사용을 자제해주세요 (새로고침 시 퇴실
+                    처리됩니다)
+                </GuideMessage>
+            )}
+        </>
+    );
+}
+
 export default function UserSpace({
     roomNo,
     roomEntered,
@@ -116,9 +168,12 @@ export default function UserSpace({
             </LocationNoticer>
             <UserCamContainer camAccepted={camAccepted}>
                 {!camAccepted ? (
-                    <CamRequestMessage>
-                        입장하기 위해 먼저 카메라 이용 권한을 설정해주세요
-                    </CamRequestMessage>
+                    <CamRequestContainer>
+                        <FontAwesomeIcon icon={faVideo} size="3x" />
+                        <CamRequestMessage>
+                            입장하기 위해 먼저 카메라 이용 권한을 허용해 주세요
+                        </CamRequestMessage>
+                    </CamRequestContainer>
                 ) : (
                     <UserCam ref={userCamRef} autoPlay playsInline />
                 )}
@@ -155,6 +210,11 @@ export default function UserSpace({
                     </>
                 )}
             </ButtonsContainer>
+            <Guide
+                roomNo={roomNo}
+                camAccepted={camAccepted}
+                roomEntered={roomEntered}
+            />
         </UserSpaceContainer>
     );
 }

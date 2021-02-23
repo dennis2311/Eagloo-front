@@ -17,5 +17,5 @@ export const UserRouterPageContainer = styled.div`
     height: 100%;
     min-height: 720px;
     padding: 0 max(50px, 4%);
-    padding-top: 117px;
+    padding-top: 105px;
 `;
