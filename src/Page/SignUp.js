@@ -85,13 +85,15 @@ const EmailBox = styled.input`
 
 const SecretWordBox = styled(EmailBox)``;
 
-const PasswordBox = styled(EmailBox)``;
+const PasswordBox = styled(EmailBox)`
+    font: caption;
+`;
 
 const UtilButton = styled(StylelessButton)`
     width: 100%;
     height: 46px;
     color: #ffffff;
-    font-size: 18px;
+    font-size: 16px;
     font-family: "JejuGothic";
     border-radius: 8px;
     background-color: ${(props) => props.theme.buttonBlue};
@@ -106,7 +108,7 @@ const LoadingButton = styled(UtilButton)`
 
 const BackButton = styled.div`
     color: ${(props) => props.theme.mainDarkBlue};
-    font-size: 16px;
+    font-size: 18px;
     font-family: "JejuGothic";
     margin-top: 38px;
 `;
@@ -172,62 +174,66 @@ export default function SignUp({ history }) {
 
     // 회원가입1단계
     async function sendSecret() {
-        setSecretSending(true);
-        try {
-            const { data } = await axios.post(`${server}/api/user`, {
-                email: emailInput,
-            });
-            if (data.success) {
-                setSecretSended(true);
-                setSecretAuthenticated(false);
-                toast.info(
-                    <div>
-                        <span role="img" aria-label="smile-face">
-                            😃
-                        </span>
-                        &nbsp; {emailInput}@yonsei.ac.kr 로
-                        <br />
-                        &emsp; 인증 메일이 전송되었습니다
-                    </div>
-                );
-            } else {
-                toastErrorMessage(data.message);
+        if (emailInput !== "") {
+            setSecretSending(true);
+            try {
+                const { data } = await axios.post(`${server}/api/user`, {
+                    email: emailInput,
+                });
+                if (data.success) {
+                    setSecretSended(true);
+                    setSecretAuthenticated(false);
+                    toast.info(
+                        <div>
+                            <span role="img" aria-label="smile-face">
+                                😃
+                            </span>
+                            &nbsp; {emailInput}@yonsei.ac.kr 로
+                            <br />
+                            &emsp; 인증 메일이 전송되었습니다
+                        </div>
+                    );
+                } else {
+                    toastErrorMessage(data.message);
+                }
+            } catch (err) {
+                console.log(err);
+                toastErrorMessage(serverErrorMessage);
             }
-        } catch (err) {
-            console.log(err);
-            toastErrorMessage(serverErrorMessage);
+            setSecretSending(false);
         }
-        setSecretSending(false);
     }
 
     // 회원가입2단계
     async function confirmSecret() {
-        setSecretAuthenticating(true);
-        try {
-            const { data } = await axios.put(`${server}/api/user/secret`, {
-                email: emailInput,
-                givenSecret: secretInput,
-            });
-            if (data.success) {
-                setSecretAuthenticated(true);
-                toast.success(
-                    <div>
-                        <span role="img" aria-label="smile-face">
-                            😆
-                        </span>
-                        &nbsp; 메일 인증이 완료되었습니다!
-                        <br />
-                        &emsp;비밀번호를 설정해주세요
-                    </div>
-                );
-            } else {
-                toastErrorMessage(data.message);
+        if (secretInput !== "") {
+            setSecretAuthenticating(true);
+            try {
+                const { data } = await axios.put(`${server}/api/user/secret`, {
+                    email: emailInput,
+                    givenSecret: secretInput,
+                });
+                if (data.success) {
+                    setSecretAuthenticated(true);
+                    toast.success(
+                        <div>
+                            <span role="img" aria-label="smile-face">
+                                😆
+                            </span>
+                            &nbsp; 메일 인증이 완료되었습니다!
+                            <br />
+                            &emsp;비밀번호를 설정해주세요
+                        </div>
+                    );
+                } else {
+                    toastErrorMessage(data.message);
+                }
+            } catch (err) {
+                console.log(err);
+                toastErrorMessage(serverErrorMessage);
             }
-        } catch (err) {
-            console.log(err);
-            toastErrorMessage(serverErrorMessage);
+            setSecretAuthenticating(false);
         }
-        setSecretAuthenticating(false);
     }
 
     // 회원가입3단계

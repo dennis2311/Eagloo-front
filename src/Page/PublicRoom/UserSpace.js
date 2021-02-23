@@ -1,8 +1,13 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import { StylelessButton } from "../../Component/StyledComponent/button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faVideo } from "@fortawesome/free-solid-svg-icons";
+import {
+    faCaretLeft,
+    faCaretRight,
+    faVideo,
+} from "@fortawesome/free-solid-svg-icons";
 
 const UserSpaceContainer = styled.div`
     display: flex;
@@ -19,7 +24,7 @@ const LocationNoticer = styled.div`
     height: 80px;
     font-family: "SamlipHopang";
     border-radius: 12px;
-    padding: 0 45px;
+    padding: 0 40px;
     margin-bottom: 15px;
     background-color: ${(props) => props.theme.headerGray};
 `;
@@ -29,6 +34,11 @@ const LocationHeader = styled.div`
 `;
 
 const LocationContent = styled.div`
+    display: flex;
+    justify-content: ${(props) =>
+        props.roomEntered ? "center" : "space-between"};
+    align-items: center;
+    min-width: 200px;
     font-size: 32px;
 `;
 
@@ -120,13 +130,58 @@ const GuideMessage = styled.div`
     border-radius: 10px;
 `;
 
+const RoomSwitcher = styled.div`
+    color: ${(props) => props.theme.mainDarkBlue};
+`;
+
+const SwitchToLeft = styled(RoomSwitcher)`
+    display: ${(props) => props.roomEntered && "none"};
+    color: ${(props) => props.roomNo <= 1 && "gray"};
+    pointer-events: ${(props) => props.roomNo <= 1 && "none"};
+`;
+
+const SwitchToRight = styled(RoomSwitcher)`
+    display: ${(props) => props.roomEntered && "none"};
+    color: ${(props) => props.roomNo >= 6 && "gray"};
+    pointer-events: ${(props) => props.roomNo >= 6 && "none"};
+`;
+
+function LocationSwitcher({ roomNo, roomEntered }) {
+    return (
+        <LocationContent roomEntered={roomEntered}>
+            {roomEntered ? (
+                `${roomNo}번 독서실`
+            ) : (
+                <>
+                    <SwitchToLeft roomNo={roomNo} roomEntered={roomEntered}>
+                        <Link
+                            style={{ color: "inherit", textDecoration: "none" }}
+                            to={`/public/${roomNo - 1}`}
+                        >
+                            <FontAwesomeIcon icon={faCaretLeft} />
+                        </Link>
+                    </SwitchToLeft>
+                    {`${roomNo}번 대기실`}
+                    <SwitchToRight roomNo={roomNo} roomEntered={roomEntered}>
+                        <Link
+                            style={{ color: "inherit", textDecoration: "none" }}
+                            to={`/public/${roomNo + 1}`}
+                        >
+                            <FontAwesomeIcon icon={faCaretRight} />
+                        </Link>
+                    </SwitchToRight>
+                </>
+            )}
+        </LocationContent>
+    );
+}
+
 function Guide({ roomNo, camAccepted, roomEntered }) {
     return (
         <>
             {!camAccepted && (
                 <GuideMessage>
-                    먼저 '내 화면 받아오기' 버튼을 눌러 카메라 권한을 허용해
-                    주세요
+                    '내 화면 받아오기' 버튼을 눌러 카메라 권한을 허용해 주세요
                 </GuideMessage>
             )}
             {camAccepted && !roomEntered && (
@@ -161,10 +216,7 @@ export default function UserSpace({
         <UserSpaceContainer>
             <LocationNoticer>
                 <LocationHeader>현재 위치 :</LocationHeader>
-                <LocationContent>
-                    {`${roomNo} 번`}
-                    {roomEntered ? " 독서실" : " 대기실"}
-                </LocationContent>
+                <LocationSwitcher roomNo={roomNo} roomEntered={roomEntered} />
             </LocationNoticer>
             <UserCamContainer camAccepted={camAccepted}>
                 {!camAccepted ? (

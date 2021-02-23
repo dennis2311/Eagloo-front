@@ -10,6 +10,14 @@ const SchedulerBodyContainer = styled.div`
     height: ${(props) => (props.schedulerOpen ? "540px" : "36px")};
     flex-direction: column;
     transition: all 0.5s ${(props) => props.theme.animationCubic};
+    overflow: hidden;
+`;
+
+const SchedulerScrollContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding-bottom: 40px;
     overflow: auto;
 `;
 
@@ -33,9 +41,11 @@ const LoadingMessage = styled.h3`
 `;
 
 const EmptyMessage = styled(Loading)`
-    color: #ffffff;
+    text-align: center;
+    font-size: 16px;
     font-family: "JejuGothic";
-    margin-top: 12px;
+    line-height: 2;
+    margin-bottom: 12px;
 `;
 
 export default function SchedulerBody({
@@ -47,14 +57,16 @@ export default function SchedulerBody({
 }) {
     return (
         <SchedulerBodyContainer schedulerOpen={schedulerOpen}>
-            {schedules.map((scheduleEach) => (
-                <ScheduleEach
-                    key={scheduleEach.id}
-                    scheduleEach={scheduleEach}
-                    schedules={schedules}
-                    setSchedules={setSchedules}
-                />
-            ))}
+            <SchedulerScrollContainer>
+                {schedules.map((scheduleEach) => (
+                    <ScheduleEach
+                        key={scheduleEach.id}
+                        scheduleEach={scheduleEach}
+                        schedules={schedules}
+                        setSchedules={setSchedules}
+                    />
+                ))}
+            </SchedulerScrollContainer>
             {loading && (
                 <Loading>
                     <CircularProgress />

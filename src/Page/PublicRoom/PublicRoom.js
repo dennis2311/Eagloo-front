@@ -42,7 +42,7 @@ const RightRoomContainer = styled.div`
 export default function PublicRoom(props) {
     const socket = useContext(SocketContext);
     const email = window.localStorage.getItem("email");
-    const roomNo = props.match.params.roomNo;
+    const roomNo = parseInt(props.match.params.roomNo);
     const [roomEntered, setRoomEntered] = useState(false);
 
     const userCamRef = useRef(null);

@@ -100,7 +100,7 @@ const CaretDiv = styled.div`
     position: absolute;
     bottom: 60px;
     color: ${(props) => props.theme.mainShineBlue};
-    cursor: pointer;
+    /* cursor: pointer; */
 `;
 
 const LeftArrow = styled(CaretDiv)`

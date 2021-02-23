@@ -60,7 +60,7 @@ const EmailBox = styled.input`
     width: 100%;
     height: 46px;
     font-size: 18px;
-    font-family: "JejuGothic";
+    /* font-family: "JejuGothic"; */
     padding: 0 12px;
     margin-bottom: 15px;
     border: none;
@@ -189,20 +189,22 @@ export default function Login({ setIsLoggedIn }) {
                         </Link>
                     </UtilButton>
                     <UtilButton>
-                        <Link
+                        {/* <Link
                             style={{ color: "inherit", textDecoration: "none" }}
                             to="/"
                         >
                             아이디 찾기
-                        </Link>
+                        </Link> */}
+                        아이디 찾기
                     </UtilButton>
                     <UtilButton>
-                        <Link
+                        {/* <Link
                             style={{ color: "inherit", textDecoration: "none" }}
                             to="/"
                         >
                             비밀번호 찾기
-                        </Link>
+                        </Link> */}
+                        비밀번호 찾기
                     </UtilButton>
                 </UtilButtonsContainer>
             </LoginContainer>
