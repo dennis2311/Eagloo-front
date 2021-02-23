@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import headerIcon from "../../resource/img/header-icon.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { servicePreparingMessage } from "../../Util/ToastMessages";
 
 const MainHeaderContainer = styled.div`
     display: flex;
@@ -69,7 +70,17 @@ export default function MainHeaer({ setIsLoggedIn }) {
                     </Link>
                 </MainHeaderComponent>
                 <WhiteVerticalLine />
-                <MainHeaderComponent>MY</MainHeaderComponent>
+                <MainHeaderComponent>
+                    <Link
+                        style={{ color: "inherit", textDecoration: "none" }}
+                        to="/"
+                        onClick={() => {
+                            servicePreparingMessage();
+                        }}
+                    >
+                        MY
+                    </Link>
+                </MainHeaderComponent>
             </MainHeaderComponentsContainer>
         </MainHeaderContainer>
     );

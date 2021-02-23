@@ -2,11 +2,15 @@ import React from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import { servicePreparingMessage } from "../../Util/ToastMessages";
 
 const ForumLinkContainer = styled.div`
     display: flex;
     flex-direction: column;
     padding: 37.5px 0;
+    :hover {
+        cursor: pointer;
+    }
 `;
 
 const ForumLinkHeader = styled.div`
@@ -61,7 +65,11 @@ const ForumLinkEachRowContent = styled.div`
 
 export default function ForumLink() {
     return (
-        <ForumLinkContainer>
+        <ForumLinkContainer
+            onClick={() => {
+                servicePreparingMessage();
+            }}
+        >
             <ForumLinkHeader>
                 게시판&nbsp;&nbsp;
                 <FontAwesomeIcon icon={faAngleRight} />

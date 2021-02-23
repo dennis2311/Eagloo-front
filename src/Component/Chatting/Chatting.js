@@ -9,11 +9,11 @@ const ChattingContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    position: fixed;
+    position: absolute;
     top: 160px;
     right: 0;
     width: 540px;
-    height: max(700px, 78vh);
+    height: max(400px, 78vh);
     background-color: #e6f1ff;
     padding: 15px;
     border-radius: 20px;

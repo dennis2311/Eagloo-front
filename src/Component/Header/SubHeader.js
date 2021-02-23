@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { servicePreparingMessage } from "../../Util/ToastMessages";
 
 const SubHeaderContainer = styled.div`
     display: flex;
@@ -34,7 +35,15 @@ const SubThreadButton = styled.div`
 export default function SubHeader({ setFeedbackOpen }) {
     return (
         <SubHeaderContainer>
-            <SubThreadButtonContainer>HOME</SubThreadButtonContainer>
+            <SubThreadButtonContainer>
+                <Link
+                    style={{ color: "inherit", textDecoration: "none" }}
+                    to="/"
+                >
+                    HOME
+                </Link>
+            </SubThreadButtonContainer>
+
             <SubThreadButtonContainer>
                 <SubThreadButton
                     onClick={() => {
@@ -44,6 +53,7 @@ export default function SubHeader({ setFeedbackOpen }) {
                     Feedback
                 </SubThreadButton>
             </SubThreadButtonContainer>
+
             <SubThreadButtonContainer>
                 <Link
                     style={{ color: "inherit", textDecoration: "none" }}
@@ -52,7 +62,15 @@ export default function SubHeader({ setFeedbackOpen }) {
                     About Us
                 </Link>
             </SubThreadButtonContainer>
-            <SubThreadButtonContainer>FAQ</SubThreadButtonContainer>
+            <SubThreadButtonContainer>
+                <SubThreadButton
+                    onClick={() => {
+                        servicePreparingMessage();
+                    }}
+                >
+                    FAQ
+                </SubThreadButton>
+            </SubThreadButtonContainer>
         </SubHeaderContainer>
     );
 }

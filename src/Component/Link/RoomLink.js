@@ -8,7 +8,7 @@ import {
     faCaretRight,
     faPlusSquare,
 } from "@fortawesome/free-solid-svg-icons";
-import { toast } from "react-toastify";
+import { servicePreparingMessage } from "../../Util/ToastMessages";
 
 const RoomLinkContainer = styled.div`
     display: flex;
@@ -142,7 +142,7 @@ export default function RoomLink() {
     // TODO
     // 스터디룸 만들기
     function CreateRoom() {
-        toast.warn("😥 서비스 준비 중입니다");
+        servicePreparingMessage();
     }
 
     return (

@@ -24,6 +24,7 @@ const SchedulerContainer = styled.div`
 // (스케쥴러 로딩이 되기 전에 라우터로 움직이는 경우 메모리 누수 발생)
 export default function Scheduler() {
     const [schedulerOpen, setSchedulerOpen] = useState(true);
+    const [schedulerError, setSchedulerError] = useState(false);
     const [loading, setLoading] = useState(true);
     const email = window.localStorage.getItem("email");
     const [schedules, setSchedules] = useState([]);
@@ -38,6 +39,7 @@ export default function Scheduler() {
                     setSchedules(data.schedules);
                 }
             } catch (err) {
+                setSchedulerError(true);
                 toastErrorMessage("스케쥴러를 받아오지 못했습니다");
             } finally {
                 setLoading(false);
@@ -61,6 +63,7 @@ export default function Scheduler() {
                 schedulerOpen={schedulerOpen}
                 schedules={schedules}
                 setSchedules={setSchedules}
+                schedulerError={schedulerError}
             />
             <SchedulerFoot
                 email={email}

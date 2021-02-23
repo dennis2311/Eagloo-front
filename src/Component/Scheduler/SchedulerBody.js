@@ -1,15 +1,16 @@
 import React from "react";
 import ScheduleEach from "./ScheduleEach";
 import styled from "styled-components";
+import SchedulerError from "./SchedulerError";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-const SchedulerBodyRow = styled.div`
+const SchedulerBodyContainer = styled.div`
     position: relative;
     display: flex;
     height: ${(props) => (props.schedulerOpen ? "540px" : "36px")};
-    overflow: ${(props) => (props.schedulerOpen ? "auto" : "hidden")};
     flex-direction: column;
     transition: all 0.5s ${(props) => props.theme.animationCubic};
+    overflow: auto;
 `;
 
 const Loading = styled.div`
@@ -31,14 +32,21 @@ const LoadingMessage = styled.h3`
     margin-top: 12px;
 `;
 
+const EmptyMessage = styled(Loading)`
+    color: #ffffff;
+    font-family: "JejuGothic";
+    margin-top: 12px;
+`;
+
 export default function SchedulerBody({
     loading,
     schedulerOpen,
     schedules,
     setSchedules,
+    schedulerError,
 }) {
     return (
-        <SchedulerBodyRow schedulerOpen={schedulerOpen}>
+        <SchedulerBodyContainer schedulerOpen={schedulerOpen}>
             {schedules.map((scheduleEach) => (
                 <ScheduleEach
                     key={scheduleEach.id}
@@ -55,6 +63,14 @@ export default function SchedulerBody({
                     </LoadingMessage>
                 </Loading>
             )}
-        </SchedulerBodyRow>
+            {schedules.length === 0 && !schedulerError && (
+                <EmptyMessage>
+                    아직 일정이 등록되지 않았습니다.
+                    <br />
+                    새로운 일정을 추가해보세요!
+                </EmptyMessage>
+            )}
+            {/* {schedulerError && <SchedulerError />} */}
+        </SchedulerBodyContainer>
     );
 }

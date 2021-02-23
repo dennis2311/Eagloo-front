@@ -18,3 +18,7 @@ export function toastLoginSuccessMessage(email) {
 export function toastErrorMessage(message) {
     toast.error(`😥 ${message}`);
 }
+
+export function servicePreparingMessage() {
+    toast.warn("😥 서비스 준비 중입니다");
+}
