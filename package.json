@@ -25,11 +25,9 @@
         "web-vitals": "^1.0.1"
     },
     "scripts": {
-        "start": "react-scripts start",
-        "build": "react-scripts build",
-        "test": "react-scripts test",
-        "eject": "react-scripts eject",
-        "postinstall": "yarn build"
+        "cleanup": "rimraf .cache dist build",
+        "start": "yarn cleanup && cross-env NODE_ENV=local parcel -p 3000 public/index.html --open --no-autoinstall",
+        "build": "yarn cleanup && cross-env NODE_ENV=production parcel build public/index.html -d build --log-level 4 --no-source-maps --no-minify"
     },
     "eslintConfig": {
         "extends": "react-app"
@@ -45,5 +43,11 @@
             "last 1 firefox version",
             "last 1 safari version"
         ]
+    },
+    "devDependencies": {
+        "cross-env": "^7.0.3",
+        "parcel": "^1.12.4",
+        "parcel-bundler": "^1.12.4",
+        "rimraf": "^3.0.2"
     }
 }
