@@ -27,12 +27,6 @@ jobs:
             - name: Build parcel
               run: npm run build
 
-            - name: Clean up
-              run: npm run cleanup
-
-            - name: Build snowpack
-              run: npm run build
-
             - name: Deploy production
               uses: amondnet/vercel-action@v19
               id: vercel-action-production
