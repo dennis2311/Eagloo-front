@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import styled, { keyframes } from "styled-components";
 import MainHeader from "./MainHeader";
 import SubHeader from "./SubHeader";
@@ -26,7 +26,15 @@ const HeaderContainer = styled.header`
     animation: ${HeaderShow} 0.5s ease-out;
 `;
 
-export default function Header({ setIsLoggedIn, setFeedbackOpen }) {
+type HeaderProps = {
+    setIsLoggedIn: boolean;
+    setFeedbackOpen: VoidFunction;
+};
+
+export default function Header({
+    setIsLoggedIn,
+    setFeedbackOpen,
+}: HeaderProps) {
     return (
         <HeaderContainer>
             <MainHeader setIsLoggedIn={setIsLoggedIn} />

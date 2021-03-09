@@ -138,6 +138,7 @@ export default function Login({ setIsLoggedIn }) {
         if (data.success) {
             window.localStorage.setItem("email", emailInput);
             window.localStorage.setItem("isLoggedIn", true);
+            window.localStorage.setItem("token", data.token);
             setIsLoggedIn(true);
             toastLoginSuccessMessage(emailInput);
         } else {
