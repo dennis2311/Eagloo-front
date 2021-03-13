@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { Channel } from "../../constants";
 import styled from "styled-components";
 import { SocketContext } from "../../Service/Socket";
 
@@ -37,7 +38,7 @@ export default function ChattingFoot({ messages, setMessages }) {
             hour,
             minute,
         };
-        socket.emit("message send", newMessage);
+        socket.emit(Channel.메시지송신, newMessage);
         setChattingInput("");
         setMessages([...messages, newMessage]);
     }
