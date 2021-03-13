@@ -7,6 +7,7 @@ import PeerSpaceEach from "./PeerSpaceEach";
 import UserSpace from "./UserSpace";
 import Calendar from "../../Component/Calendar/Calendar";
 import { toast } from "react-toastify";
+import { Channel } from "../../constants";
 
 const PublicRoomContainer = styled(UserRouterPageContainer)``;
 
@@ -70,11 +71,11 @@ export default function PublicRoom(props) {
     // TODO
     // 접근 거부시 다시 물어볼 수 있는 장치 필요
     useEffect(() => {
-        socket.on("rejected", (message) => {
+        socket.on(Channel.입장거부, (message) => {
             toast.error(message);
         });
 
-        socket.on("accepted", (allPeerId) => {
+        socket.on(Channel.입장수락, (allPeerId) => {
             setRoomEntered(true);
             allPeerId.forEach((peerId, index) => {
                 if (peerId !== socket.id) {
@@ -90,7 +91,7 @@ export default function PublicRoom(props) {
             });
         });
 
-        socket.on("cam requested", (payload) => {
+        socket.on(Channel.캠요청됨, (payload) => {
             const peerIndex = findVacancy();
             const peer = addPeer(
                 peerIndex,
@@ -103,14 +104,14 @@ export default function PublicRoom(props) {
             peerToIndexRef.current[payload.callerId] = peerIndex;
         });
 
-        socket.on("cam request accepted", (payload) => {
+        socket.on(Channel.캠요청수락됨, (payload) => {
             // TODO
             // stream 받아온 후 한번 더 확인
             // socket.emit("peer still alive")
             peersRef.current[payload.index].signal(payload.signal);
         });
 
-        socket.on("peer quit", (quitPeerId) => {
+        socket.on(Channel.참여자퇴실, (quitPeerId) => {
             handlePeerQuit(quitPeerId);
         });
 
@@ -119,14 +120,14 @@ export default function PublicRoom(props) {
         // unmount되는 경우 socket on 전부 off
         // (안 하면 재입장시 기능 중복됨)
         return () => {
-            socket.off("rejected");
-            socket.off("accepted");
-            socket.off("cam requested");
-            socket.off("cam request accepted");
-            socket.off("peer quit");
+            socket.off(Channel.입장거부);
+            socket.off(Channel.입장수락);
+            socket.off(Channel.캠요청됨);
+            socket.off(Channel.캠요청수락됨);
+            socket.off(Channel.참여자퇴실);
             // socket.off("peer dead")
 
-            socket.emit("quit", email);
+            socket.emit(Channel.퇴실, email);
             if (userCamRef.current) {
                 const tracks = userCamRef.current.srcObject.getTracks();
                 tracks.forEach((track) => {
@@ -165,12 +166,12 @@ export default function PublicRoom(props) {
     }
 
     function enterRoom() {
-        socket.emit("enter", { roomNo, email });
+        socket.emit(Channel.입실시도, { roomNo, email });
     }
 
     function quitRoom() {
         setRoomEntered(false);
-        socket.emit("quit", email);
+        socket.emit(Channel.퇴실, email);
         peersRef.current.forEach((peer) => {
             if (peer) {
                 peer.destroy();
@@ -206,7 +207,7 @@ export default function PublicRoom(props) {
         });
 
         peer.on("signal", (signal) => {
-            socket.emit("request peer cam", {
+            socket.emit(Channel.캠요청, {
                 index,
                 peerId,
                 callerId,
@@ -232,7 +233,7 @@ export default function PublicRoom(props) {
         });
 
         peer.on("signal", (signal) => {
-            socket.emit("accept peer cam request", {
+            socket.emit(Channel.캠요청수락, {
                 callerId,
                 index: myIndex,
                 signal,

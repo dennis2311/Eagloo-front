@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
+import { Channel } from "../../constants";
 import styled from "styled-components";
 import { SocketContext } from "../../Service/Socket";
 import ChattingBody from "./ChattingBody";
@@ -29,13 +30,13 @@ export default function Chatting({ chattingOpen }) {
     const socket = useContext(SocketContext);
     const [messages, setMessages] = useState([]);
 
-    socket.on("new message", (message) => {
+    socket.on(Channel.새메시지, (message) => {
         setMessages([...messages, message]);
     });
 
     useEffect(() => {
         return function turnoff() {
-            socket.off("new message");
+            socket.off(Channel.새메시지);
         };
     }, [socket]);
 
