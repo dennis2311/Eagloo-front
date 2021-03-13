@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
+import axios from "axios";
+import { server } from "../../Util/server";
 import styled, { keyframes } from "styled-components";
 import { UserRouterPageContainer } from "../../Component/StyledComponent/div";
 import YonseiLink from "../../Component/Link/YonseiLink";
@@ -6,6 +8,8 @@ import ForumLink from "../../Component/Link/ForumLink";
 import MainBanner from "../../Component/Banner/MainBanner";
 import RoomLink from "../../Component/Link/RoomLink";
 import Calendar from "../../Component/Calendar/Calendar";
+
+// TODO : 컴포넌트 default -> 상수화 수정.
 
 const slideUp = keyframes`
   from {
@@ -59,6 +63,27 @@ const MiddleUpperLobbyContainer = styled.div`
 const MiddleBottomLobbyContainer = styled.div``;
 
 export default function Lobby() {
+    useEffect(() => {
+        async function booXios() {
+            const token = window.localStorage.getItem("token");
+            console.log(`send http request with header token ${token}`);
+            axios
+                .get(`${server}/api/user/boo`, {
+                    // headers: { token },
+                })
+                .then(function ({ data }) {
+                    console.log("boo 요청 성공");
+                    console.log(data);
+                })
+                .catch(function (error) {
+                    console.log("boo 요청 실패 :");
+                    console.dir(error.response);
+                });
+        }
+
+        booXios();
+    }, []);
+
     return (
         <LobbyContainer>
             <LeftLobbyContainer>

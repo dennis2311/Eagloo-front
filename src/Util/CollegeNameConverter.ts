@@ -5,7 +5,7 @@ const converter = {
     socsci: "사회과학대학",
 };
 
-function collegename(colname) {
+function collegename(colname: string) {
     const result = converter[colname];
     return result;
 }
