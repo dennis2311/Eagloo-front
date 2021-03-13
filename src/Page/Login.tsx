@@ -132,19 +132,24 @@ export default function Login({ setIsLoggedIn }) {
 
     async function handleLogin() {
         setSigningIn(true);
-        const { data } = await axios.get(
-            `${server}/api/user/${emailInput}/${hash(passwordInput)}`
-        );
-        if (data.success) {
-            window.localStorage.setItem("email", emailInput);
-            window.localStorage.setItem("isLoggedIn", true);
-            window.localStorage.setItem("token", data.token);
-            setIsLoggedIn(true);
-            toastLoginSuccessMessage(emailInput);
-        } else {
-            setSigningIn(false);
-            toastErrorMessage(data.message);
-        }
+        axios
+            .get(`${server}/api/user/${emailInput}/${hash(passwordInput)}`)
+            .then(function ({ data }) {
+                if (data.success) {
+                    window.localStorage.setItem("email", emailInput);
+                    window.localStorage.setItem("isLoggedIn", true);
+                    window.localStorage.setItem("token", data.token);
+                    window.sessionStorage.setItem("token", data.token);
+                    setIsLoggedIn(true);
+                    toastLoginSuccessMessage(emailInput);
+                } else {
+                    setSigningIn(false);
+                    toastErrorMessage(data.message);
+                }
+            })
+            .catch(function (response) {
+                console.log(response.status);
+            });
     }
 
     return (
