@@ -52,7 +52,9 @@ const ChattingOpenButton = styled.div`
 `;
 
 export default function UserRouter({ setIsLoggedIn }) {
-    const [feedbackOpen, setFeedbackOpen] = useState(false);
+    const [feedbackOpen, setFeedb
+        
+        ackOpen] = useState(false);
     const [chattingOpen, setChattingOpen] = useState(false);
 
     function toggleChatting() {
@@ -61,7 +63,8 @@ export default function UserRouter({ setIsLoggedIn }) {
 
     return (
         <UserRouterContainer>
-            <SocketContext.Provider value={socket}>
+            {/* <SocketContext.Provider value={socket}> */}
+            <>
                 <Header
                     setIsLoggedIn={setIsLoggedIn}
                     setFeedbackOpen={setFeedbackOpen}
@@ -70,10 +73,11 @@ export default function UserRouter({ setIsLoggedIn }) {
                     <Route exact path="/" render={() => <Lobby />} />
                     <Route path="/about" render={() => <About />} />
                     <Route path="/forum" render={() => <Forum />} />
-                    <Route
+                    <Route path="/room" render={() => <PublicRoom />} />
+                    {/* <Route
                         path="/public/:roomNo"
                         render={(props) => <PublicRoom {...props} />}
-                    />
+                    /> */}
                     <Route render={() => <WrongPath />} />
                 </Switch>
 
@@ -89,7 +93,8 @@ export default function UserRouter({ setIsLoggedIn }) {
                 >
                     <FontAwesomeIcon icon={faCommentDots} size="2x" />
                 </ChattingOpenButton>
-            </SocketContext.Provider>
+            </>
+            {/* </SocketContext.Provider> */}
         </UserRouterContainer>
     );
 }

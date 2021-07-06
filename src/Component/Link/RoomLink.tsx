@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,8 +7,17 @@ import {
     faCaretLeft,
     faCaretRight,
     faPlusSquare,
+    faTruckLoading,
 } from "@fortawesome/free-solid-svg-icons";
-import { servicePreparingMessage } from "../../Util/ToastMessages";
+import {
+    servicePreparingMessage,
+    toastErrorMessage,
+} from "../../Util/ToastMessages";
+import { useAppStore } from "../../stores/useAppStore";
+import { api } from "../../api";
+import { Icon } from "@material-ui/core";
+import { IConnectRoomResponse } from "../../api/room";
+import { useHistory } from "react-router-dom";
 
 const RoomLinkContainer = styled.div`
     display: flex;
@@ -138,15 +147,62 @@ const TempMessage = styled.div`
     padding-bottom: 24px;
 `;
 
+function getUserCam(onSaveMyStream: (e?: MediaStream) => void) {
+    navigator.mediaDevices
+        .getUserMedia({ video: true })
+        .then((stream) => {
+            console.log("mystream: ", stream);
+            onSaveMyStream(stream);
+            // setCamAccepted(true);
+            // userCamRef.current.srcObject = stream;
+        })
+        .catch((e) => {
+            console.log("getUserCam error : ", e);
+        });
+}
+
 export default function RoomLink() {
+    const as = useAppStore();
+    const [loading, setLoading] = useState<boolean>(false);
+    const { push } = useHistory();
+    useEffect(() => {
+        getUserCam(as.onSaveMyStream);
+    }, []);
+
+    console.log("as.myStream: ", as.myStream);
     // TODO
     // 스터디룸 만들기
-    function CreateRoom() {
-        servicePreparingMessage();
+    async function onConnectRoom() {
+        // POST 요청
+        // 입장 성공시 rooms 데이터 푸시.
+        if (as.myStream) {
+            setLoading(true);
+            const res = await api.connectRoom(as.myStream.id);
+            const result: IConnectRoomResponse = await res.json();
+            if (result.ok && result.rooms) {
+                console.log("result: ", result);
+                as.onSaveRooms(result.rooms);
+                push("/room");
+            } else {
+                toastErrorMessage(result?.message || "");
+            }
+            setLoading(false);
+        } else {
+            toastErrorMessage("stream 객체가 존재하지 않습니다.");
+        }
+
+        // servicePreparingMessage();
     }
 
     return (
         <RoomLinkContainer>
+            {/* TODO : 로딩컴포넌트 구현 */}
+            {loading && (
+                <p>
+                    {<FontAwesomeIcon icon={faTruckLoading} size="8x" />}{" "}
+                    로딩중...
+                </p>
+            )}
             <RoomLinkHeader>
                 <RoomLinkHeaderDiv>
                     스터디 참여하기&nbsp;
@@ -161,9 +217,12 @@ export default function RoomLink() {
                 </RoomLinkRowContainerHead>
                 <RoomLinkEachRow>
                     <RoomAddIcon
-                        onClick={() => {
-                            CreateRoom();
-                        }}
+                        style={
+                            as.myStream
+                                ? undefined
+                                : { opacity: 0.3, cursor: "default" }
+                        }
+                        onClick={onConnectRoom}
                     >
                         <RoomAddText>
                             스터디

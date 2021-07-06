@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "baseUrl": ".",
+        "baseUrl": "./*",
         "outDir": "dist",
         "module": "esnext",
         "target": "es5",
@@ -27,6 +27,7 @@
         "acceptance-tests",
         "webpack",
         "jest",
-        "src/setupTests.ts"
+        "src/setupTests.ts",
+        "dist/*"
     ]
 }
