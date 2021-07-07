@@ -157,7 +157,7 @@ function ShowProgressButton({ buttonContent, buttonActive, buttonFunction }) {
     );
 }
 
-export default function SignUp({ history }) {
+export function SignUp({ history }) {
     const [emailInput, setEmailInput] = useState("");
     const [secretInput, setSecretInput] = useState("");
     const [passwordInput, setPasswordInput] = useState("");

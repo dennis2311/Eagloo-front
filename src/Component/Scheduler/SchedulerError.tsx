@@ -7,11 +7,7 @@ const SchedulerErrorRow = styled.div`
     border: 2px solid red;
 `;
 
-export default function SchedulerError({
-    email,
-    setSchedules,
-    setLoadSuccess,
-}) {
+export function SchedulerError({ email, setSchedules, setLoadSuccess }) {
     async function getSchedule() {
         try {
             const { data } = await axios.get(

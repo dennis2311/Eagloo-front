@@ -74,7 +74,7 @@ function PeerReady({ peerStream }) {
     return <PeerCam ref={camRef} autoPlay playsInline />;
 }
 
-export default function PeerSpaceEach({ peerOnline, peerLoading, peerStream }) {
+export function PeerSpaceEach({ peerOnline, peerLoading, peerStream }) {
     return (
         <PeerSpaceContainer>
             {!peerOnline || peerLoading ? (

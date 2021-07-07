@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import CalendarHead from "./CalendarHead";
-import CalendarBody from "./CalendarBody";
-import Scheduler from "../Scheduler/Scheduler";
+import { CalendarBody } from "./CalendarBody";
+import { CalendarHead } from "./CalendarHead";
+import { Scheduler } from "../Scheduler/Scheduler";
 
 const CalendarContainer = styled.div`
     position: relative;
@@ -13,7 +13,7 @@ const CalendarContainer = styled.div`
     height: 100%;
 `;
 
-export default function Calendar() {
+export function Calendar() {
     return (
         <CalendarContainer>
             <CalendarHead />

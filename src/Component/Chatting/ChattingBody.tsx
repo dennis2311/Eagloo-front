@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import ChattingContent from "./ChattingContent";
+import { ChattingContent } from "./ChattingContent";
 
 const ChattingBodyContainer = styled.div`
     display: flex;
@@ -12,7 +12,7 @@ const ChattingBodyContainer = styled.div`
     border-radius: 20px;
 `;
 
-export default function ChattingBody({ messages }) {
+export function ChattingBody({ messages }) {
     return (
         <ChattingBodyContainer>
             {messages.map((message, index) => (

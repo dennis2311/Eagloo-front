@@ -9,7 +9,7 @@ const UserHeaderContainer = styled.div`
     justify-content: space-evenly;
 `;
 
-export default function UserHeader({ setIsLoggedIn, setFeedbackOpen }) {
+export function UserHeader({ setIsLoggedIn, setFeedbackOpen }) {
     function makeFeedback() {
         setFeedbackOpen(true);
     }

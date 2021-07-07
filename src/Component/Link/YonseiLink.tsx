@@ -37,7 +37,7 @@ const YonseiLinkRow = styled.a`
     text-decoration: none;
 `;
 
-export default function YonseiLink() {
+export function YonseiLink() {
     return (
         <YonseiLinkContainer>
             <YonseiLinkHeader>

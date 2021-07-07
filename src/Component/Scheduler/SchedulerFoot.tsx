@@ -118,7 +118,7 @@ function Importance({ newScheduleImportance }) {
     }
 }
 
-export default function SchedulerFoot({ email, schedules, setSchedules }) {
+export function SchedulerFoot({ email, schedules, setSchedules }) {
     const [uploading, setUploading] = useState(false);
     const [newScheduleInput, setNewScheduleInput] = useState("");
     const [newScheduleImportance, setNewScheduleImportance] = useState(1);

@@ -1,7 +1,7 @@
 import React from "react";
-import ScheduleEach from "./ScheduleEach";
+import { ScheduleEach } from "./ScheduleEach";
 import styled from "styled-components";
-import SchedulerError from "./SchedulerError";
+import { SchedulerError } from "./SchedulerError";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 const SchedulerBodyContainer = styled.div`
@@ -48,7 +48,7 @@ const EmptyMessage = styled(Loading)`
     margin-bottom: 12px;
 `;
 
-export default function SchedulerBody({
+export function SchedulerBody({
     loading,
     schedulerOpen,
     schedules,

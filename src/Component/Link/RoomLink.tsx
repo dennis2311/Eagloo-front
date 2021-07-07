@@ -147,27 +147,10 @@ const TempMessage = styled.div`
     padding-bottom: 24px;
 `;
 
-function getUserCam(onSaveMyStream: (e?: MediaStream) => void) {
-    navigator.mediaDevices
-        .getUserMedia({ video: true })
-        .then((stream) => {
-            console.log("mystream: ", stream);
-            onSaveMyStream(stream);
-            // setCamAccepted(true);
-            // userCamRef.current.srcObject = stream;
-        })
-        .catch((e) => {
-            console.log("getUserCam error : ", e);
-        });
-}
-
-export default function RoomLink() {
+export function RoomLink() {
     const as = useAppStore();
     const [loading, setLoading] = useState<boolean>(false);
     const { push } = useHistory();
-    useEffect(() => {
-        getUserCam(as.onSaveMyStream);
-    }, []);
 
     console.log("as.myStream: ", as.myStream);
     // TODO

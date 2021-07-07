@@ -9,7 +9,7 @@ const CommonHeaderContainer = styled.div`
     justify-content: space-evenly;
 `;
 
-export default function CommonHeader() {
+export function CommonHeader() {
     return (
         <CommonHeaderContainer>
             <div>

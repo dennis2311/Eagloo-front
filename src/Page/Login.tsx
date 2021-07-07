@@ -125,7 +125,7 @@ function SignInButton({ signingIn, handleLogin }) {
     );
 }
 
-export default function Login({ setIsLoggedIn }) {
+export function Login({ setIsLoggedIn }) {
     const [signingIn, setSigningIn] = useState(false);
     const [emailInput, setEmailInput] = useState("");
     const [passwordInput, setPasswordInput] = useState("");

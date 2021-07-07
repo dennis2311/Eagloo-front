@@ -32,7 +32,7 @@ const SubThreadButton = styled.div`
     }
 `;
 
-export default function SubHeader({ setFeedbackOpen }) {
+export function SubHeader({ setFeedbackOpen }) {
     return (
         <SubHeaderContainer>
             <SubThreadButtonContainer>

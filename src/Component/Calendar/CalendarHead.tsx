@@ -33,7 +33,7 @@ const Arrow = styled.div`
     color: ${(props) => props.theme.mainBlue};
 `;
 
-export default function CalendarHead() {
+export function CalendarHead() {
     const dayName = [
         "일요일",
         "월요일",

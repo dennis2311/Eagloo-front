@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { Route, Switch } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 import { SocketContext, socket } from "../Service/Socket";
-import Header from "../Component/Header/Header";
-import Lobby from "../Page/Lobby/Lobby";
-import About from "../Page/About";
-import Forum from "../Page/Forum/Forum";
-import PublicRoom from "../Page/PublicRoom/PublicRoom";
-import WrongPath from "../Page/WrongPath";
-import FeedbackDialog from "../Component/Dialog/FeedbackDialog";
-import Chatting from "../Component/Chatting/Chatting";
+import { Header } from "../Component/Header/Header";
+import { Lobby } from "../Page/Lobby/Lobby";
+import { About } from "../Page/About";
+import { Forum } from "../Page/Forum/Forum";
+import { PublicRoom } from "../Page/PublicRoom/PublicRoom";
+import { WrongPath } from "../Page/WrongPath";
+import { FeedbackDialog } from "../Component/Dialog/FeedbackDialog";
+import { Chatting } from "../Component/Chatting/Chatting";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCommentDots } from "@fortawesome/free-solid-svg-icons";
 
@@ -51,10 +51,8 @@ const ChattingOpenButton = styled.div`
     }
 `;
 
-export default function UserRouter({ setIsLoggedIn }) {
-    const [feedbackOpen, setFeedb
-        
-        ackOpen] = useState(false);
+export function UserRouter({ setIsLoggedIn }) {
+    const [feedbackOpen, setFeedbackOpen] = useState(false);
     const [chattingOpen, setChattingOpen] = useState(false);
 
     function toggleChatting() {

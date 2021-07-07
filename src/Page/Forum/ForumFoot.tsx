@@ -7,7 +7,7 @@ const ForumFootRow = styled.div`
     padding: 15px;
 `;
 
-export default function ForumFoot() {
+export function ForumFoot() {
     return (
         <ForumFootRow>
             <div>페이지 선택 및 검색</div>

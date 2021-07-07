@@ -4,7 +4,7 @@ import { UserRouterPageContainer } from "../Component/StyledComponent/div";
 
 const AboutContainer = styled(UserRouterPageContainer)``;
 
-export default function About() {
+export function About() {
     return (
         <AboutContainer>{`In association with YCC & 연희동 장사꾼`}</AboutContainer>
     );

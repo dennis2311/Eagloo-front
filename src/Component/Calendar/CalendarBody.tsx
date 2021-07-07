@@ -26,7 +26,7 @@ const CalendarSample = styled.img`
     opacity: 0.4;
 `;
 
-export default function CalendarBody() {
+export function CalendarBody() {
     return (
         <CalendarBodyContainer>
             서비스 업데이트 예정입니다
