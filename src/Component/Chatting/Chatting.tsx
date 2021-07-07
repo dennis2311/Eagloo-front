@@ -2,8 +2,8 @@ import React, { useEffect, useState, useContext } from "react";
 import { Channel } from "../../constants";
 import styled from "styled-components";
 import { SocketContext } from "../../Service/Socket";
-import ChattingBody from "./ChattingBody";
-import ChattingFoot from "./ChattingFoot";
+import { ChattingBody } from "./ChattingBody";
+import { ChattingFoot } from "./ChattingFoot";
 
 const ChattingContainer = styled.div`
     display: flex;
@@ -26,7 +26,7 @@ const ChattingContainer = styled.div`
     transition: all 0.5s ${(props) => props.theme.animationCubic};
 `;
 
-export default function Chatting({ chattingOpen }) {
+export function Chatting({ chattingOpen }) {
     const socket = useContext(SocketContext);
     const [messages, setMessages] = useState([]);
 

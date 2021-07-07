@@ -3,7 +3,7 @@ import styled from "styled-components";
 import axios from "axios";
 import { server } from "../../Util/server";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
-import SubthreadEach from "./SubthreadEach";
+import { SubthreadEach } from "./SubthreadEach";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
@@ -34,7 +34,7 @@ const ArcodionContent = styled.div`
     flex-direction: column;
 `;
 
-export default function MainthreadEach({ mainthread }) {
+export function MainthreadEach({ mainthread }) {
     const [expanded, setExpanded] = useState(false);
     const [makeReply, setMakeReply] = useState(false);
     const [replyContent, setReplyContent] = useState("");

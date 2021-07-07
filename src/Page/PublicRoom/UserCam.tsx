@@ -10,10 +10,8 @@ interface IProps {
     stream: any;
 }
 
-const UserCam: React.FC<IProps> = ({ stream }) => {
+export const UserCam: React.FC<IProps> = ({ stream }) => {
     const camRef = useRef(stream);
 
     return <Cam ref={camRef} autoPlay playsInline />;
 };
-
-export default UserCam;

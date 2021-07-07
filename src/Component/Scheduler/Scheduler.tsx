@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { server } from "../../Util/server";
 import styled from "styled-components";
-import SchedulerHead from "./SchedulerHead";
-import SchedulerBody from "./SchedulerBody";
-import SchedulerFoot from "./SchedulerFoot";
+import { SchedulerHead } from "./SchedulerHead";
+import { SchedulerBody } from "./SchedulerBody";
+import { SchedulerFoot } from "./SchedulerFoot";
 import { toastErrorMessage } from "../../Util/ToastMessages";
 
 const SchedulerContainer = styled.div`
@@ -22,7 +22,7 @@ const SchedulerContainer = styled.div`
 // TODO
 // useEffect 클린업 설정할 것
 // (스케쥴러 로딩이 되기 전에 라우터로 움직이는 경우 메모리 누수 발생)
-export default function Scheduler() {
+export function Scheduler() {
     const [schedulerOpen, setSchedulerOpen] = useState(true);
     const [schedulerError, setSchedulerError] = useState(false);
     const [loading, setLoading] = useState(true);

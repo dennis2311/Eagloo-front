@@ -73,7 +73,7 @@ const MainBannerCopyEagloo = styled(MainBannerCopyHead)`
     letter-spacing: 1.5px;
 `;
 
-export default function MainBanner() {
+export function MainBanner() {
     return (
         <MainBannerContainer>
             <MainBannerLeftImage

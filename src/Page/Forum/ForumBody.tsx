@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import MainthreadEach from "./MainthreadEach";
+import { MainthreadEach } from "./MainthreadEach";
 
 const ForumBodyRow = styled.div`
     position: relative;
@@ -51,7 +51,7 @@ const LoadingMessage = styled.h1`
     color: #ffffff;
 `;
 
-export default function ForumBody({ loading, totalThreads, currentThreads }) {
+export function ForumBody({ loading, totalThreads, currentThreads }) {
     const [addThread, setAddThread] = useState(false);
     const [newThreadSubject, setNewThreadSubject] = useState("");
     // const [newThreadContent, setNewThreadContent] = useState("");

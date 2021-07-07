@@ -17,7 +17,7 @@ const MyMessage = styled(MessageRow)`
 
 const OthersMessage = styled(MessageRow)``;
 
-export default function ChattingContent({ message }) {
+export function ChattingContent({ message }) {
     const email = window.localStorage.getItem("email");
     const noon = parseInt(message.hour) < 12 ? "오전" : "오후";
     const hour =

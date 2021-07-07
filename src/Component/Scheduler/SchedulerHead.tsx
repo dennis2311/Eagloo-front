@@ -33,7 +33,7 @@ const SchedulerToggleIcon = styled.div`
     transition: all 0.2s linear;
 `;
 
-export default function SchedulerHead({ schedulerOpen, setSchedulerOpen }) {
+export function SchedulerHead({ schedulerOpen, setSchedulerOpen }) {
     function toggleSchedulerOpen() {
         setSchedulerOpen(!schedulerOpen);
     }

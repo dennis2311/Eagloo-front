@@ -3,11 +3,11 @@ import axios from "axios";
 import { server } from "../../Util/server";
 import styled, { keyframes } from "styled-components";
 import { UserRouterPageContainer } from "../../Component/StyledComponent/div";
-import YonseiLink from "../../Component/Link/YonseiLink";
-import ForumLink from "../../Component/Link/ForumLink";
-import MainBanner from "../../Component/Banner/MainBanner";
-import RoomLink from "../../Component/Link/RoomLink";
-import Calendar from "../../Component/Calendar/Calendar";
+import { YonseiLink } from "../../Component/Link/YonseiLink";
+import { ForumLink } from "../../Component/Link/ForumLink";
+import { MainBanner } from "../../Component";
+import { RoomLink } from "../../Component/Link/RoomLink";
+import { Calendar } from "../../Component";
 
 // TODO : 컴포넌트 default -> 상수화 수정.
 
@@ -62,7 +62,7 @@ const MiddleUpperLobbyContainer = styled.div`
 
 const MiddleBottomLobbyContainer = styled.div``;
 
-export default function Lobby() {
+export function Lobby() {
     useEffect(() => {
         async function booXios() {
             const token = window.localStorage.getItem("token");

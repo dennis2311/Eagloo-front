@@ -23,7 +23,7 @@ const ChattingInput = styled.input`
     }
 `;
 
-export default function ChattingFoot({ messages, setMessages }) {
+export function ChattingFoot({ messages, setMessages }) {
     const socket = useContext(SocketContext);
     const email = window.localStorage.getItem("email");
     const [chattingInput, setChattingInput] = useState("");

@@ -1,11 +1,11 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
-import Login from "../Page/Login";
-import SignUp from "../Page/SignUp";
-import About from "../Page/About";
-import WrongPath from "../Page/WrongPath";
+import { Login } from "../Page/Login";
+import { SignUp } from "../Page/SignUp";
+import { About } from "../Page/About";
+import { WrongPath } from "../Page/WrongPath";
 
-function CommonRouter({ setIsLoggedIn }) {
+export function CommonRouter({ setIsLoggedIn }) {
     return (
         <Switch>
             <Route
@@ -19,5 +19,3 @@ function CommonRouter({ setIsLoggedIn }) {
         </Switch>
     );
 }
-
-export default CommonRouter;

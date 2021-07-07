@@ -203,7 +203,7 @@ function Guide({ roomNo, camAccepted, roomEntered }) {
     );
 }
 
-export default function UserSpace({
+export function UserSpace({
     roomNo,
     roomEntered,
     getUserCam,

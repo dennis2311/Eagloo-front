@@ -10,7 +10,7 @@ const SubthreadEachRow = styled.div`
     border: 1px solid black;
 `;
 
-export default function SubthreadEach({ subthread }) {
+export function SubthreadEach({ subthread }) {
     return (
         <SubthreadEachRow>
             <div>{`작성자 : ${subthread.user.email}`}</div>

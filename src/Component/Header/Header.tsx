@@ -1,7 +1,7 @@
 import * as React from "react";
 import styled, { keyframes } from "styled-components";
-import MainHeader from "./MainHeader";
-import SubHeader from "./SubHeader";
+import { MainHeader } from "./MainHeader";
+import { SubHeader } from "./SubHeader";
 // import UserHeader from "./UserHeader";
 // import CommonHeader from "./CommonHeader";
 // import NoticeHeader from "./NoticeHeader";
@@ -31,10 +31,7 @@ type HeaderProps = {
     setFeedbackOpen: VoidFunction;
 };
 
-export default function Header({
-    setIsLoggedIn,
-    setFeedbackOpen,
-}: HeaderProps) {
+export function Header({ setIsLoggedIn, setFeedbackOpen }: HeaderProps) {
     return (
         <HeaderContainer>
             <MainHeader setIsLoggedIn={setIsLoggedIn} />

@@ -106,11 +106,7 @@ function ScheduleImportance({ importance }) {
     }
 }
 
-export default function ScheduleEach({
-    scheduleEach,
-    schedules,
-    setSchedules,
-}) {
+export function ScheduleEach({ scheduleEach, schedules, setSchedules }) {
     const [scheduleDone, setScheduleDone] = useState(scheduleEach.done);
 
     function toggleScheduleDone() {

@@ -63,7 +63,7 @@ const ForumLinkEachRowContent = styled.div`
     white-space: nowrap;
 `;
 
-export default function ForumLink() {
+export function ForumLink() {
     return (
         <ForumLinkContainer
             onClick={() => {

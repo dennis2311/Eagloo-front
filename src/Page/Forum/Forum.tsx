@@ -3,16 +3,16 @@ import axios from "axios";
 import { server } from "../../Util/server";
 import styled from "styled-components";
 import { UserRouterPageContainer } from "../../Component/StyledComponent/div";
-import ForumHead from "./ForumHead";
-import ForumBody from "./ForumBody";
-import ForumFoot from "./ForumFoot";
+import { ForumHead } from "./ForumHead";
+import { ForumBody } from "./ForumBody";
+import { ForumFoot } from "./ForumFoot";
 import { toastErrorMessage } from "../../Util/ToastMessages";
 
 const ForumContainer = styled(UserRouterPageContainer)``;
 
 // TODO
 // useEffect 클린업 설정할 것
-export default function Forum() {
+export function Forum() {
     const [loading, setLoading] = useState(true);
     const [college, setCollege] = useState("all");
     const [totalThreads, setTotalThreads] = useState(0);

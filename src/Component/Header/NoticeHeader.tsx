@@ -9,7 +9,7 @@ const NoticeHeaderRow = styled.div`
     border: 2px solid darkmagenta;
 `;
 
-export default function NoticeHeader() {
+export function NoticeHeader() {
     useEffect(() => {
         console.log("공지를 읽어오는 중입니다.");
     }, []);

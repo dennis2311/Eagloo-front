@@ -41,7 +41,7 @@ const WhiteVerticalLine = styled.div`
     border-right: 2px solid ${(props) => props.theme.headerGray};
 `;
 
-export default function MainHeaer({ setIsLoggedIn }) {
+export function MainHeader({ setIsLoggedIn }) {
     function handleLogout() {
         window.localStorage.removeItem("email");
         window.localStorage.removeItem("isLoggedIn");
