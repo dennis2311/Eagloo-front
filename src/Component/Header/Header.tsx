@@ -2,9 +2,6 @@ import * as React from "react";
 import styled, { keyframes } from "styled-components";
 import { MainHeader } from "./MainHeader";
 import { SubHeader } from "./SubHeader";
-// import UserHeader from "./UserHeader";
-// import CommonHeader from "./CommonHeader";
-// import NoticeHeader from "./NoticeHeader";
 
 const HeaderShow = keyframes`
     from{

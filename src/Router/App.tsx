@@ -1,24 +1,10 @@
 import React, { useEffect, useState } from "react";
-import styled, { ThemeProvider } from "styled-components";
-import Theme from "../Style/Theme";
+import styled from "styled-components";
 import { BrowserRouter } from "react-router-dom";
 import { UserRouter } from "./UserRouter";
 import { CommonRouter } from "./CommonRouter";
-import GlobalStyles from "../Style/GlobalStyles";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { socket } from "./../Service/Socket";
 
-const AppContainer = styled.div`
-    display: flex;
-    width: 100vw;
-    height: 100vh;
-    flex-direction: column;
-    align-items: center;
-    background-color: ${(props) => props.theme.backgroundWhite};
-`;
-
-function App() {
+export const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
@@ -43,25 +29,23 @@ function App() {
     //     // });
     // }, []);
     return (
-        <ThemeProvider theme={Theme}>
-            <BrowserRouter>
-                <AppContainer>
-                    {isLoggedIn ? (
-                        <UserRouter setIsLoggedIn={setIsLoggedIn} />
-                    ) : (
-                        <CommonRouter setIsLoggedIn={setIsLoggedIn} />
-                    )}
-                </AppContainer>
-            </BrowserRouter>
-            <ToastContainer
-                position="bottom-left"
-                closeOnClick
-                newestOnTop={true}
-                pauseOnFocusLoss={false}
-            />
-            <GlobalStyles />
-        </ThemeProvider>
+        <BrowserRouter>
+            <AppContainer>
+                {isLoggedIn ? (
+                    <UserRouter setIsLoggedIn={setIsLoggedIn} />
+                ) : (
+                    <CommonRouter setIsLoggedIn={setIsLoggedIn} />
+                )}
+            </AppContainer>
+        </BrowserRouter>
     );
-}
+};
 
-export default App;
+const AppContainer = styled.div`
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    flex-direction: column;
+    align-items: center;
+    background-color: ${(props) => props.theme.backgroundWhite};
+`;
