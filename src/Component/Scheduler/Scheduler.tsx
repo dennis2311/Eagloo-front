@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { server } from "../../Util/server";
+import { API_ENDPOINT } from "../../constants";
 import styled from "styled-components";
 import { SchedulerHead } from "./SchedulerHead";
 import { SchedulerBody } from "./SchedulerBody";
@@ -30,10 +30,10 @@ export function Scheduler() {
     const [schedules, setSchedules] = useState([]);
 
     useEffect(() => {
-        async function getSchedules(email) {
+        async function getSchedules(email: string | null) {
             try {
                 const { data } = await axios.get(
-                    `${server}/api/schedule/${email}/`
+                    `${API_ENDPOINT}/api/schedule/${email}`
                 );
                 if (loading) {
                     setSchedules(data.schedules);

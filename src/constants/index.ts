@@ -16,5 +16,4 @@ export enum Channel {
     // 방생성
 }
 
-export const API_ENDPOINT =
-    process.env.REACT_APP_SERVER || "http://localhost:3001";
+export const API_ENDPOINT = process.env.REACT_APP_SERVER;
