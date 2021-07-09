@@ -3,12 +3,15 @@ import React, { useState } from "react";
 import { useQuery, useMutation } from "react-query";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
+import { UserRouterPageContainer } from "../../Component/StyledComponent/div";
 import { API_ENDPOINT } from "../../constants";
 import { useAppStore } from "../../stores";
 
 export const RoomEntry = () => {
-    const [roomNo, setRoomNo] = useState(0);
-    const [positionNo, setPositionNo] = useState(0);
+    const numberOfRooms = Array(6).fill(null);
+    const numberOfPositions = Array(12).fill(null);
+    const [roomNo, setRoomNo] = useState<number>(1);
+    const [positionNo, setPositionNo] = useState<number>(1);
     const [rooms, setRooms] = useState([]);
     const { push } = useHistory();
     const appStore = useAppStore();
@@ -75,13 +78,49 @@ export const RoomEntry = () => {
 
     return (
         <Container>
-            <button
-                onClick={() => {
-                    onFinish({ roomNo: 1, positionNo: 2 });
-                }}
-            >
-                어쨌든 시도
-            </button>
+            <Row>
+                {numberOfRooms.map((_, index) => {
+                    return (
+                        <label>
+                            <input
+                                type="radio"
+                                name="room"
+                                key={`room-${index + 1}`}
+                                onClick={() => {
+                                    setRoomNo(index + 1);
+                                }}
+                            />
+                            {`${index + 1}번 방`}
+                        </label>
+                    );
+                })}
+            </Row>
+            <Row>
+                {numberOfPositions.map((_, index) => {
+                    return (
+                        <label>
+                            <input
+                                type="radio"
+                                name="position"
+                                key={`position-${index + 1}`}
+                                onClick={() => {
+                                    setPositionNo(index + 1);
+                                }}
+                            />
+                            {`${index + 1}번 자리`}
+                        </label>
+                    );
+                })}
+            </Row>
+            <Row>
+                <button
+                    onClick={() => {
+                        onFinish({ roomNo, positionNo });
+                    }}
+                >
+                    {`${roomNo}번 방 ${positionNo}번 자리로 입장하기`}
+                </button>
+            </Row>
         </Container>
     );
 };
@@ -97,14 +136,23 @@ interface roomDetail {
     userName: string;
 }
 
-const Container = styled.div`
+const Container = styled(UserRouterPageContainer)`
     background-color: #bebebe;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 60%;
     height: 100%;
 `;
 
-const RoomSelector = styled.div``;
-const PositionSelector = styled.button``;
+const Row = styled.div`
+    display: flex;
+    width: 80%;
+    min-height: 120px;
+    margin-bottom: 15px;
+    border: 2px solid black;
+`;
+
+const RoomButton = styled.div``;
+const PositionButton = styled.button``;

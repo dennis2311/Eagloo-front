@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { RouteComponentProps, useHistory } from "react-router-dom";
 import io, { Socket } from "socket.io-client";
-import * as Peer from "simple-peer";
+import Peer from "simple-peer";
 // import Peer from "simple-peer"
 import styled from "styled-components";
 import { API_ENDPOINT } from "../../constants";
@@ -24,21 +24,23 @@ export const PublicRoom: React.FC<RouteComponentProps> = (props) => {
     const { push } = useHistory();
     const [peers, setPeers] = useState([]);
     const peersRef = useRef<Peer.Instance[]>([]);
-    const socketRef = useRef<typeof Socket>();
-    const userVideo = useRef<HTMLVideoElement | undefined>(undefined);
-    const roomId = Number(props.match.params?.roomId || 0);
-    const positionId = Number(props.match.params?.positionId || 0);
+    const socketRef = useRef<typeof Socket | null>();
+    const userVideo = useRef<
+        HTMLVideoElement | MediaStream | undefined | null
+    >();
+    const roomNo = Number(props.match.params?.roomNo || 0);
+    const positionNo = Number(props.match.params?.positionNo || 0);
 
     if (!appStore.isEntered) {
         /** 단순히 URL로 접근하는 경우 */
         message.warn("올바른 접근방식이 아닙니다.");
-        push("/");
+        push("/entry");
     }
 
-    if (roomId == 0 || positionId == 0) {
+    if (roomNo == 0 || positionNo == 0) {
         //TODO
         message.warn("알 수 없는 오류");
-        push("/");
+        push("/entry");
     }
 
     useEffect(() => {
@@ -48,8 +50,8 @@ export const PublicRoom: React.FC<RouteComponentProps> = (props) => {
                 video: true,
                 audio: false,
             })
-            .then((stream) => {
-                userVideo.current?.srcObject = stream;
+            .then((stream: MediaStream) => {
+                userVideo.current.srcObject = stream;
                 // socketRef.current?.on("disconnect", (d) => {
                 //     socketRef.current?.off();
                 //     socketRef.current?.disconnect();
@@ -58,8 +60,8 @@ export const PublicRoom: React.FC<RouteComponentProps> = (props) => {
 
                 /** 1. 방참가 */
                 socketRef.current?.emit(Channel.JOIN, {
-                    roomNo: roomId,
-                    positionNo: positionId,
+                    roomNo: roomNo,
+                    positionNo: positionNo,
                 });
 
                 /** 2. 참여한 방의 기존 사용자들의 정보를 가져옴. */
@@ -75,7 +77,7 @@ export const PublicRoom: React.FC<RouteComponentProps> = (props) => {
                                         roomDetail.socketId,
                                         socketRef.current?.id,
                                         stream,
-                                        positionId
+                                        positionNo
                                     );
                                     peersRef.current.push({
                                         peer,
@@ -141,6 +143,15 @@ export const PublicRoom: React.FC<RouteComponentProps> = (props) => {
         return () => {
             socketRef.current?.disconnect();
             socketRef.current?.close();
+            socketRef.current = null;
+            /** TODO : 방 나가는 경우 캠 이용 중단 */
+            const userStream = userVideo.current?.srcObject;
+            console.log(userStream);
+            // const tracks = userStream?.getTracks();
+            // tracks.forEach((track: MediaStreamTrack) => {
+            //     track.stop();
+            // });
+            appStore.onChangeIsEntered(false);
         };
     }, []);
 
@@ -200,21 +211,20 @@ export const PublicRoom: React.FC<RouteComponentProps> = (props) => {
 
     return (
         <>
-            <PageHeader
-                className="site-page-header"
-                onBack={() => {
-                    push("/");
-                    appStore.onChangeIsEntered(false);
-                }}
-                title="뒤로가기"
-                subTitle={`${roomId}번 클래스`}
-            />
             <Container>
+                <button
+                    onClick={() => {
+                        push("/entry");
+                    }}
+                >
+                    입장 엔트리로 이동
+                </button>
+                <div>{`현재 위치 : ${roomNo}번 방`}</div>
                 <Space
                     direction="vertical"
                     style={{ width: "100%", alignItems: "center" }}
                 >
-                    <Tag color="blue">{positionId}번 자리</Tag>
+                    <Tag color="blue">{positionNo}번 자리</Tag>
                     <StyledVideo ref={userVideo} autoPlay playsInline />
                 </Space>
                 <Space
@@ -242,11 +252,13 @@ export const PublicRoom: React.FC<RouteComponentProps> = (props) => {
 };
 
 const Video = (props) => {
-    const ref = useRef<HTMLVideoElement>();
+    const ref = useRef<HTMLVideoElement | undefined>();
 
     useEffect(() => {
-        props.peer.on("stream", (stream) => {
-            ref.current.srcObject = stream;
+        props.peer.on("stream", (stream: MediaStream) => {
+            if (ref.current) {
+                ref.current.srcObject = stream;
+            }
         });
         props.peer.on("close", () => {
             document.getElementById(`container-${props.no}`)?.remove();

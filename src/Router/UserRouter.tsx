@@ -36,7 +36,7 @@ export function UserRouter({ setIsLoggedIn }) {
                     <Route path="/entry" render={() => <RoomEntry />} />
                     <Route
                         path="/room/:roomNo/position/:positionNo"
-                        render={() => <PublicRoom />}
+                        render={(props) => <PublicRoom {...props} />}
                     />
                     {/* <Route
                         path="/public/:roomNo"
