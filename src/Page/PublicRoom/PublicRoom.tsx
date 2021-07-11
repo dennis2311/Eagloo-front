@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { RouteComponentProps, useHistory } from "react-router-dom";
 import io, { Socket } from "socket.io-client";
+
 import Peer from "simple-peer";
 // import Peer from "simple-peer"
 import styled from "styled-components";
 import { API_ENDPOINT } from "../../constants";
-import { message, PageHeader, Space, Tag } from "antd";
+import { message, Space, Tag } from "antd";
 import { useAppStore } from "../../stores";
 
 enum Channel {
@@ -276,10 +277,6 @@ const Video = (props) => {
             <StyledVideo playsInline autoPlay ref={ref} />
         </VideoContainer>
     );
-};
-
-const MyVideo: React.FC<{ ref: any }> = ({ ref }) => {
-    return <video ref={ref} autoPlay playsInline />;
 };
 
 const Container = styled.div`
