@@ -46,10 +46,14 @@ export const RoomEntry = () => {
                     `/api/room/${params.roomNo}/position/${params.positionNo}`,
                 {
                     method: "POST",
-                    body: JSON.stringify({ userId: "1", userName: "kkh" }),
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
+                    body: JSON.stringify({
+                        no: positionNo,
+                        socketId: "",
+                        userName: "",
+                    }),
+                    // headers: {
+                    //     "Content-Type": "application/json",
+                    // },
                 }
             ),
         {
@@ -75,9 +79,25 @@ export const RoomEntry = () => {
 
     return (
         <Container>
+            <input
+                type="number"
+                value={roomNo}
+                onChange={(e) => {
+                    setRoomNo(Number(e.target.value));
+                }}
+                placeholder="방 번호"
+            />
+            <input
+                type="number"
+                value={positionNo}
+                onChange={(e) => {
+                    setPositionNo(Number(e.target.value));
+                }}
+                placeholder="자리 번호"
+            />
             <button
                 onClick={() => {
-                    onFinish({ roomNo: 1, positionNo: 2 });
+                    onFinish({ roomNo, positionNo });
                 }}
             >
                 어쨌든 시도
@@ -91,12 +111,6 @@ interface entryInput {
     positionNo: number;
 }
 
-interface roomDetail {
-    no: number;
-    socketId: string;
-    userName: string;
-}
-
 const Container = styled.div`
     background-color: #bebebe;
     display: flex;
@@ -105,6 +119,3 @@ const Container = styled.div`
     width: 60%;
     height: 100%;
 `;
-
-const RoomSelector = styled.div``;
-const PositionSelector = styled.button``;

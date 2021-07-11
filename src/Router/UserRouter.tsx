@@ -9,21 +9,19 @@ import { RoomEntry } from "../Page/RoomEntry/RoomEntry";
 import { PublicRoom } from "../Page/PublicRoom/PublicRoom";
 import { WrongPath } from "../Page/WrongPath";
 import { FeedbackDialog } from "../Component/Dialog/FeedbackDialog";
-import { Chatting } from "../Component/Chatting/Chatting";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCommentDots } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faCommentDots } from "@fortawesome/free-solid-svg-icons";
 
 export function UserRouter({ setIsLoggedIn }) {
     const [feedbackOpen, setFeedbackOpen] = useState(false);
-    const [chattingOpen, setChattingOpen] = useState(false);
+    // const [chattingOpen, setChattingOpen] = useState(false);
 
-    function toggleChatting() {
-        setChattingOpen(!chattingOpen);
-    }
+    // function toggleChatting() {
+    //     setChattingOpen(!chattingOpen);
+    // }
 
     return (
         <UserRouterContainer>
-            {/* <SocketContext.Provider value={socket}> */}
             <>
                 <Header
                     setIsLoggedIn={setIsLoggedIn}
@@ -36,7 +34,7 @@ export function UserRouter({ setIsLoggedIn }) {
                     <Route path="/entry" render={() => <RoomEntry />} />
                     <Route
                         path="/room/:roomNo/position/:positionNo"
-                        render={() => <PublicRoom />}
+                        render={(props) => <PublicRoom {...props} />}
                     />
                     {/* <Route
                         path="/public/:roomNo"
@@ -49,28 +47,27 @@ export function UserRouter({ setIsLoggedIn }) {
                     feedbackOpen={feedbackOpen}
                     setFeedbackOpen={setFeedbackOpen}
                 />
-                <Chatting chattingOpen={chattingOpen} />
+                {/* <Chatting chattingOpen={chattingOpen} />
                 <ChattingOpenButton
                     onClick={() => {
                         toggleChatting();
                     }}
                 >
                     <FontAwesomeIcon icon={faCommentDots} size="2x" />
-                </ChattingOpenButton>
+                </ChattingOpenButton> */}
             </>
-            {/* </SocketContext.Provider> */}
         </UserRouterContainer>
     );
 }
 
-const buttonShow = keyframes`
-    from{
-        transform: translateX(65px);
-    }
-    to{
-        transform: translateX(0);
-    }
-`;
+// const buttonShow = keyframes`
+//     from{
+//         transform: translateX(65px);
+//     }
+//     to{
+//         transform: translateX(0);
+//     }
+// `;
 
 const UserRouterContainer = styled.div`
     position: relative;
@@ -82,21 +79,21 @@ const UserRouterContainer = styled.div`
     overflow-x: hidden;
 `;
 
-const ChattingOpenButton = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    top: 160px;
-    right: 0;
-    width: 65px;
-    height: 65px;
-    border-top-left-radius: 12px;
-    border-bottom-left-radius: 12px;
-    color: #ffffff;
-    background-color: ${(props) => props.theme.mainBlue};
-    animation: ${buttonShow} 0.8s ${(props) => props.theme.animationCubic};
-    :hover {
-        cursor: pointer;
-    }
-`;
+// const ChattingOpenButton = styled.div`
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     position: absolute;
+//     top: 160px;
+//     right: 0;
+//     width: 65px;
+//     height: 65px;
+//     border-top-left-radius: 12px;
+//     border-bottom-left-radius: 12px;
+//     color: #ffffff;
+//     background-color: ${(props) => props.theme.mainBlue};
+//     animation: ${buttonShow} 0.8s ${(props) => props.theme.animationCubic};
+//     :hover {
+//         cursor: pointer;
+//     }
+// `;

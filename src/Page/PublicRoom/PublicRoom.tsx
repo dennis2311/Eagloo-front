@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { RouteComponentProps, useHistory } from "react-router-dom";
 import io, { Socket } from "socket.io-client";
-import * as Peer from "simple-peer";
+import Peer from "simple-peer";
 // import Peer from "simple-peer"
 import styled from "styled-components";
 import { API_ENDPOINT } from "../../constants";
@@ -24,22 +24,22 @@ export const PublicRoom: React.FC<RouteComponentProps> = (props) => {
     const { push } = useHistory();
     const [peers, setPeers] = useState([]);
     const peersRef = useRef<Peer.Instance[]>([]);
-    const socketRef = useRef<typeof Socket>();
+    const socketRef = useRef<typeof Socket | null>();
     const userVideo = useRef<HTMLVideoElement | undefined>(undefined);
-    const roomId = Number(props.match.params?.roomId || 0);
-    const positionId = Number(props.match.params?.positionId || 0);
+    const roomNo = Number(props.match.params?.roomNo || 0);
+    const positionNo = Number(props.match.params?.positionNo || 0);
 
-    if (!appStore.isEntered) {
-        /** 단순히 URL로 접근하는 경우 */
-        message.warn("올바른 접근방식이 아닙니다.");
-        push("/");
-    }
+    // if (!appStore.isEntered) {
+    //     /** 단순히 URL로 접근하는 경우 */
+    //     message.warn("올바른 접근방식이 아닙니다.");
+    //     push("/");
+    // }
 
-    if (roomId == 0 || positionId == 0) {
-        //TODO
-        message.warn("알 수 없는 오류");
-        push("/");
-    }
+    // if (roomNo == 0 || positionNo == 0) {
+    //     //TODO
+    //     message.warn("알 수 없는 오류");
+    //     push("/");
+    // }
 
     useEffect(() => {
         socketRef.current = io(API_ENDPOINT);
@@ -58,14 +58,16 @@ export const PublicRoom: React.FC<RouteComponentProps> = (props) => {
 
                 /** 1. 방참가 */
                 socketRef.current?.emit(Channel.JOIN, {
-                    roomNo: roomId,
-                    positionNo: positionId,
+                    roomNo: roomNo,
+                    positionNo: positionNo,
                 });
+                console.log("1");
 
                 /** 2. 참여한 방의 기존 사용자들의 정보를 가져옴. */
                 socketRef.current?.on(
                     Channel.GET_CURRENT_ROOM,
                     (roomDetails) => {
+                        console.log("2");
                         if (roomDetails.length) {
                             const peers = [];
                             if (!!roomDetails?.length) {
@@ -75,7 +77,7 @@ export const PublicRoom: React.FC<RouteComponentProps> = (props) => {
                                         roomDetail.socketId,
                                         socketRef.current?.id,
                                         stream,
-                                        positionId
+                                        positionNo
                                     );
                                     peersRef.current.push({
                                         peer,
@@ -141,6 +143,7 @@ export const PublicRoom: React.FC<RouteComponentProps> = (props) => {
         return () => {
             socketRef.current?.disconnect();
             socketRef.current?.close();
+            socketRef.current = null;
         };
     }, []);
 
@@ -192,12 +195,6 @@ export const PublicRoom: React.FC<RouteComponentProps> = (props) => {
         return peer;
     }
 
-    // useEffect(() => {
-    //     return () => {
-    //         socketRef.current?.close();
-    //     };
-    // }, []);
-
     return (
         <>
             <PageHeader
@@ -207,14 +204,14 @@ export const PublicRoom: React.FC<RouteComponentProps> = (props) => {
                     appStore.onChangeIsEntered(false);
                 }}
                 title="뒤로가기"
-                subTitle={`${roomId}번 클래스`}
+                subTitle={`${roomNo}번 클래스`}
             />
             <Container>
                 <Space
                     direction="vertical"
                     style={{ width: "100%", alignItems: "center" }}
                 >
-                    <Tag color="blue">{positionId}번 자리</Tag>
+                    <Tag color="blue">{positionNo}번 자리</Tag>
                     <StyledVideo ref={userVideo} autoPlay playsInline />
                 </Space>
                 <Space
@@ -228,7 +225,7 @@ export const PublicRoom: React.FC<RouteComponentProps> = (props) => {
                     {peers.map((peer, index) => {
                         return (
                             <Video
-                                key={peer.no}
+                                key={`video-${peer.no}`}
                                 no={peer.no}
                                 peer={peer.peer}
                             />
@@ -264,10 +261,6 @@ const Video = (props) => {
             <StyledVideo playsInline autoPlay ref={ref} />
         </VideoContainer>
     );
-};
-
-const MyVideo: React.FC<{ ref: any }> = ({ ref }) => {
-    return <video ref={ref} autoPlay playsInline />;
 };
 
 const Container = styled.div`
