@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { API_ENDPOINT } from "../../constants";
 import { useAppStore } from "../../stores";
+import { toastErrorMessage } from "../../Util/ToastMessages";
 
 export const RoomEntry = () => {
     const [roomNo, setRoomNo] = useState(0);
@@ -64,7 +65,7 @@ export const RoomEntry = () => {
                     appStore.onChangeIsEntered(true);
                     push(`/room/${res.roomNo}/position/${res.positionNo}`);
                 } else {
-                    message.error("이미 존재하는 자리입니다.");
+                    toastErrorMessage("이미 존재하는 자리입니다.");
                 }
             },
             onError: (err) => {
@@ -100,7 +101,7 @@ export const RoomEntry = () => {
                     onFinish({ roomNo, positionNo });
                 }}
             >
-                어쨌든 시도
+                방 입장하기
             </button>
         </Container>
     );

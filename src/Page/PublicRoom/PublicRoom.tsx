@@ -29,17 +29,17 @@ export const PublicRoom: React.FC<RouteComponentProps> = (props) => {
     const roomNo = Number(props.match.params?.roomNo || 0);
     const positionNo = Number(props.match.params?.positionNo || 0);
 
-    // if (!appStore.isEntered) {
-    //     /** 단순히 URL로 접근하는 경우 */
-    //     message.warn("올바른 접근방식이 아닙니다.");
-    //     push("/");
-    // }
+    if (!appStore.isEntered) {
+        /** 단순히 URL로 접근하는 경우 */
+        message.warn("올바른 접근방식이 아닙니다.");
+        push("/entry");
+    }
 
-    // if (roomNo == 0 || positionNo == 0) {
-    //     //TODO
-    //     message.warn("알 수 없는 오류");
-    //     push("/");
-    // }
+    if (roomNo <= 0 || roomNo >= 7 || positionNo <= 0 || positionNo >= 13) {
+        //TODO
+        message.warn("방과 자리 번호를 정확히 입력해주세요");
+        push("/entry");
+    }
 
     useEffect(() => {
         socketRef.current = io(API_ENDPOINT);
