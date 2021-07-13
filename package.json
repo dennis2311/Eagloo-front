@@ -6,6 +6,7 @@
     "repository": "https://github.com/dennis2311/Eagloo-front",
     "license": "MIT",
     "dependencies": {
+        "@babel/runtime": "^7.14.6",
         "@fortawesome/fontawesome-svg-core": "^1.2.34",
         "@fortawesome/free-solid-svg-icons": "^5.15.2",
         "@fortawesome/react-fontawesome": "^0.1.14",
