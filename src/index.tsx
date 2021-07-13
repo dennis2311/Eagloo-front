@@ -7,6 +7,8 @@ import { App } from "./Router/App";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import GlobalStyles from "./Style/GlobalStyles";
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 
 const queryClient = new QueryClient();
 
