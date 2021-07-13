@@ -6,6 +6,7 @@
     "repository": "https://github.com/dennis2311/Eagloo-front",
     "license": "MIT",
     "dependencies": {
+        "@babel/runtime": "^7.14.6",
         "@fortawesome/fontawesome-svg-core": "^1.2.34",
         "@fortawesome/free-solid-svg-icons": "^5.15.2",
         "@fortawesome/react-fontawesome": "^0.1.14",
@@ -26,7 +27,7 @@
     },
     "devDependencies": {
         "@babel/core": "^7.0.0-0",
-        "@babel/plugin-transform-runtime": "^7.13.9",
+        "@babel/plugin-transform-runtime": "^7.14.5",
         "@babel/preset-env": "^7.13.9",
         "@babel/preset-react": "^7.12.13",
         "@types/react": "^17.0.3",
@@ -52,6 +53,7 @@
     "scripts": {
         "cleanup": "rimraf .cache dist build",
         "start": "yarn cleanup && cross-env NODE_ENV=local parcel -p 3000 public/index.html --open --no-autoinstall",
+        "start:prod": "yarn cleanup && cross-env NODE_ENV=production parcel build public/index.html -d build --log-level 4 --no-source-maps --no-minify",
         "build": "yarn cleanup && cross-env NODE_ENV=production parcel build public/index.html -d build --log-level 4 --no-source-maps --no-minify"
     }
 }
