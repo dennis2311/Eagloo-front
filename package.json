@@ -56,6 +56,6 @@
     "scripts": {
         "cleanup": "rimraf .cache dist build",
         "start": "yarn cleanup && cross-env NODE_ENV=local parcel -p 3000 public/index.html --open --no-autoinstall",
-        "build": "yarn cleanup && cross-env NODE_ENV=production parcel build public/index.html -d build --log-level 4 --no-source-maps --no-minify"
+        "build": "parcel build public/index.html -d build --log-level 4 --no-source-maps --no-minify"
     }
 }
