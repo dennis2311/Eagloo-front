@@ -2,7 +2,7 @@
     "name": "eagloo-front",
     "description": "Eagloo-front",
     "version": "0.1.0",
-    "main": "index.js",
+    "main": "index.tsx",
     "repository": "https://github.com/dennis2311/Eagloo-front",
     "license": "MIT",
     "dependencies": {
