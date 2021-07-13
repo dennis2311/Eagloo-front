@@ -10,7 +10,7 @@ jobs:
 
         strategy:
             matrix:
-                node-version: [12.x]
+                node-version: [14.x]
 
         steps:
             - name: Checkout repository
@@ -27,13 +27,13 @@ jobs:
             - name: Build parcel
               run: yarn build
 
-            # - name: Deploy production
-            #   uses: amondnet/vercel-action@v19
-            #   id: vercel-action-production
-            #   if: github.event_name == 'push'
-            #   with:
-            #       github-token: ${{ secrets.GITHUB_TOKEN }}
-            #       vercel-token: ${{ secrets.VERCEL_TOKEN }}
-            #       vercel-org-id: ${{ secrets.ORG_ID }}
-            #       vercel-project-id: ${{ secrets.PROJECT_ID }}
-            #       vercel-args: "--prod"
+            - name: Deploy production
+              uses: amondnet/vercel-action@v19
+              id: vercel-action-production
+              if: github.event_name == 'push'
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  vercel-token: ${{ secrets.VERCEL_TOKEN }}
+                  vercel-org-id: ${{ secrets.ORG_ID }}
+                  vercel-project-id: ${{ secrets.PROJECT_ID }}
+                  vercel-args: "--prod"
